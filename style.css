@@ -1,4 +1,16 @@
+#map {
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:400px;
+    height:280px;
+}
 
+circle {
+    fill:aquamarine;
+    opacity: 0.2;
+    stroke:white;
+}
 path {
     fill: #ccc;
     stroke: #fff;
