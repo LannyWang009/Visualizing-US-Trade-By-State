@@ -12,7 +12,7 @@ d3.csv('al2018.csv', conversor, function (csvdata) {
   }
 
   var packLayout = d3.pack()
-    .size([900, 900])
+    .size([500, 500])
 
   var rootNode = d3.hierarchy(data)
 
