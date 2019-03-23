@@ -7,8 +7,8 @@
 }
 
 circle {
-    fill:aquamarine;
-    opacity: 0.2;
+    /* fill:#7fc5c9; */
+    /* opacity: 0.2; */
     stroke:white;
 }
 path {
@@ -218,7 +218,7 @@ button {
 
 ._5{
     stroke: none;
-    fill: blueviolet;
+    /* fill: blueviolet; */
     fill-opacity: .7;
 }
 
@@ -229,4 +229,19 @@ button {
 .bar{
     stroke: none;
     fill: steelblue;
+}
+
+.div.tooltip {   
+position: absolute;           
+   text-align: center;           
+   width: 40px;                  
+   height: 100px;                 
+   padding: 2px;             
+   font: 12px sans-serif;        
+   background: rgba(0,0,0,0.1); 
+   color:darkgrey;  
+   border: 0px;      
+   border-radius: 8px;           
+   pointer-events: none;
+    z-index:-1
 }
