@@ -1,15 +1,41 @@
+body {
+    background-color: #565656;
+}
 #map {
-    position:absolute;
+    position: absolute;
     top:10px;
     left:10px;
     width:400px;
-    height:280px;
+    height:400px;
+}
+
+#barchart {
+    position: absolute;
+
+}
+
+#title{
+    position:absolute;
+}
+
+#packLayout-export {
+    position:absolute;
+    width:400px;
+    height:400px;
+    margin-top:200px;
+    margin-right:10px;
+    margin-left:1000px;
+    z-index:2;
+}
+
+#packLayout-import {
+    position: absolute;
 }
 
 circle {
     /* fill:#7fc5c9; */
     /* opacity: 0.2; */
-    stroke:white;
+    stroke:rgba(0,0,0,0);
 }
 path {
     fill: #ccc;
@@ -218,7 +244,7 @@ button {
 
 ._5{
     stroke: none;
-    /* fill: blueviolet; */
+    fill: blueviolet;
     fill-opacity: .7;
 }
 
@@ -232,7 +258,8 @@ button {
 }
 
 .div.tooltip {   
-position: absolute;           
+    position: absolute; 
+    display: inline;          
    text-align: center;           
    width: 40px;                  
    height: 100px;                 
@@ -243,5 +270,5 @@ position: absolute;
    border: 0px;      
    border-radius: 8px;           
    pointer-events: none;
-    z-index:-1
+    z-index:10
 }

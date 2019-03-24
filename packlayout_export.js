@@ -4,7 +4,7 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
   console.log('csv', csvdata)
   datasetExport = csvdata
 
-  var s = 500
+  var s = 400
   // =========== scaling function ===========
   let exportValue = datasetExport.map(element => { return element.total_exports_value })
   const max = d3.max(exportValue)
@@ -13,6 +13,10 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
   var linearscale = d3.scaleLinear()
     .domain(domain)
     .range(range)
+  // ========tooltip=========
+  var tooltip = d3.select('body')
+    .append('div')
+    .attr('class', 'tooltip')
   // ====layout=====
   var data = {
     'name': 'Total',
@@ -41,26 +45,23 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
     .attr('cx', function (d) { return d.x })
     .attr('cy', function (d) { return d.y })
     .attr('r', function (d) { return d.r })
+
   // show tips on mouseover
-    .on('click', function (d) {
+    .on('mouseover', function (d) {
       console.log('your mouse moved here')
-      d3.select(this).text(d.data.name)
-      // tooltip.transition()
-      //   .duration(200)
-      //   .style('opacity', 1)
-      // tooltip.text(d.data.name)
-      //   .style('left', (d3.event.pageX) + 'px')
-      //   .style('top', (d3.event.pageY - 28) + 'px')
+      // d3.select(this).attr('stroke', 'grey')
+      tooltip.transition()
+        .duration(200)
+        .style('opacity', 1)
+      tooltip.text(d.data.name)
+        .style('left', (d3.event.pageX) + 'px')
+        .style('top', (d3.event.pageY - 100) + 'px')
     })
     .on('mouseout', function (d) {
       tooltip.transition()
         .duration(500)
         .style('opacity', 0)
     })
-
-  var tooltip = d3.select('svg g')
-    .append('div')
-    .attr('class', 'tooltip')
 })
 
 function conversor (d) {
@@ -135,6 +136,6 @@ function switchColor (commodity) {
     case '930 Used Or Second-hand Merchandise': return colors[28]
     case '980 Goods Returned (exports For Canada Only)': return colors[29]
     case '990 Other Special Classification Provisions': return colors[30]
-    default:return 'white'
+    default:return 'rgba(0, 0, 0, 0)'
   }
 }
