@@ -50,18 +50,24 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
   // show tips on mouseover
     .on('mouseover', function (d) {
       console.log('your mouse moved here')
-      // d3.select(this).attr('stroke', 'grey')
-      tooltip.transition()
-        .duration(200)
-        .style('opacity', 1)
-      tooltip.text(d.data.name)
-        .style('left', (d3.event.pageX) + 'px')
-        .style('top', (d3.event.pageY - 100) + 'px')
+      // to get circle's cx and cy value
+      const xPosition = parseFloat(d3.select(this).attr('cx'))
+      const yPosition = parseFloat(d3.select(this).attr('cy'))
+      const text = d.data.name
+      // create the tooltip label
+      d3.select('#packLayout-Export svg g').append('text')
+        .attr('id', 'tooltip')
+        .attr('x', xPosition)
+        .attr('y', yPosition)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', 'sans-serif')
+        .attr('font-weight', 'bold')
+        .attr('font-size', '12px')
+        .attr('fill', 'grey')
+        .text(text)
     })
     .on('mouseout', function (d) {
-      tooltip.transition()
-        .duration(500)
-        .style('opacity', 0)
+      d3.select('#tooltip').remove()
     })
 })
 
