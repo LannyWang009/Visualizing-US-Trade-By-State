@@ -1,13 +1,13 @@
 
-var datasetExport // global var for
-d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
+var datasetImport // global var for
+d3.csv('./data/csv/txImport2018.csv', conversor, function (csvdata) {
   console.log('csv', csvdata)
-  datasetExport = csvdata
+  datasetImport = csvdata
 
   var s = 400
   // =========== scaling function ===========
-  let exportValue = datasetExport.map(element => { return element.total_exports_value })
-  const max = d3.max(exportValue)
+  let importValue = datasetImport.map(element => { return element.total_import_values })
+  const max = d3.max(importValue)
   const range = [0, s]
   const domain = [0, max]
   var linearscale = d3.scaleLinear()
@@ -20,8 +20,8 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
   // ====layout=====
   var data = {
     'name': 'Total',
-    'children': datasetExport.map(element => {
-      return { 'name': element.commodity, 'value': linearscale(element.total_exports_value) }
+    'children': datasetImport.map(element => {
+      return { 'name': element.commodity, 'value': linearscale(element.total_import_values) }
     })
   }
 
@@ -36,7 +36,7 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
 
   packLayout(rootNode)
 
-  d3.select('#packLayout-export svg g')
+  d3.select('#packLayout-import svg g')
     // .select('svg g')
     .selectAll('circle')
     .data(rootNode.descendants())
@@ -66,8 +66,8 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
 })
 
 function conversor (d) {
-  d.total_exports_value = parseInt(d.total_exports_value.replace(/,/g, ''))
-  // console.log(d.total_exports_value)
+  d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''))
+  // console.log(d.total_import_values)
   return d
 }
 

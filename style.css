@@ -1,12 +1,54 @@
 body {
-    background-color: #565656;
+    background-color: grey;
 }
+
+#title {
+    background-color: black;
+    width:1800px;
+    height:80px;
+    text-align: left;
+    padding-left:70px;
+    color:rgb(165, 55, 253)
+}
+#content {
+    background-color:black;
+    width:1800px;
+    height:900px;
+    display:flex;
+    flex-direction: row;
+}
+#left {
+    background-color:lavender;
+    flex:12;
+    display:flex;
+    flex-direction: column;
+}
+
+#mapPanel {
+    background-color: black;
+    flex:2
+}
+
+#barPanel {
+    background-color: black;
+    flex:1
+}
+
+#middle {
+    background-color:lightpink;
+    flex:2;
+}
+
+#right {
+    background-color:lightskyblue;
+    flex:4;
+    display:flex;
+    flex-direction: column;
+}
+
 #map {
-    position: absolute;
-    top:10px;
-    left:10px;
-    width:400px;
-    height:400px;
+   
+    
 }
 
 #barchart {
@@ -14,22 +56,26 @@ body {
 
 }
 
-#title{
-    position:absolute;
-}
-
 #packLayout-export {
-    position:absolute;
-    width:400px;
-    height:400px;
-    margin-top:200px;
-    margin-right:10px;
-    margin-left:1000px;
+    background-color: black;
+    flex:5;
+    /* position:absolute; */
+    /* width:400px; */
+    /* height:400px; */
+    /* margin-top:200px; */
+    /* margin-right:10px; */
+    /* margin-left:1000px; */
     z-index:2;
 }
 
 #packLayout-import {
-    position: absolute;
+    flex:5;
+    background-color:black;
+}
+
+#layoutchart-info {
+    flex:4;
+    background-color:purple
 }
 
 circle {
@@ -43,7 +89,7 @@ path {
     stroke-width: .5px;
 }
 path:hover {
-    fill: red;
+    fill: rgb(165, 55, 253)
 }
 
 body {
@@ -66,13 +112,13 @@ button {
 }
 
 .box {
-    width: 200px;
-    height: 200px;
-    margin: 40px;
+    /* width: 200px; */
+    /* height: 200px; */
+    margin: 3px;
     float: left;
     text-align: center;
     border: #969696 solid thin;
-    padding: 5px;
+    /* padding: 5px; */
 }
 
 .red {

@@ -10,17 +10,41 @@
     <script src='./lib/d3.js'></script>
 </head>
 <body>
-    <!-- <div id="map"></div> -->
-    <div id="barChart"></div>
-    <div id="packLayout-export">
-        <svg width="400" height="400">
-            <g></g>
-            <g></g>
-        </svg>
+    <div class="box" id="title">
+        <h4>What does your state trade oversea? </h4>
+        <p> U.S. trade and commerce by state</p>
     </div>
+    <div class="box" id="content">
+            <div class="box" id="left">
+                <div class="box" id="mapPanel">
+                    <div id="barExport"></div>
+                    <div id="map"></div>
+                    <div id="barImport"></div>
+                </div>
+                <div class="box" id="barPanel"></div>
+            </div>
+            <div class="box" id="middle">
+                <div class="box" id="state-info-box"></div>
+            </div>
+            <div class="box" id="right">
+                    <div class="box" id="packLayout-export">
+                            <svg width="400" height="400">
+                                <g></g>
+                            </svg>
+                    </div>
+                    <div class="box" id="layoutchart-info"></div>
+                    <div class="box" id="packLayout-import">
+                            <svg width="400" height="400">
+                                <g></g>
+                            </svg>
+                    </div>
+            </div> 
+    </div>
+    
 
 <script src="https://d3js.org/topojson.v2.js"></script>
 <script src="./packlayout_export.js"></script>
+<script src="./packlayout_import.js"></script>
 <script src="./usa.js"></script>
 
 </body>
