@@ -325,19 +325,17 @@ button {
     stroke: none;
     fill: steelblue;
 }
-/* 
-.div.tooltip {   
+
+#tooltip {   
     position: absolute; 
     display: inline;          
-   text-align: center;           
-   width: 40px;                  
-   height: 100px;                 
+   text-align: center;                           
    padding: 2px;             
    font: 12px sans-serif;        
-   background: rgba(0,0,0,0.1); 
-   color:darkgrey;  
+   background-color: rgba(231, 226, 226, 0.342); 
+   color:rgb(17, 2, 29);  
    border: 0px;      
    border-radius: 8px;           
    pointer-events: none;
-    z-index:10
-} */
+z-index:10
+}

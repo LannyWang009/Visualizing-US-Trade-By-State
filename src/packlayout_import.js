@@ -60,7 +60,7 @@ d3.csv('./data/csv/txImport2018.csv', conversor, function (csvdata) {
         .attr('font-family', 'sans-serif')
         .attr('font-weight', 'bold')
         .attr('font-size', '12px')
-        .attr('fill', 'grey')
+        .attr('fill', 'lavender')
         .text(text)
     })
     .on('mouseout', function (d) {

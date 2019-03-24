@@ -55,7 +55,7 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
       const yPosition = parseFloat(d3.select(this).attr('cy'))
       const text = d.data.name
       // create the tooltip label
-      d3.select('#packLayout-Export svg g').append('text')
+      d3.select('#packLayout-export svg g').append('text')
         .attr('id', 'tooltip')
         .attr('x', xPosition)
         .attr('y', yPosition)
@@ -63,7 +63,7 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
         .attr('font-family', 'sans-serif')
         .attr('font-weight', 'bold')
         .attr('font-size', '12px')
-        .attr('fill', 'grey')
+        .attr('fill', 'lavender')
         .text(text)
     })
     .on('mouseout', function (d) {
