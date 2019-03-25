@@ -230,3 +230,37 @@ button {
     stroke: none;
     fill: steelblue;
 }
+
+.chartBar:hover {
+    fill: #4d308b;
+}
+
+.yaxis {
+    fill: none;
+    
+}
+
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+    text-anchor: end;
+}
+
+.tooltip {
+    position: absolute;
+    max-width: 200px;
+    height: auto;
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.5);
+    pointer-events: none;
+    font-family: sans-serif;
+    font-size: 11px;
+}

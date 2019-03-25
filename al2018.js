@@ -1,6 +1,6 @@
 
 var datasetBarchart // global var for
-d3.csv('al2018.csv', conversor, function (csvdata) {
+d3.csv('/data/csv/al2018.csv', conversor, function (csvdata) {
   console.log(csvdata)
   datasetBarchart = csvdata
 
