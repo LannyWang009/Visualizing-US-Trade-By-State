@@ -5,29 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>D3 sandbox</title>
+    <!-- add favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="./favicon_io/site.webmanifest">
+    <!-- add style sheets -->
     <link rel="stylesheet" type="text/css" href="./style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js" integrity="sha256-kX9/pjvgpDgSmoSfzAlYJeICaZXca16iu+c3F6ueKRo=" crossorigin="anonymous"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src='./lib/d3.js'></script>
+
 </head>
 <body>
-    <style>
-        circle {
-    fill:blueviolet;
-    opacity: 0.4;
-    stroke:white;
-}
-</style>
-    <div id="map"></div>
-    <div id="barChart"></div>
-    <div id="packLayout">
-        <svg width="1000" height="1000">
-            <g></g>
-        </svg>
+    <div class="box" id="title">
+        <div style="float:left;margin:3px">
+            <img style="object-fit:scale-down; width:50px; height:65px" src="./favicon_io/android-chrome-192x192.png"/>
+        </div>
+        <h1 style="padding-left:100px"> U.S. International Trade and Commerce By State</h1>
     </div>
+    <div class="box" id="content">
+            <div class="box" id="left">
+                <div class="box" id="mapPanel">
+                    <div class="overlay" id="barExport"></div>
+                    <div id="map"></div>
+                    <div class="overlay" id="barImport"></div>
+                </div>
+                <div class="box" id="barPanel"></div>
+            </div>
+            <div class="box" id="middle">
+                <div class="box" id="state-info-box"></div>
+            </div>
+            <div class="box" id="right">
+                    <div class="box" id="packLayout-export">
+                            <svg width="400" height="400">
+                                <g></g>
+                            </svg>
+                    </div>
+                    <div class="box" id="layoutchart-info"></div>
+                    <div class="box" id="packLayout-import">
+                            <svg width="400" height="400">
+                                <g></g>
+                            </svg>
+                    </div>
+            </div> 
+    </div>
+    
 
 <script src="https://d3js.org/topojson.v2.js"></script>
-<script src="./al2018.js"></script>
-<!-- <script src="./usa.js"></script> -->
+<script src="../src/packlayout_export.js"></script>
+<script src="../src/packlayout_import.js"></script>
+<script src="../src/usa.js"></script>
 
 </body>
 
