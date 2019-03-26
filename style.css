@@ -27,7 +27,8 @@ body {
 #mapPanel {
     background-color: black;
     flex:2;
-    position: absolute;
+    display: flex;
+    flex-direction: row;
 }
 
 #barPanel {
@@ -49,29 +50,30 @@ body {
 }
 
 #map {
+flex:7;
    text-align: center;
    border:thin solid silver;
-   position: absolute;
-   z-index:1;
+   display:flex;
+   flex-direction:column;
 }
 
-.overlay {
-    width:150px;
-    height:400px;
-    z-index: 5;
-    position: relative;
+#maptitle{
+    flex:50;
 }
 
-#barExport {
+#themap{
+    flex:481;
+}
+
+#map-slider{
+    flex:47;
+}
+
+
+#bar {
+    flex:4;
     border:thin dashed silver;
-    float:left;
-}
-
-#barImport{
-    border:thin dashed silver;
-    /* float:right; */
-    margin-bottom: 0;
-    margin-right:0;
+    
 }
 
 #barchart {
@@ -107,13 +109,27 @@ circle {
     stroke:rgba(0,0,0,0);
 }
 path {
-    fill: #ccc;
+    fill: #fff;
     stroke: #fff;
     stroke-width: .5px;
 }
 path:hover {
-    fill: rgb(165, 55, 253)
+    stroke:silver;
+    stroke-width:2px;
+    fill-opacity: 0.5;
+    
 }
+
+#maptitle {
+    text-align: left;
+    
+}
+.maptitle {
+    font-size:20px;
+    color:white;
+    text-align: left;
+}
+
 
 body {
     font-family: "helvetica";

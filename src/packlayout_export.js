@@ -1,7 +1,7 @@
 
 var datasetExport // global var for
 d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
-  console.log('csv', csvdata)
+  console.log('datasetExport', csvdata)
   datasetExport = csvdata
 
   var s = 400
