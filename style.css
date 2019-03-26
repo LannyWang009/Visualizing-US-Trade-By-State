@@ -1,15 +1,110 @@
+body {
+    background-color: grey;
+}
+
+#title {
+    background-color: black;
+    width:1800px;
+    height:80px;
+    text-align: left;
+    padding-left:70px;
+    color:rgb(165, 55, 253)
+}
+#content {
+    background-color:black;
+    width:1800px;
+    height:900px;
+    display:flex;
+    flex-direction: row;
+}
+#left {
+    background-color:lavender;
+    flex:12;
+    display:flex;
+    flex-direction: column;
+}
+
+#mapPanel {
+    background-color: black;
+    flex:2;
+    position: absolute;
+}
+
+#barPanel {
+    background-color: black;
+    flex:1
+}
+
+#middle {
+    background-color:lightpink;
+    flex:2;
+}
+
+#right {
+    background-color:lightskyblue;
+    flex:4;
+    display:flex;
+    flex-direction: column;
+    
+}
+
 #map {
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:400px;
-    height:280px;
+   text-align: center;
+   border:thin solid silver;
+   position: absolute;
+   z-index:1;
+}
+
+.overlay {
+    width:150px;
+    height:400px;
+    z-index: 5;
+    position: relative;
+}
+
+#barExport {
+    border:thin dashed silver;
+    float:left;
+}
+
+#barImport{
+    border:thin dashed silver;
+    /* float:right; */
+    margin-bottom: 0;
+    margin-right:0;
+}
+
+#barchart {
+    position: absolute;
+
+}
+
+#packLayout-export {
+    background-color: black;
+    flex:5;
+    /* position:absolute; */
+    /* width:400px; */
+    /* height:400px; */
+    /* margin-top:200px; */
+    /* margin-right:10px; */
+    /* margin-left:1000px; */
+    z-index:2;
+}
+
+#packLayout-import {
+    flex:5;
+    background-color:black;
+}
+
+#layoutchart-info {
+    flex:4;
+    background-color:purple
 }
 
 circle {
-    fill:aquamarine;
-    opacity: 0.2;
-    stroke:white;
+    /* fill:#7fc5c9; */
+    /* opacity: 0.2; */
+    stroke:rgba(0,0,0,0);
 }
 path {
     fill: #ccc;
@@ -17,7 +112,7 @@ path {
     stroke-width: .5px;
 }
 path:hover {
-    fill: red;
+    fill: rgb(165, 55, 253)
 }
 
 body {
@@ -40,13 +135,13 @@ button {
 }
 
 .box {
-    width: 200px;
-    height: 200px;
-    margin: 40px;
+    /* width: 200px; */
+    /* height: 200px; */
+    margin: 3px;
     float: left;
     text-align: center;
     border: #969696 solid thin;
-    padding: 5px;
+    /* padding: 5px; */
 }
 
 .red {
@@ -263,4 +358,17 @@ button {
     pointer-events: none;
     font-family: sans-serif;
     font-size: 11px;
+}
+#tooltip {   
+    position: absolute; 
+    display: inline;          
+   text-align: center;                           
+   padding: 2px;             
+   font: 12px sans-serif;        
+   background-color: rgba(231, 226, 226, 0.342); 
+   color:rgb(17, 2, 29);  
+   border: 0px;      
+   border-radius: 8px;           
+   pointer-events: none;
+z-index:10
 }
