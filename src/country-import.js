@@ -33,8 +33,8 @@ d3.csv("./data/csv/ImportsByCountry.csv", numConverter, function(error, data) {
 
     const w = 300;
     const h = 300;
-    const paddingTopBottom = 50;
-    const paddingLeftRight = 5;
+    const paddingTopBottom = 100;
+    const paddingSide = 5;
     let numItems = Number(importBarChartData.length)
 
     let barTooltip = d3.select("#importBarChart")
@@ -44,7 +44,7 @@ d3.csv("./data/csv/ImportsByCountry.csv", numConverter, function(error, data) {
 
     const xScale = d3.scaleLinear()
                     .domain([0, numItems])
-                    .range([paddingLeftRight, w - paddingLeftRight])
+                    .range([paddingSide, w - paddingSide])
 
     const yScale = d3.scaleLinear()
                     .domain([0, d3.max(importBarChartData, (d) => d.Imports)])
@@ -60,10 +60,10 @@ d3.csv("./data/csv/ImportsByCountry.csv", numConverter, function(error, data) {
         .data(importBarChartData)
         .enter()
         .append("rect")
-        .attr("x", (d, i) => paddingLeftRight + i * ((h - (2 * paddingLeftRight)) / importBarChartData.length))
+        .attr("x", (d, i) => i * ((w - (2 * paddingSide))  / importBarChartData.length))
         .attr("y", (d) => h - paddingTopBottom - yScale(d.Imports))
         .attr("height", (d) => yScale(d.Imports))
-        .attr("width", (d) => ((h - (2 * paddingLeftRight)) / importBarChartData.length) - 5)
+        .attr("width", (d) => ((h - (2 * paddingSide)) / importBarChartData.length) - 5)
         .attr("fill", importColors[1])
         .attr("class", "chartBar")
         .on("mouseover", function(d) {
@@ -87,13 +87,38 @@ d3.csv("./data/csv/ImportsByCountry.csv", numConverter, function(error, data) {
                 .style("opacity", 0)
         })
 
+    // svg.selectAll("text")
+    //     .data(importBarChartData)
+    //     .enter()        
+    //     .append("text")
+    //     .attr("x", 50)
+    //     .attr("y", (d, i) => paddingSide + i * ((w - (2 * paddingSide)) / importBarChartData.length))
+    //     .text((d) => d.Country)
+    //     .attr("dy", ".35em")
+    //     .attr("transform", "rotate(90)")
+    //     // (d, i) => h - paddingTopBottom - yScale(d.Imports)
+        
     const xAxis = d3.axisBottom(xScale)
-                    .tickFormat(function(d, i) { return importBarChartData[i].Country})
+                    // .tickFormat(function(d, i) { return importBarChartData[i].Country})
 
+    var axisLabels = function(d) {
+        var labels = []
+        for (let i = 0; i < 10; i++) {
+            labels.push(importBarChartData[i].Country)
+        }
+        return labels[d]
+    }
+    
     svg.append("g")
-        .attr("class", "axis yaxis")
+        .attr("class", "axis xaxis")
         .attr("transform", "translate(0, " + (h - paddingTopBottom) +")")
         .call(xAxis)
+        .selectAll("text")
+            .text(axisLabels)
+            .attr("y", 0)
+            .attr("x", 9)
+            .attr("dy", ".35em")
+            .attr("transform", "rotate(90)")
 })
 
 function numConverter(d) {

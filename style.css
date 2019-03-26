@@ -356,7 +356,7 @@ button {
     fill: #4d308b;
 }
 
-.yaxis {
+.xaxis {
     fill: none;
     
 }
@@ -370,7 +370,7 @@ button {
 .axis text {
     font-family: sans-serif;
     font-size: 11px;
-    text-anchor: end;
+    text-anchor: start;
     fill: #ffffff;
 }
 

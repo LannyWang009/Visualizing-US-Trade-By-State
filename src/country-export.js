@@ -33,7 +33,7 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
 
     const w = 300;
     const h = 300;
-    const paddingTopBottom = 50;
+    const paddingTopBottom = 100;
     const paddingLeftRight = 5;
     let numItems = Number(exportBarChartData.length)
 
@@ -88,12 +88,26 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
         })
 
     const xAxis = d3.axisBottom(xScale)
-                    .tickFormat(function(d, i) { return exportBarChartData[i].Country})
+                    // .tickFormat(function(d, i) { return exportBarChartData[i].Country})
+
+    var exportAxisLabels = function(d) {
+        var labels = []
+            for (let i = 0; i < 10; i++) {
+                labels.push(exportBarChartData[i].Country)
+            }
+        return labels[d]
+    }
 
     svg.append("g")
-        .attr("class", "axis yaxis")
+        .attr("class", "axis xaxis")
         .attr("transform", "translate(0, " + (h - paddingTopBottom) +")")
         .call(xAxis)
+        .selectAll("text")
+            .text(exportAxisLabels)
+            .attr("y", 0)
+            .attr("x", 9)
+            .attr("dy", ".35em")
+            .attr("transform", "rotate(90)")
 
 })
 
