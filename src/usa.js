@@ -22,7 +22,7 @@ var g = svg.append('g')
 
 // Define linear scale for color output
 var mapColor = d3.scaleQuantize()
-  .range(['#c7c7ce', '#c5bfce', '#c2b7cd', '#beadcd', '#baa3cc', '#b597cb', '#a97dc9', '#995cc6', '#8a3fc3', '#812cc1'])
+  .range(['#ebe4eb', '#e4dbea', '#ddd1e9', '#d4c5e8', '#cab8e6', '#c0abe4', '#b69ee2', '#ab91e0', '#a085de'])
 
 d3.csv('../../data/csv/allState2018.csv', function (error, data) {
   if (error) { console.log('error', error) }

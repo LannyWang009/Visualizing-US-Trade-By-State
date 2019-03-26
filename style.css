@@ -116,7 +116,8 @@ path {
 path:hover {
     stroke:silver;
     stroke-width:2px;
-    fill-opacity: 0.8;
+    fill-opacity: 0.5;
+    
 }
 
 #maptitle {
