@@ -119,6 +119,17 @@ path:hover {
     fill-opacity: 0.8;
 }
 
+#maptitle {
+    text-align: left;
+    
+}
+.maptitle {
+    font-size:20px;
+    color:white;
+    text-align: left;
+}
+
+
 body {
     font-family: "helvetica";
 }
