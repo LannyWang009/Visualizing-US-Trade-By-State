@@ -1,54 +1,1 @@
-state,id,time,import_2018,export_2018,total_trade_activity,trade_balance
-Texas,TX,2018,304.6,315.4,620.1,10.8
-California,CA,2018,441.2,178.4,619.6,-262.8
-Illinois,IL,2018,157.4,65.4,222.8,-92.0
-New York,NY,2018,137.1,81.5,218.6,-55.6
-Michigan,MI,2018,146.8,57.9,204.8,-88.9
-New Jersey,NJ,2018,128.0,35.7,163.7,-92.3
-Georgia,GA,2018,98.8,40.6,139.3,-58.2
-Florida,FL,2018,80.6,57.2,137.9,-23.4
-Washington,WA,2018,54.4,77.7,132.1,23.3
-Pennsylvania,PA,2018,88.6,41.0,129.6,-47.5
-Ohio,OH,2018,70.2,54.3,124.5,-15.9
-Tennessee,TN,2018,86.2,32.7,118.9,-53.5
-Louisiana,LA,2018,40.0,66.2,106.2,26.2
-Indiana,IN,2018,61.8,39.3,101.1,-22.4
-Kentucky,KY,2018,54.6,31.8,86.3,-22.8
-North Carolina,NC,2018,53.4,32.7,86.2,-20.7
-South Carolina,SC,2018,40.2,34.6,74.8,-5.6
-Massachusetts,MA,2018,35.5,27.1,62.6,-8.3
-Minnesota,MN,2018,32.8,22.7,55.5,-10.1
-Wisconsin,WI,2018,31.0,22.7,53.7,-8.3
-Virginia,VA,2018,29.5,18.4,47.8,-11.1
-Alabama,AL,2018,26.2,21.3,47.6,-4.9
-Maryland,MD,2018,35.2,12.1,47.2,-23.1
-Puerto Rico,PR,2018,27.7,18.1,45.9,-9.6
-Arizona,AR,2018,22.5,22.4,44.8,-0.1
-Oregon,OR,2018,20.1,22.3,42.4,2.2
-Connecticut,CT,2018,19.9,17.4,37.3,-2.5
-Missouri,MO,2018,20.7,14.5,35.2,-6.2
-Utah,UT,2018,15.1,14.4,29.5,-0.8
-Mississippi,MS,2018,16.7,11.8,28.5,-4.9
-Iowa,IA,2018,10.7,14.3,25.0,3.6
-Kansas,KS,2018,12.3,11.6,23.9,-0.7
-Nevada,NV,2018,11.8,11.1,22.9,-0.7
-Colorado,CO,2018,13.5,8.3,21.8,-5.2
-Arkansas,AR,2018,11.5,6.5,18.0,-5.1
-New Hampshire,NH,2018,12.5,5.3,17.8,-7.2
-Oklahoma,OK,2018,11.3,6.1,17.4,-5.2
-Delaware,DE,2018,8.9,4.7,13.6,-4.2
-Rhode Island,RI,2018,10.5,2.4,12.9,-8.1
-Nebraska,NE,2018,4.5,7.9,12.4,3.5
-West Virginia,WR,2018,3.4,8.1,11.6,4.7
-Idaho,ID,2018,6.9,4.0,10.9,-2.9
-North Dakota,ND,2018,3.4,6.8,10.2,3.4
-Alaska,AL,2018,1.9,4.8,6.7,2.9
-Maine,ME,2018,3.8,2.8,6.7,-1.0
-Montana,MT,2018,4.7,1.7,6.4,-3.0
-Vermont,VT,2018,3.4,2.9,6.3,-0.5
-New Mexico,NM,2018,2.6,3.7,6.3,1.0
-Hawaii,HI,2018,4.5,0.6,5.2,-3.9
-Dist of Columbia,DC,2018,0.8,2.7,3.5,2.0
-South Dakota,SD,2018,1.1,1.4,2.6,0.3
-Wyoming,WY,2018,1.1,1.4,2.4,0.3
-US Virgin Islands,VI,2018,1.5,0.7,2.2,-0.8
+state,id,time,import_2018,export_2018,total_trade_activity,trade_balanceTexas,TX,2018,304.6,315.4,620.1,10.8California,CA,2018,441.2,178.4,619.6,-262.8Illinois,IL,2018,157.4,65.4,222.8,-92.0New York,NY,2018,137.1,81.5,218.6,-55.6Michigan,MI,2018,146.8,57.9,204.8,-88.9New Jersey,NJ,2018,128.0,35.7,163.7,-92.3Georgia,GA,2018,98.8,40.6,139.3,-58.2Florida,FL,2018,80.6,57.2,137.9,-23.4Washington,WA,2018,54.4,77.7,132.1,23.3Pennsylvania,PA,2018,88.6,41.0,129.6,-47.5Ohio,OH,2018,70.2,54.3,124.5,-15.9Tennessee,TN,2018,86.2,32.7,118.9,-53.5Louisiana,LA,2018,40.0,66.2,106.2,26.2Indiana,IN,2018,61.8,39.3,101.1,-22.4Kentucky,KY,2018,54.6,31.8,86.3,-22.8North Carolina,NC,2018,53.4,32.7,86.2,-20.7South Carolina,SC,2018,40.2,34.6,74.8,-5.6Massachusetts,MA,2018,35.5,27.1,62.6,-8.3Minnesota,MN,2018,32.8,22.7,55.5,-10.1Wisconsin,WI,2018,31.0,22.7,53.7,-8.3Virginia,VA,2018,29.5,18.4,47.8,-11.1Alabama,AL,2018,26.2,21.3,47.6,-4.9Maryland,MD,2018,35.2,12.1,47.2,-23.1Puerto Rico,PR,2018,27.7,18.1,45.9,-9.6Arizona,AR,2018,22.5,22.4,44.8,-0.1Oregon,OR,2018,20.1,22.3,42.4,2.2Connecticut,CT,2018,19.9,17.4,37.3,-2.5Missouri,MO,2018,20.7,14.5,35.2,-6.2Utah,UT,2018,15.1,14.4,29.5,-0.8Mississippi,MS,2018,16.7,11.8,28.5,-4.9Iowa,IA,2018,10.7,14.3,25.0,3.6Kansas,KS,2018,12.3,11.6,23.9,-0.7Nevada,NV,2018,11.8,11.1,22.9,-0.7Colorado,CO,2018,13.5,8.3,21.8,-5.2Arkansas,AR,2018,11.5,6.5,18.0,-5.1New Hampshire,NH,2018,12.5,5.3,17.8,-7.2Oklahoma,OK,2018,11.3,6.1,17.4,-5.2Delaware,DE,2018,8.9,4.7,13.6,-4.2Rhode Island,RI,2018,10.5,2.4,12.9,-8.1Nebraska,NE,2018,4.5,7.9,12.4,3.5West Virginia,WR,2018,3.4,8.1,11.6,4.7Idaho,ID,2018,6.9,4.0,10.9,-2.9North Dakota,ND,2018,3.4,6.8,10.2,3.4Alaska,AL,2018,1.9,4.8,6.7,2.9Maine,ME,2018,3.8,2.8,6.7,-1.0Montana,MT,2018,4.7,1.7,6.4,-3.0Vermont,VT,2018,3.4,2.9,6.3,-0.5New Mexico,NM,2018,2.6,3.7,6.3,1.0Hawaii,HI,2018,4.5,0.6,5.2,-3.9Dist of Columbia,DC,2018,0.8,2.7,3.5,2.0South Dakota,SD,2018,1.1,1.4,2.6,0.3Wyoming,WY,2018,1.1,1.4,2.4,0.3US Virgin Islands,VI,2018,1.5,0.7,2.2,-0.8,,,,,,,,,,,,
