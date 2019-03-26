@@ -50,15 +50,28 @@ body {
 }
 
 #map {
-flex:2;
+flex:7;
    text-align: center;
    border:thin solid silver;
-  
+   display:flex;
+   flex-direction:column;
+}
+
+#maptitle{
+    flex:50;
+}
+
+#themap{
+    flex:481;
+}
+
+#map-slider{
+    flex:47;
 }
 
 
 #bar {
-    flex:1;
+    flex:4;
     border:thin dashed silver;
     
 }
@@ -96,12 +109,14 @@ circle {
     stroke:rgba(0,0,0,0);
 }
 path {
-    fill: #ccc;
+    fill: #fff;
     stroke: #fff;
     stroke-width: .5px;
 }
 path:hover {
-    fill: rgb(165, 55, 253)
+    stroke:silver;
+    stroke-width:2px;
+    fill-opacity: 0.8;
 }
 
 body {
