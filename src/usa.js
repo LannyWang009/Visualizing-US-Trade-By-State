@@ -1,7 +1,7 @@
 var width = 960
 var height = 500
 var path = d3.geoPath() // <- A
-  .projection(d3.geoAlbersUsa())
+  .projection(d3.geoAlbersUsa().scale([900]))
 var svg = d3.select('#map').append('svg')
   .attr('width', width)
   .attr('height', height)

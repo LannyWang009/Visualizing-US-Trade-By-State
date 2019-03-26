@@ -27,7 +27,8 @@ body {
 #mapPanel {
     background-color: black;
     flex:2;
-    position: absolute;
+    display: flex;
+    flex-direction: row;
 }
 
 #barPanel {
@@ -49,29 +50,17 @@ body {
 }
 
 #map {
+flex:2;
    text-align: center;
    border:thin solid silver;
-   position: absolute;
-   z-index:1;
+  
 }
 
-.overlay {
-    width:150px;
-    height:400px;
-    z-index: 5;
-    position: relative;
-}
 
-#barExport {
+#bar {
+    flex:1;
     border:thin dashed silver;
-    float:left;
-}
-
-#barImport{
-    border:thin dashed silver;
-    /* float:right; */
-    margin-bottom: 0;
-    margin-right:0;
+    
 }
 
 #barchart {
