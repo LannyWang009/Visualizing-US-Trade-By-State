@@ -18,10 +18,10 @@ body {
     flex-direction: row;
 }
 #left {
-    background-color:lavender;
-    flex:12;
+    background-color:black;
+    /* flex:12; */
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 #mapPanel {
@@ -100,6 +100,32 @@ body {
     flex:4;
     background-color:purple
 }
+
+#exportBarChart {
+    height: 380px;
+    width: 450px;
+    background-color: black;
+    align-self: flex-end;
+}
+
+#exportBarChart h2 {
+    font-size: 20px;
+    color: white;
+}
+
+#importBarChart {
+    height: 380px;
+    width: 450px;
+    background-color: black;
+    align-self: flex-end;
+}
+
+#importBarChart h2 {
+    font-size: 20px;
+    color: white;
+}
+
+#importBarChart 
 
 circle {
     /* fill:#7fc5c9; */
@@ -345,6 +371,7 @@ button {
     font-family: sans-serif;
     font-size: 11px;
     text-anchor: end;
+    fill: #ffffff;
 }
 
 .tooltip {

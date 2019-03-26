@@ -1,7 +1,7 @@
 
 let exportBarChartData
 let dataset
-const colors = [
+const exportColors = [
     "#9221ac",
     "#d5c3fc",
     "#a085de",
@@ -31,10 +31,10 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
 
     console.log(exportBarChartData)
 
-    const w = 500;
-    const h = 400;
-    const paddingTopBottom = 15;
-    const paddingLeftRight = 100;
+    const w = 300;
+    const h = 300;
+    const paddingTopBottom = 50;
+    const paddingLeftRight = 5;
     let numItems = Number(exportBarChartData.length)
 
     let barTooltip = d3.select("#exportBarChart")
@@ -43,11 +43,11 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
                         .style("opacity", 0)
 
     const xScale = d3.scaleLinear()
-                    .domain([0, d3.max(exportBarChartData, (d) => d.Exports)])
+                    .domain([0, numItems])
                     .range([paddingLeftRight, w - paddingLeftRight])
 
     const yScale = d3.scaleLinear()
-                    .domain([0, numItems])
+                    .domain([0, d3.max(exportBarChartData, (d) => d.Exports)])
                     .range([paddingTopBottom, h - paddingTopBottom])
 
     const svg = d3.select("#exportBarChart")
@@ -60,11 +60,11 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
         .data(exportBarChartData)
         .enter()
         .append("rect")
-        .attr("x", paddingLeftRight)
-        .attr("y", (d, i) => paddingTopBottom + i * ((h - (2 * paddingTopBottom)) / exportBarChartData.length))
-        .attr("width", (d) => xScale(d.Exports))
-        .attr("height", (d) => ((h - (2 * paddingTopBottom)) / exportBarChartData.length) - 5)
-        .attr("fill", colors[1])
+        .attr("x", (d, i) => paddingLeftRight + i * ((h - (2 * paddingLeftRight)) / exportBarChartData.length))
+        .attr("y", (d) => h - paddingTopBottom - yScale(d.Exports))
+        .attr("height", (d) => yScale(d.Exports))
+        .attr("width", (d) => ((h - (2 * paddingLeftRight)) / exportBarChartData.length) - 5)
+        .attr("fill", exportColors[1])
         .attr("class", "chartBar")
         .on("mouseover", function(d) {
 
@@ -87,13 +87,13 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
                 .style("opacity", 0)
         })
 
-    const yAxis = d3.axisLeft(yScale)
+    const xAxis = d3.axisBottom(xScale)
                     .tickFormat(function(d, i) { return exportBarChartData[i].Country})
 
     svg.append("g")
         .attr("class", "axis yaxis")
-        .attr("transform", "translate(" + (paddingLeftRight) +")", 0)
-        .call(yAxis)
+        .attr("transform", "translate(0, " + (h - paddingTopBottom) +")")
+        .call(xAxis)
 
 })
 

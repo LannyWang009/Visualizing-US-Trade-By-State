@@ -77,8 +77,8 @@ function conversor (d) {
   return d
 }
 
-// ============All about assignming colors==================
-// var colors = ['#7fc5c9',
+// ============All about assignming expColors==================
+// var expColors = ['#7fc5c9',
 //   '#ecb1c2',
 //   '#b2e5c2',
 //   '#7fcfe0',
@@ -110,7 +110,7 @@ function conversor (d) {
 //   '#c9b6b0',
 //   '#60c699'
 // ]
-var colors =
+var expColors =
 ['#ae3871',
   '#3e40d3',
   '#df6fa3',
@@ -144,37 +144,37 @@ var colors =
   '#9131a7']
 function switchColor (commodity) {
   switch (commodity) {
-    case '111 Agricultural Products':return colors[0]
-    case '112 Livestock & Livestock Products':return colors[1]
-    case '113 Forestry Products, Nesoi':return colors[2]
-    case '114 Fish, Fresh/chilled/frozen & Other Marine Products': return colors[3]
-    case '211 Oil & Gas': return colors[4]
-    case '212 Minerals & Ores': return colors[5]
-    case '311 Food & Kindred Products': return colors[6]
-    case '312 Beverages & Tobacco Products': return colors[7]
-    case '313 Textiles & Fabrics': return colors[8]
-    case '314 Textile Mill Products': return colors[9]
-    case '315 Apparel & Accessories': return colors[10]
-    case '316 Leather & Allied Products': return colors[11]
-    case '321 Wood Products': return colors[12]
-    case '322 Paper': return colors[13]
-    case '323 Printed Matter And Related Products, Nesoi': return colors[14]
-    case '324 Petroleum & Coal Products': return colors[15]
-    case '325 Chemicals': return colors[16]
-    case '326 Plastics & Rubber Products': return colors[17]
-    case '327 Nonmetallic Mineral Products': return colors[18]
-    case '331 Primary Metal Mfg': return colors[19]
-    case '332 Fabricated Metal Products, Nesoi': return colors[20]
-    case '333 Machinery, Except Electrical': return colors[21]
-    case '334 Computer & Electronic Products': return colors[22]
-    case '335 Electrical Equipment, Appliances & Components': return colors[23]
-    case '336 Transportation Equipment': return colors[24]
-    case '337 Furniture & Fixtures': return colors[25]
-    case '339 Miscellaneous Manufactured Commodities': return colors[26]
-    case '910 Waste And Scrap': return colors[27]
-    case '930 Used Or Second-hand Merchandise': return colors[28]
-    case '980 Goods Returned (exports For Canada Only)': return colors[29]
-    case '990 Other Special Classification Provisions': return colors[30]
+    case '111 Agricultural Products':return expColors[0]
+    case '112 Livestock & Livestock Products':return expColors[1]
+    case '113 Forestry Products, Nesoi':return expColors[2]
+    case '114 Fish, Fresh/chilled/frozen & Other Marine Products': return expColors[3]
+    case '211 Oil & Gas': return expColors[4]
+    case '212 Minerals & Ores': return expColors[5]
+    case '311 Food & Kindred Products': return expColors[6]
+    case '312 Beverages & Tobacco Products': return expColors[7]
+    case '313 Textiles & Fabrics': return expColors[8]
+    case '314 Textile Mill Products': return expColors[9]
+    case '315 Apparel & Accessories': return expColors[10]
+    case '316 Leather & Allied Products': return expColors[11]
+    case '321 Wood Products': return expColors[12]
+    case '322 Paper': return expColors[13]
+    case '323 Printed Matter And Related Products, Nesoi': return expColors[14]
+    case '324 Petroleum & Coal Products': return expColors[15]
+    case '325 Chemicals': return expColors[16]
+    case '326 Plastics & Rubber Products': return expColors[17]
+    case '327 Nonmetallic Mineral Products': return expColors[18]
+    case '331 Primary Metal Mfg': return expColors[19]
+    case '332 Fabricated Metal Products, Nesoi': return expColors[20]
+    case '333 Machinery, Except Electrical': return expColors[21]
+    case '334 Computer & Electronic Products': return expColors[22]
+    case '335 Electrical Equipment, Appliances & Components': return expColors[23]
+    case '336 Transportation Equipment': return expColors[24]
+    case '337 Furniture & Fixtures': return expColors[25]
+    case '339 Miscellaneous Manufactured Commodities': return expColors[26]
+    case '910 Waste And Scrap': return expColors[27]
+    case '930 Used Or Second-hand Merchandise': return expColors[28]
+    case '980 Goods Returned (exports For Canada Only)': return expColors[29]
+    case '990 Other Special Classification Provisions': return expColors[30]
     default:return 'rgba(0, 0, 0, 0)'
   }
 }
