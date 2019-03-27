@@ -1,6 +1,6 @@
 
 let exportBarChartData
-let dataset
+
 const exportColors = [
     "#9221ac",
     "#d5c3fc",
@@ -9,14 +9,30 @@ const exportColors = [
     "#714fdb"
 ]
 
-d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
-    
+function renderExportGraph() {
+    d3.csv("./data/csv/ExportByCountry.csv", numConverter, exportGraph)
+
+    function numConverter(d) {
+        d.Exports = parseFloat(d.Exports.replace(/,/g, ''));
+        d.Time = +d.Time;
+        return d;
+    }
+}
+
+renderExportGraph()
+
+function exportGraph(error, data) {
+    // if (selectedState === undefined) {
+    //     selectedState = "Texas"
+    // }
+
     if(error) {
-        alert('Something went wrong when trying to load the data.')
+        console.log('this is the error:', error)
     } else {
         let allData = []
+        console.log('export file:', selectedState)
         for (let i = 0; i < data.length; i++) {
-            if (data[i].State === "Maryland" && data[i].Time === 2018 && data[i].Country != "World Total") {
+            if (data[i].State === "Texas" && data[i].Time === 2018 && data[i].Country != "World Total") {
                 allData.push(data[i])
             }
         }
@@ -109,11 +125,7 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
             .attr("dy", ".35em")
             .attr("transform", "rotate(90)")
 
-})
-
-function numConverter(d) {
-    d.Exports = parseFloat(d.Exports.replace(/,/g, ''));
-    d.Time = +d.Time;
-    return d;
 }
+
+
 
