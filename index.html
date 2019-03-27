@@ -25,6 +25,7 @@
         <h1 style="padding-left:80px"> U.S. International Trade and Commerce By State</h1>
     </div>
     <div class="box" id="content">
+
             <div class="box" id="left">
                 <div class="box" id="mapPanel">
                     <div class="box" id="bar"></div>
@@ -37,12 +38,16 @@
                     </div>
                 </div>
                 <div class="box" id="barPanel">
-                    <svg>
-                        <g id='importbar'></g>
-                        <g id='exportbar'></g>
-                    </svg>
+                    <div id="exportBarChart">
+                        <h2>Countries with Highest Exports</h2>
+                    </div>        
+                            
+                    <div id="importBarChart">
+                        <h2>Countries with Highest Imports</h2>
+                    </div>
                 </div>
             </div>
+
             <div class="box" id="middle">
                 <div class="box" id="state-info-box"></div>
             </div>
@@ -60,9 +65,12 @@
                     </div>
             </div> 
     </div>
-    
+
 
 <script src="https://d3js.org/topojson.v2.js"></script>
+<script src="../src/country-export.js"></script>
+<script src="../src/country-import.js"></script>
+<!-- <script src="./usa.js"></script> -->
 <script src="../src/packlayout_export.js"></script>
 <script src="../src/packlayout_import.js"></script>
 <script src="../src/usa.js"></script>
