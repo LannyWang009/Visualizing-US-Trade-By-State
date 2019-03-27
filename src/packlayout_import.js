@@ -1,7 +1,7 @@
 
 var datasetImport // global var for
 d3.csv('./data/csv/txImport2018.csv', conversor, function (csvdata) {
-  console.log('csv', csvdata)
+  console.log('datasetImport', csvdata)
   datasetImport = csvdata
 
   var s = 400

@@ -32,7 +32,7 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
     console.log(exportBarChartData)
 
     const w = 300;
-    const h = 300;
+    const h = 250;
     const paddingTopBottom = 100;
     const paddingLeftRight = 5;
     let numItems = Number(exportBarChartData.length)

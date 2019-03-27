@@ -22,27 +22,30 @@
         <div style="float:left;margin:3px">
             <img style="object-fit:scale-down; width:50px; height:65px" src="./favicon_io/android-chrome-192x192.png"/>
         </div>
-        <h1 style="padding-left:100px"> U.S. International Trade and Commerce By State</h1>
+        <h1 style="padding-left:80px"> U.S. International Trade and Commerce By State</h1>
     </div>
     <div class="box" id="content">
 
             <div class="box" id="left">
                 <div class="box" id="mapPanel">
-                    <div class="overlay" id="barExport"></div>
-                    <div id="map"></div>
-                    <div class="overlay" id="barImport"></div>
+                    <div class="box" id="bar"></div>
+                    <div class="box" id="map">
+                        <div class="box" id="maptitle">
+                            <text class="maptitle">Total Trade Volume by State in 2018 (in Billion $USD)</text>
+                        </div>
+                       <div class="box" id="themap"></div>
+                       <div class="box" id="map-slider"></div>
+                    </div>
                 </div>
-
-                <div class="box" id="barPanel"></div>
-
-                <div id="exportBarChart">
-                    <h2>Countries with Highest Exports</h2>
+                <div class="box" id="barPanel">
+                    <div id="exportBarChart">
+                        <h2>Countries with Highest Exports</h2>
+                    </div>        
+                            
+                    <div id="importBarChart">
+                        <h2>Countries with Highest Imports</h2>
+                    </div>
                 </div>
-
-                <div id="importBarChart">
-                    <h2>Countries with Highest Imports</h2>
-                </div>
-                
             </div>
 
             <div class="box" id="middle">
@@ -71,6 +74,7 @@
 <script src="../src/packlayout_export.js"></script>
 <script src="../src/packlayout_import.js"></script>
 <script src="../src/usa.js"></script>
+<script src="../src/barChart_tradevolume.js"></script>
 
 </body>
 
