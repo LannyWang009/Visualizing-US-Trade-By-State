@@ -108,7 +108,7 @@ d3.csv("./data/csv/ImportsByCountry.csv", numConverter, function(error, data) {
         }
         return labels[d]
     }
-    
+
     svg.append("g")
         .attr("class", "axis xaxis")
         .attr("transform", "translate(0, " + (h - paddingTopBottom) +")")
