@@ -1,12 +1,36 @@
 
 var datasetImport // global var for
-d3.csv('./data/csv/txImport2018.csv', conversor, function (csvdata) {
-  console.log('datasetImport', csvdata)
+var filters = {
+  'state': 'Texas',
+  'time': '2018'
+}
+
+d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   datasetImport = csvdata
 
-  var s = 400
-  // =========== scaling function ===========
-  let importValue = datasetImport.map(element => { return element.total_import_values })
+  // ================= filter the data =========
+  datasetImport = csvdata.filter(function (row) {
+    // run through all the filters, returning a boolean
+    return ['commodity', 'state', 'time', 'country', 'total_import_values'].reduce(function (pass, column) {
+      return pass && (
+      // pass if no filter is set
+        !filters[column] ||
+              // pass if the row's value is equal to the filter
+              // (i.e. the filter is set to a string)
+              row[column] === filters[column]
+      )
+    }, true)
+  })
+  // }).sort(compare)
+  console.log('datasetImport', datasetImport)
+  // ========helper var for labels and scaling function=====
+  // to find out the top 3 category
+  const importValue = datasetImport.map(element => { return (element.total_import_values) })
+  // console.log('importValue array', importValue)
+  const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 3)
+  // console.log('big import numbers', biggest3data)
+
+  var s = 410
   const max = d3.max(importValue)
   const range = [0, s]
   const domain = [0, max]
@@ -18,7 +42,12 @@ d3.csv('./data/csv/txImport2018.csv', conversor, function (csvdata) {
   var data = {
     'name': 'Total',
     'children': datasetImport.map(element => {
-      return { 'name': element.commodity, 'value': linearscale(element.total_import_values) }
+      if (biggest3data.includes(element.total_import_values)) {
+        console.log('injecting', element.commodity)
+        return { 'name': element.commodity, 'value': linearscale(element.total_import_values), 'importValue': element.total_import_values, 'tag': true }
+      } else {
+        return { 'name': element.commodity, 'value': linearscale(element.total_import_values), 'importValue': element.total_import_values, 'tag': false }
+      }
     })
   }
 
@@ -33,40 +62,116 @@ d3.csv('./data/csv/txImport2018.csv', conversor, function (csvdata) {
 
   packLayout(rootNode)
 
-  d3.select('#packLayout-import svg g')
+  var nodes = d3.select('#packLayout-import svg g')
     // .select('svg g')
     .selectAll('circle')
     .data(rootNode.descendants())
     .enter()
+    .append('g')
+    .attr('transform', function (d) {
+      // console.log(d)
+      return 'translate(' + [d.x, d.y] + ')'
+    })
+
+  nodes
     .append('circle')
     .style('fill', function (d) { return switchColor(d.data.name) })
-    .attr('cx', function (d) { return d.x })
-    .attr('cy', function (d) { return d.y })
+    // .attr('cx', function (d) { return d.x })
+    // .attr('cy', function (d) { return d.y })
     .attr('r', function (d) { return d.r })
 
-  // show tooltip on mouseover
+    // show tips on mouseover
     .on('mouseover', function (d) {
       console.log('your mouse moved here')
       // to get circle's cx and cy value
-      const xPosition = parseFloat(d3.select(this).attr('cx'))
-      const yPosition = parseFloat(d3.select(this).attr('cy'))
-      const text = d.data.name
+      // const xPosition = parseFloat(d3.select(this).attr('cx'))
+      // const yPosition = parseFloat(d3.select(this).attr('cy'))
+      const xPosition = parseFloat(d.x)
+      const yPosition = parseFloat(d.y)
+      const lengthOftext = d.data.name.length
+      const textCategory = d.data.name.slice(3, lengthOftext)
+      // const textCategory = d.data.name
+      const textValue = Math.round(d.data.importValue / 1000000)
       // create the tooltip label
       d3.select('#packLayout-import svg g').append('text')
         .attr('id', 'tooltip')
         .attr('x', xPosition)
         .attr('y', yPosition)
         .attr('text-anchor', 'middle')
-        .attr('font-family', 'sans-serif')
-        .attr('font-weight', 'bold')
-        .attr('font-size', '12px')
         .attr('fill', 'lavender')
-        .text(text)
+        .text(
+          function () {
+            if (textValue) {
+              return textCategory + ', $' + textValue + ' Million'
+            } else { return '' }
+          }
+
+        )
     })
     .on('mouseout', function (d) {
       d3.select('#tooltip').remove()
     })
+
+  // add label of category name for top 3 categories
+  nodes
+    .append('text')
+    .attr('class', 'packlayout-import-label')
+    // .attr(d => { return d.y })
+    .attr('dx', -40)
+    .attr('dy', 0)
+    .text(function (d) {
+      const lengthOftext = d.data.name.length
+      const textCategory = d.data.name.slice(3, lengthOftext)
+      return d.data.tag === true ? textCategory : ''
+    })
+
+  // add label of import value under the category
+  nodes
+    .append('text')
+    .attr('class', 'packlayout-import-label')
+    // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
+    .attr('dx', -36)
+    .attr('dy', 18)
+    .text(function (d) {
+      let textValue = Math.round(d.data.importValue / 1000000)
+      return d.data.tag === true ? ' $' + textValue + ' M' : ''
+    })
 })
+
+//   d3.select('#packLayout-import svg g')
+//     // .select('svg g')
+//     .selectAll('circle')
+//     .data(rootNode.descendants())
+//     .enter()
+//     .append('circle')
+//     .style('fill', function (d) { return switchColor(d.data.name) })
+//     .attr('cx', function (d) { return d.x })
+//     .attr('cy', function (d) { return d.y })
+//     .attr('r', function (d) { return d.r })
+
+//   // show tooltip on mouseover
+//     .on('mouseover', function (d) {
+//       console.log('your mouse moved here')
+//       // to get circle's cx and cy value
+//       const xPosition = parseFloat(d3.select(this).attr('cx'))
+//       const yPosition = parseFloat(d3.select(this).attr('cy'))
+//       const text = d.data.name
+//       // create the tooltip label
+//       d3.select('#packLayout-import svg g').append('text')
+//         .attr('id', 'tooltip')
+//         .attr('x', xPosition)
+//         .attr('y', yPosition)
+//         .attr('text-anchor', 'middle')
+//         .attr('font-family', 'sans-serif')
+//         .attr('font-weight', 'bold')
+//         .attr('font-size', '12px')
+//         .attr('fill', 'lavender')
+//         .text(text)
+//     })
+//     .on('mouseout', function (d) {
+//       d3.select('#tooltip').remove()
+//     })
+// })
 
 function conversor (d) {
   d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''))
@@ -107,38 +212,7 @@ var colors =
   '#682278',
   '#a16de7',
   '#9131a7']
-// ['#7fc5c9',
-//   '#ecb1c2',
-//   '#b2e5c2',
-//   '#7fcfe0',
-//   '#d6eec0',
-//   '#ffcbbd',
-//   '#abc89b',
-//   '#dabbe9',
-//   '#a2ece5',
-//   '#ccd9a6',
-//   '#c1bced',
-//   '#cac092',
-//   '#a6c3ed',
-//   '#e9bc99',
-//   '#87c9ed',
-//   '#eeebc0',
-//   '#bbe4ee',
-//   '#d0b89c',
-//   '#bad6d0',
-//   '#e2a997',
-//   '#94c5b3',
-//   '#ddb2b6',
-//   '#b5e6bb',
-//   '#e1d9ee',
-//   '#bbc5aa',
-//   '#c1b3d0',
-//   '#e7ddc9',
-//   '#acbed0',
-//   '#edd3d5',
-//   '#c9b6b0',
-//   '#60c699'
-// ]
+
 function switchColor (commodity) {
   switch (commodity) {
     case '111 Agricultural Products':return colors[0]
