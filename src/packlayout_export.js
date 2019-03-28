@@ -92,7 +92,7 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
       // const textCategory = d.data.name
-      const textValue = Math.round(d.data.exportValue / 1000000)
+      const textValue = Math.round(d.data.exportValue / 10000000)
       // create the tooltip label
       d3.select('#packLayout-export svg g').append('text')
         .attr('id', 'tooltip')
@@ -103,7 +103,7 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
         .text(
           function () {
             if (textValue) {
-              return textCategory + ', $' + textValue + ' Million'
+              return textCategory + ', $' + textValue/100 + ' B'
             } else { return '' }
           }
 
@@ -134,8 +134,8 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     .attr('dx', -36)
     .attr('dy', 18)
     .text(function (d) {
-      let textValue = Math.round(d.data.exportValue / 1000000)
-      return d.data.tag === true ? ' $' + textValue + ' M' : ''
+      let textValue = Math.round(d.data.exportValue / 10000000)
+      return d.data.tag === true ? ' $' + textValue/100 + ' Billion' : ''
     })
 })
 

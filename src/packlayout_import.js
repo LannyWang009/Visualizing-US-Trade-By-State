@@ -1,4 +1,3 @@
-
 var datasetImport // global var for
 var filters = {
   'state': 'Ohio',
@@ -91,7 +90,7 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
       // const textCategory = d.data.name
-      const textValue = Math.round(d.data.importValue / 1000000)
+      const textValue = Math.round(d.data.importValue / 10000000)
       // create the tooltip label
       d3.select('#packLayout-import svg g').append('text')
         .attr('id', 'tooltip')
@@ -102,7 +101,7 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
         .text(
           function () {
             if (textValue) {
-              return textCategory + ', $' + textValue + ' Million'
+              return textCategory + ', $' + textValue/100 + ' B'
             } else { return '' }
           }
 
@@ -133,12 +132,12 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
     .attr('dx', -36)
     .attr('dy', 18)
     .text(function (d) {
-      let textValue = Math.round(d.data.importValue / 1000000)
-      return d.data.tag === true ? ' $' + textValue + ' M' : ''
+      let textValue = Math.round(d.data.importValue / 10000000)
+      return d.data.tag === true ? ' $' + textValue/100 + ' Billion' : ''
     })
 })
 
-function 
+
 
 function conversor (d) {
   d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''))
