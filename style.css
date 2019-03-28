@@ -37,15 +37,19 @@ body {
     display: flex;
     flex-direction: row;
 }
-
+/* 
 #middle {
     background-color:lightpink;
     flex:2;
-}
+} */
 
 #right {
     background-color:lightskyblue;
+<<<<<<< HEAD
     flex:6;
+=======
+    flex:8;
+>>>>>>> 36e7eda4b627ffe7d42072fd7e04e9ae336f80ab
     display:flex;
     flex-direction: column;
     
@@ -402,8 +406,8 @@ button {
 }
 
 .axis line {
-    fill: none;
-    stroke: black;
+    fill: white;
+    stroke: white;
     shape-rendering: crispEdges;
 }
 
