@@ -80,6 +80,12 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
         updateExportGraph()
         updateImportGraph()
       })
+      .on('mouseover', function(d){
+        selectState(d)
+        updateExportGraph()
+        updateImportGraph()
+      })
+      
 
 
   })

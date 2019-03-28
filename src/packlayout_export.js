@@ -1,27 +1,57 @@
+var datasetExport
+var filters = {
+  'state': 'Montana',
+  'time': '2018'
+}
 
-var datasetExport // global var for
-d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
-  console.log('datasetExport', csvdata)
-  datasetExport = csvdata
+d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
+  // ================= filter the data =========
+  datasetExport = csvdata.filter(function (row) {
+    // run through all the filters, returning a boolean
+    return ['commodity', 'state', 'time', 'country', 'total_exports_value'].reduce(function (pass, column) {
+      return pass && (
+      // pass if no filter is set
+        !filters[column] ||
+              // pass if the row's value is equal to the filter
+              // (i.e. the filter is set to a string)
+              row[column] === filters[column]
+      )
+    }, true)
+  })
+  // }).sort(compare)
+  console.log('datasetExport', datasetExport)
 
-  var s = 400
   // =========== scaling function ===========
-  let exportValue = datasetExport.map(element => { return element.total_exports_value })
+  // to find out the top 3 category
+  const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
+  // console.log('exportValue array', exportValue)
+  const biggest3data = exportValue.sort(function (a, b) { return b - a }).slice(0, 3)
+  // console.log('big numbers', biggest3data)
+
+  // ==================Size of the SVG==========
+  // var biggest = 410
+  // const maxStateExport = 315400000000
+  // const sizeRange = [0, biggest]
+  // const sizeDomain = [0, maxStateExport]
+  // var sqrtScale = d3.scale.sqrt().domain(sizeDomain).range(sizeRange)
+  // var s = sqrtScale(sum(exportValue))
+  var s = 410
   const max = d3.max(exportValue)
   const range = [0, s]
   const domain = [0, max]
   var linearscale = d3.scaleLinear()
     .domain(domain)
     .range(range)
-  // ========tooltip=========
-  // var tooltip = d3.select('body')
-  //   .append('div')
-  //   .attr('class', 'tooltip')
-  // ====layout=====
+
   var data = {
     'name': 'Total',
     'children': datasetExport.map(element => {
-      return { 'name': element.commodity, 'value': linearscale(element.total_exports_value) }
+      if (biggest3data.includes(element.total_exports_value)) {
+        console.log(element.commodity)
+        return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': true }
+      } else {
+        return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': false }
+      }
     })
   }
 
@@ -36,80 +66,134 @@ d3.csv('./data/csv/al2018.csv', conversor, function (csvdata) {
 
   packLayout(rootNode)
 
-  d3.select('#packLayout-export svg g')
+  var nodes = d3.select('#packLayout-export svg g')
     // .select('svg g')
     .selectAll('circle')
     .data(rootNode.descendants())
     .enter()
+    .append('g')
+    .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
+
+  nodes
     .append('circle')
     .style('fill', function (d) { return switchColor(d.data.name) })
-    .attr('cx', function (d) { return d.x })
-    .attr('cy', function (d) { return d.y })
+    // .attr('cx', function (d) { return d.x })
+    // .attr('cy', function (d) { return d.y })
     .attr('r', function (d) { return d.r })
 
-  // show tips on mouseover
+    // show tips on mouseover
     .on('mouseover', function (d) {
       console.log('your mouse moved here')
       // to get circle's cx and cy value
-      const xPosition = parseFloat(d3.select(this).attr('cx'))
-      const yPosition = parseFloat(d3.select(this).attr('cy'))
-      const text = d.data.name
+      // const xPosition = parseFloat(d3.select(this).attr('cx'))
+      // const yPosition = parseFloat(d3.select(this).attr('cy'))
+      const xPosition = parseFloat(d.x)
+      const yPosition = parseFloat(d.y)
+      const lengthOftext = d.data.name.length
+      const textCategory = d.data.name.slice(3, lengthOftext)
+      // const textCategory = d.data.name
+      const textValue = Math.round(d.data.exportValue / 10000000)
       // create the tooltip label
       d3.select('#packLayout-export svg g').append('text')
         .attr('id', 'tooltip')
         .attr('x', xPosition)
         .attr('y', yPosition)
         .attr('text-anchor', 'middle')
-        .attr('font-family', 'sans-serif')
-        .attr('font-weight', 'bold')
-        .attr('font-size', '12px')
         .attr('fill', 'lavender')
-        .text(text)
+        .text(
+          function () {
+            if (textValue) {
+              return textCategory + ', $' + textValue/100 + ' B'
+            } else { return '' }
+          }
+
+        )
     })
     .on('mouseout', function (d) {
       d3.select('#tooltip').remove()
     })
+
+  // add label of category name for top 3 categories
+  nodes
+    .append('text')
+    .attr('class', 'packlayout-export-label')
+    // .attr(d => { return d.y })
+    .attr('dx', -40)
+    .attr('dy', 0)
+    .text(function (d) {
+      const lengthOftext = d.data.name.length
+      const textCategory = d.data.name.slice(3, lengthOftext)
+      return d.data.tag === true ? textCategory : ''
+    })
+
+  // add label of export value under the category
+  nodes
+    .append('text')
+    .attr('class', 'packlayout-export-label')
+    // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
+    .attr('dx', -36)
+    .attr('dy', 18)
+    .text(function (d) {
+      let textValue = Math.round(d.data.exportValue / 10000000)
+      return d.data.tag === true ? ' $' + textValue/100 + ' Billion' : ''
+    })
 })
 
+// function wrap (text, width) {
+//   text.each(function () {
+//     const text = d3.select(this)
+//     let words = text.text().split(/\s+/).reverse()
+//     var word = ''
+//     let line = []
+//     let lineNumber = 0
+//     let lineHeight = 1.1 // ems
+//     let y = text.attr('y')
+//     let dy = parseFloat(text.attr('dy'))
+//     let tspan = text.text(null).append('tspan').attr('x', 0).attr('dy', dy + 'em')
+//     while (word === words.pop()) {
+//       line.push(word)
+//       tspan.text(line.join(' '))
+//       if (tspan.node().getComputedTextLength() > width) {
+//         line.pop()
+//         tspan.text.append('tspan').attr('x', 0).attr('y', y).attr('dy', ++lineNumber * lineHeight)
+//       }
+//     }
+//   })
+// }
+
+// parsing csv data
 function conversor (d) {
   d.total_exports_value = parseInt(d.total_exports_value.replace(/,/g, ''))
   // console.log(d.total_exports_value)
   return d
 }
 
-// ============All about assignming expColors==================
-// var expColors = ['#7fc5c9',
-//   '#ecb1c2',
-//   '#b2e5c2',
-//   '#7fcfe0',
-//   '#d6eec0',
-//   '#ffcbbd',
-//   '#abc89b',
-//   '#dabbe9',
-//   '#a2ece5',
-//   '#ccd9a6',
-//   '#c1bced',
-//   '#cac092',
-//   '#a6c3ed',
-//   '#e9bc99',
-//   '#87c9ed',
-//   '#eeebc0',
-//   '#bbe4ee',
-//   '#d0b89c',
-//   '#bad6d0',
-//   '#e2a997',
-//   '#94c5b3',
-//   '#ddb2b6',
-//   '#b5e6bb',
-//   '#e1d9ee',
-//   '#bbc5aa',
-//   '#c1b3d0',
-//   '#e7ddc9',
-//   '#acbed0',
-//   '#edd3d5',
-//   '#c9b6b0',
-//   '#60c699'
-// ]
+// use for the sorting function
+function compare (a, b) {
+  const valueA = a.total_exports_value
+  const valueB = b.total_exports_value
+  let comparison = 0
+  if (valueA > valueB) {
+    comparison = 1
+  } else if (valueA < valueB) {
+    comparison = -1
+  }
+  return comparison
+}
+// get sum of an array
+function sum (input) {
+  if (toString.call(input) !== '[object Array]') { return false }
+  var total = 0
+  for (var i = 0; i < input.length; i++) {
+    if (isNaN(input[i])) {
+      continue
+    }
+    total += Number(input[i])
+  }
+  return total
+}
+
+// ============All about assignming Colors==================
 var expColors =
 ['#ae3871',
   '#3e40d3',
@@ -142,6 +226,40 @@ var expColors =
   '#682278',
   '#a16de7',
   '#9131a7']
+
+// var expColors =
+// ['#7fc5c9',
+//   '#ecb1c2',
+//   '#b2e5c2',
+//   '#7fcfe0',
+//   '#d6eec0',
+//   '#ffcbbd',
+//   '#abc89b',
+//   '#dabbe9',
+//   '#a2ece5',
+//   '#ccd9a6',
+//   '#c1bced',
+//   '#cac092',
+//   '#a6c3ed',
+//   '#e9bc99',
+//   '#87c9ed',
+//   '#eeebc0',
+//   '#bbe4ee',
+//   '#d0b89c',
+//   '#bad6d0',
+//   '#e2a997',
+//   '#94c5b3',
+//   '#ddb2b6',
+//   '#b5e6bb',
+//   '#e1d9ee',
+//   '#bbc5aa',
+//   '#c1b3d0',
+//   '#e7ddc9',
+//   '#acbed0',
+//   '#edd3d5',
+//   '#c9b6b0',
+//   '#9131a7']
+
 function switchColor (commodity) {
   switch (commodity) {
     case '111 Agricultural Products':return expColors[0]

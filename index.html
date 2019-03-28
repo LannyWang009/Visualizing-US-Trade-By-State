@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
     <link rel="manifest" href="./favicon_io/site.webmanifest">
     <!-- add style sheets -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js" integrity="sha256-kX9/pjvgpDgSmoSfzAlYJeICaZXca16iu+c3F6ueKRo=" crossorigin="anonymous"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -31,7 +32,7 @@
                     <div class="box" id="bar"></div>
                     <div class="box" id="map">
                         <div class="box" id="maptitle">
-                            <text class="maptitle">Total Trade Volume by State in 2018 (in Billion $USD)</text>
+                            <text class="maptitle">Total Trade Volume in 2018 (in Billion $USD)</text>
                         </div>
                        <div class="box" id="themap"></div>
                        <div class="box" id="map-slider"></div>
@@ -48,18 +49,20 @@
                 </div>
             </div>
 
-            <div class="box" id="middle">
+            <!-- <div class="box" id="middle">
                 <div class="box" id="state-info-box"></div>
-            </div>
+            </div> -->
             <div class="box" id="right">
                     <div class="box" id="packLayout-export">
-                            <svg width="400" height="400">
+                            <p style="text-align:left; z-index:7; color:lavender; padding-left:15px; margin:0; font-size:22px">State Export Values by Commodity Category</p>
+                            <svg width="520" height="410">
                                 <g></g>
                             </svg>
                     </div>
                     <div class="box" id="layoutchart-info"></div>
                     <div class="box" id="packLayout-import">
-                            <svg width="400" height="400">
+                            <p style="text-align:left; z-index:7; color:lavender; padding-left:15px; margin:0; font-size:22px">State Import Values by Commodity Category</p>
+                            <svg width="480" height="410">
                                 <g></g>
                             </svg>
                     </div>
