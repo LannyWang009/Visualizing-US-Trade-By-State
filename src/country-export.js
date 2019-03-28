@@ -1,6 +1,6 @@
 
 let exportBarChartData
-let dataset
+
 const exportColors = [
     "#9221ac",
     "#d5c3fc",
@@ -9,62 +9,74 @@ const exportColors = [
     "#714fdb"
 ]
 
-d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
-    
+function renderExportGraph() {
+    d3.csv("./data/csv/ExportByCountry.csv", numConverter, exportGraph)
+
+    function numConverter(d) {
+        d.Exports = parseFloat(d.Exports.replace(/,/g, ''));
+        d.Time = +d.Time;
+        return d;
+    }
+}
+
+renderExportGraph()
+
+function exportGraph(error, data) {
+
+    //Filter dataset
     if(error) {
-        alert('Something went wrong when trying to load the data.')
+        console.log('Error occurred while loading data:', error)
     } else {
-        let allData = []
+        let statesData = []
         for (let i = 0; i < data.length; i++) {
-            if (data[i].State === "Maryland" && data[i].Time === 2018 && data[i].Country != "World Total") {
-                allData.push(data[i])
+            if (data[i].State === "Texas" && data[i].Time === 2018 && data[i].Country != "World Total") {
+                statesData.push(data[i])
             }
         }
 
-        allData.sort(function (a, b) {
+        statesData.sort(function (a, b) {
             return b.Exports - a.Exports
         })
 
-        exportBarChartData = allData.slice(0, 10)
+        exportBarChartData = statesData.slice(0, 10)
 
     }
 
-    console.log(exportBarChartData)
+    console.log(exportBarChartData, exportBarChartData.length)
 
-    const w = 300;
-    const h = 250;
-    const paddingTopBottom = 100;
-    const paddingLeftRight = 5;
-    let numItems = Number(exportBarChartData.length)
+    //Build Export Bar Chart Graph
+    const w = 400;
+    const h = 225;
+    const padding = 30
 
+    //Build tooltip
     let barTooltip = d3.select("#exportBarChart")
                         .append("div")
                         .attr("class", "tooltip")
                         .style("opacity", 0)
 
+    //Define scales
     const xScale = d3.scaleLinear()
-                    .domain([0, numItems])
-                    .range([paddingLeftRight, w - paddingLeftRight])
-
-    const yScale = d3.scaleLinear()
                     .domain([0, d3.max(exportBarChartData, (d) => d.Exports)])
-                    .range([paddingTopBottom, h - paddingTopBottom])
-
+                    .range([padding, w]);
+ 
+    //Add Chart svg
     const svg = d3.select("#exportBarChart")
                     .append("svg")
                     .attr("width", w)
                     .attr("height", h)
                     .attr("class", "exportsChart");
 
+    //Build bars
     svg.selectAll("rect")
         .data(exportBarChartData)
         .enter()
         .append("rect")
-        .attr("x", (d, i) => paddingLeftRight + i * ((h - (2 * paddingLeftRight)) / exportBarChartData.length))
-        .attr("y", (d) => h - paddingTopBottom - yScale(d.Exports))
-        .attr("height", (d) => yScale(d.Exports))
-        .attr("width", (d) => ((h - (2 * paddingLeftRight)) / exportBarChartData.length) - 5)
-        .attr("fill", exportColors[1])
+        .attr("x", padding)
+        .attr("y", (d, i) => i * (h / exportBarChartData.length))
+        .attr("height", (d) => (h / exportBarChartData.length) - 5)
+        .attr("width", (d) => xScale(d.Exports))
+        .attr("fill", "#9B88D8")
         .attr("class", "chartBar")
         .on("mouseover", function(d) {
 
@@ -87,33 +99,21 @@ d3.csv("./data/csv/ExportByCountry.csv", numConverter, function(error, data) {
                 .style("opacity", 0)
         })
 
-    const xAxis = d3.axisBottom(xScale)
-                    // .tickFormat(function(d, i) { return exportBarChartData[i].Country})
+        svg.selectAll("text")
+        .data(exportBarChartData)
+        .enter()
+        .append("text")
+        .text(function(d, i) {
+                return exportBarChartData[i].Country;
+        })
+        .attr("text-anchor", "left")
+        .attr("y", (d, i) => 11 + i * (h / exportBarChartData.length))
+        .attr("x", padding + 5)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "11px")
+        .attr("fill", "white")
 
-    var exportAxisLabels = function(d) {
-        var labels = []
-            for (let i = 0; i < 10; i++) {
-                labels.push(exportBarChartData[i].Country)
-            }
-        return labels[d]
-    }
-
-    svg.append("g")
-        .attr("class", "axis xaxis")
-        .attr("transform", "translate(0, " + (h - paddingTopBottom) +")")
-        .call(xAxis)
-        .selectAll("text")
-            .text(exportAxisLabels)
-            .attr("y", 0)
-            .attr("x", 9)
-            .attr("dy", ".35em")
-            .attr("transform", "rotate(90)")
-
-})
-
-function numConverter(d) {
-    d.Exports = parseFloat(d.Exports.replace(/,/g, ''));
-    d.Time = +d.Time;
-    return d;
 }
+
+
 
