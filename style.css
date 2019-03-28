@@ -45,11 +45,7 @@ body {
 
 #right {
     background-color:lightskyblue;
-<<<<<<< HEAD
     flex:6;
-=======
-    flex:8;
->>>>>>> 36e7eda4b627ffe7d42072fd7e04e9ae336f80ab
     display:flex;
     flex-direction: column;
     
