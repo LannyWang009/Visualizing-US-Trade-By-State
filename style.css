@@ -45,7 +45,7 @@ body {
 
 #right {
     background-color:lightskyblue;
-    flex:4;
+    flex:6;
     display:flex;
     flex-direction: column;
     
@@ -114,7 +114,7 @@ flex:7;
 
 #exportBarChart h2 {
     font-size: 20px;
-    color: white;
+    color:lavender;
 }
 
 #importBarChart {
@@ -126,13 +126,20 @@ flex:7;
 
 #importBarChart h2 {
     font-size: 20px;
-    color: white;
+    color: lavender;
 }
 
-circle {
+#packLayout-export circle {
     /* fill:#7fc5c9; */
     /* opacity: 0.2; */
     stroke:rgba(0,0,0,0);
+    z-index:2;
+}
+
+#packLayout-export svg text{
+    z-index:5;
+    fill:#fff;
+    font-size:13px;
 }
 path {
     fill: #fff;
