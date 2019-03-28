@@ -221,7 +221,8 @@ var expColors =
   '#574db8',
   '#682278',
   '#a16de7',
-  '#9131a7']
+  '#9131a7',
+  ]
 
 // var expColors =
 // ['#7fc5c9',
