@@ -378,8 +378,8 @@ button {
 }
 
 .axis line {
-    fill: none;
-    stroke: black;
+    fill: white;
+    stroke: white;
     shape-rendering: crispEdges;
 }
 
