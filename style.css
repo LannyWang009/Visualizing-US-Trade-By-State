@@ -141,6 +141,23 @@ flex:7;
     fill:#fff;
     font-size:13px;
 }
+
+#packLayout-import circle {
+    /* fill:#7fc5c9; */
+    /* opacity: 0.2; */
+    z-index:2;
+}
+
+/* #packLayout-import circle:hover {
+    
+} */
+
+#packLayout-import svg text{
+    z-index:5;
+    fill:#fff;
+    font-size:13px;
+}
+
 path {
     fill: #fff;
     stroke: #fff;
