@@ -1,4 +1,3 @@
-
 var datasetImport // global var for
 var filters = {
   'state': 'California',
@@ -91,7 +90,7 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
       // const textCategory = d.data.name
-      const textValue = Math.round(d.data.importValue / 1000000)
+      const textValue = Math.round(d.data.importValue / 10000000)
       // create the tooltip label
       d3.select('#packLayout-import svg g').append('text')
         .attr('id', 'tooltip')
@@ -102,7 +101,7 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
         .text(
           function () {
             if (textValue) {
-              return textCategory + ', $' + textValue + ' Million'
+              return textCategory + ', $' + textValue / 100 + ' B'
             } else { return '' }
           }
 
@@ -133,45 +132,10 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
     .attr('dx', -36)
     .attr('dy', 18)
     .text(function (d) {
-      let textValue = Math.round(d.data.importValue / 1000000)
-      return d.data.tag === true ? ' $' + textValue + ' M' : ''
+      let textValue = Math.round(d.data.importValue / 10000000)
+      return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
     })
 })
-
-//   d3.select('#packLayout-import svg g')
-//     // .select('svg g')
-//     .selectAll('circle')
-//     .data(rootNode.descendants())
-//     .enter()
-//     .append('circle')
-//     .style('fill', function (d) { return switchColor(d.data.name) })
-//     .attr('cx', function (d) { return d.x })
-//     .attr('cy', function (d) { return d.y })
-//     .attr('r', function (d) { return d.r })
-
-//   // show tooltip on mouseover
-//     .on('mouseover', function (d) {
-//       console.log('your mouse moved here')
-//       // to get circle's cx and cy value
-//       const xPosition = parseFloat(d3.select(this).attr('cx'))
-//       const yPosition = parseFloat(d3.select(this).attr('cy'))
-//       const text = d.data.name
-//       // create the tooltip label
-//       d3.select('#packLayout-import svg g').append('text')
-//         .attr('id', 'tooltip')
-//         .attr('x', xPosition)
-//         .attr('y', yPosition)
-//         .attr('text-anchor', 'middle')
-//         .attr('font-family', 'sans-serif')
-//         .attr('font-weight', 'bold')
-//         .attr('font-size', '12px')
-//         .attr('fill', 'lavender')
-//         .text(text)
-//     })
-//     .on('mouseout', function (d) {
-//       d3.select('#tooltip').remove()
-//     })
-// })
 
 function conversor (d) {
   d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''))
@@ -180,38 +144,73 @@ function conversor (d) {
 }
 
 // ============All about assignming colors==================
-var colors =
-['#ae3871',
-  '#3e40d3',
-  '#df6fa3',
-  '#4e1ab2',
-  '#e53296',
-  '#5f8ddb',
-  '#7a28d1',
-  '#7a2255',
-  '#9251f2',
-  '#752063',
-  '#4d62ea',
-  '#b93497',
-  '#6a7ee8',
-  '#e04eca',
-  '#445ba7',
-  '#d851ec',
-  '#313380',
-  '#e78bd7',
-  '#37149a',
-  '#b390e0',
-  '#48218e',
-  '#bb6fce',
-  '#502a69',
-  '#aa3dcf',
-  '#7a53a0',
-  '#7231b8',
-  '#a34e97',
-  '#574db8',
-  '#682278',
-  '#a16de7',
-  '#9131a7']
+// the first version (purple)
+// var colors =
+// ['#ae3871',
+//   '#3e40d3',
+//   '#df6fa3',
+//   '#4e1ab2',
+//   '#e53296',
+//   '#5f8ddb',
+//   '#7a28d1',
+//   '#7a2255',
+//   '#9251f2',
+//   '#752063',
+//   '#4d62ea',
+//   '#b93497',
+//   '#6a7ee8',
+//   '#e04eca',
+//   '#445ba7',
+//   '#d851ec',
+//   '#313380',
+//   '#e78bd7',
+//   '#37149a',
+//   '#b390e0',
+//   '#48218e',
+//   '#bb6fce',
+//   '#502a69',
+//   '#aa3dcf',
+//   '#7a53a0',
+//   '#7231b8',
+//   '#a34e97',
+//   '#574db8',
+//   '#682278',
+//   '#a16de7',
+//   '#9131a7']
+
+var colors = [
+  'rgb(189,123,123)',
+  'rgb(64,108,191)',
+  'rgb(234,134,129)',
+  'rgb(75,104,165)',
+  'rgb(184,93,86)',
+  'rgb(127,154,232)',
+  'rgb(151,68,72)',
+  'rgb(176,146,219)',
+  'rgb(139,87,84)',
+  'rgb(225,170,233)',
+  'rgb(181,72,92)',
+  'rgb(222,189,223)',
+  'rgb(169,69,110)',
+  'rgb(182,180,233)',
+  'rgb(222,117,146)',
+  'rgb(137,124,183)',
+  'rgb(233,170,174)',
+  'rgb(116,113,190)',
+  'rgb(186,134,163)',
+  'rgb(147,82,146)',
+  'rgb(146,88,110)',
+  'rgb(80,80,153)',
+  'rgb(234,145,191)',
+  'rgb(133,88,167)',
+  'rgb(162,74,128)',
+  'rgb(151,142,180)',
+  'rgb(116,82,142)',
+  'rgb(195,120,180)',
+  'rgb(118,93,125)',
+  'rgb(98,96,143)',
+  'rgb(147,84,125)'
+]
 
 function switchColor (commodity) {
   switch (commodity) {
