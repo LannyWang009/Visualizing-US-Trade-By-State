@@ -1,8 +1,4 @@
 var datasetExport
-var filters = {
-  'state': 'Montana',
-  'time': '2018'
-}
 
 d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
   // ================= filter the data =========

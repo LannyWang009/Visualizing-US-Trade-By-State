@@ -1,8 +1,8 @@
 
 var datasetImport // global var for
 var filters = {
-  'state': 'Texas',
-  'time': '2018'
+  'state': 'California',
+  'time': '2015'
 }
 
 d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
