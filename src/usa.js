@@ -83,8 +83,8 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
       })
       .on('mouseover', function(d){
         selectState(d)
-        updateExportGraph()
-        updateImportGraph()
+        // updateExportGraph()
+        // updateImportGraph()
 
       })
       
@@ -286,7 +286,7 @@ function updateExportPack(){
         )
       }, true)
     })
-    // console.log('datasetExport', datasetExport)
+    console.log('updated datasetExport: ', datasetExport)
   
     // =========== scaling function ===========
     const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
@@ -314,24 +314,34 @@ function updateExportPack(){
       })
     }
   
+
+//packLayout
     var packLayout = d3.pack()
       .size([s, s])
-  
-    var rootNode = d3.hierarchy(data)
-                      
-  
-    rootNode.sum(function (d) {
-      return d.value
-    })
-  
-    packLayout(rootNode)
-  
+      // .value(function(d) { return d.value; });
 
-    var nodes = d3.select('#packLayout-export svg g')
-      .selectAll('circle')
-      .data(rootNode.descendants())
-      .transition().duration(1000)
-      // .enter()
+    //transition
+    var t = d3.transition()
+    .duration(1000)
+
+  //hierarchy
+    var rootNode = d3.hierarchy(data)
+                      .sum(function (d) {
+                        return d.value
+                      })
+  
+    //join
+    var nodes = d3.select("#packLayout-export svg g")
+                  .selectAll('circle')
+                  .data(packLayout(rootNode).descendants())
+
+
+    nodes.exit()
+    .style('fill', function (d) { return switchColor(d.data.name) })
+    .transition(t)
+    .remove()
+
+      nodes.transition(t)
       // .append('g')
       // .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
   
@@ -339,13 +349,14 @@ function updateExportPack(){
       // .append('circle')
       // .transition().duration(1000)
       .style('fill', function (d) { return switchColor(d.data.name) })
+      .attr('r', function (d) { return d.r })
       .attr('cx', function (d) { return d.x })
       .attr('cy', function (d) { return d.y })
-      .attr('r', function (d) { return d.r })
   
+      
       // show tips on mouseover
       .on('mouseover', function (d) {
-        console.log('your mouse moved here')
+        // console.log('your mouse moved here')
         // to get circle's cx and cy value
         // const xPosition = parseFloat(d3.select(this).attr('cx'))
         // const yPosition = parseFloat(d3.select(this).attr('cy'))
@@ -422,16 +433,16 @@ function updateExportPack(){
     return comparison
   }
   // get sum of an array
-  function sum (input) {
-    if (toString.call(input) !== '[object Array]') { return false }
-    var total = 0
-    for (var i = 0; i < input.length; i++) {
-      if (isNaN(input[i])) {
-        continue
-      }
-      total += Number(input[i])
-    }
-    return total
-  }
+  // function sum (input) {
+  //   if (toString.call(input) !== '[object Array]') { return false }
+  //   var total = 0
+  //   for (var i = 0; i < input.length; i++) {
+  //     if (isNaN(input[i])) {
+  //       continue
+  //     }
+  //     total += Number(input[i])
+  //   }
+  //   return total
+  // }
     
 }
