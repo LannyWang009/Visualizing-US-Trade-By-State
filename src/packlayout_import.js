@@ -4,6 +4,11 @@ var filters = {
   'time': '2018'
 }
 
+let packImpTooltip = d3.select("#packLayout-export")
+                    .append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0)
+
 d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   datasetImport = csvdata
 
@@ -81,34 +86,32 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
 
     // show tips on mouseover
     .on('mouseover', function (d) {
-      console.log('your mouse moved here')
-      // to get circle's cx and cy value
-      // const xPosition = parseFloat(d3.select(this).attr('cx'))
-      // const yPosition = parseFloat(d3.select(this).attr('cy'))
-      const xPosition = parseFloat(d.x)
-      const yPosition = parseFloat(d.y)
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
-      // const textCategory = d.data.name
       const textValue = Math.round(d.data.importValue / 10000000)
-      // create the tooltip label
-      d3.select('#packLayout-import svg g').append('text')
-        .attr('id', 'tooltip')
-        .attr('x', xPosition)
-        .attr('y', yPosition)
-        .attr('text-anchor', 'middle')
-        .attr('fill', 'lavender')
-        .text(
-          function () {
+
+      if (d.data.name != "Total") {
+        packImpTooltip.transition()
+        .duration(500)
+        .style("opacity", .9)
+      }
+
+      var tip = setTooltipText
+      
+      packImpTooltip.html(tip)
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY) + "px");
+
+          function setTooltipText () {
             if (textValue) {
               return textCategory + ', $' + textValue/100 + ' B'
-            } else { return '' }
+            } else { return null}
           }
-
-        )
     })
     .on('mouseout', function (d) {
-      d3.select('#tooltip').remove()
+      packImpTooltip.transition()
+      .duration(500)
+      .style("opacity", 0)
     })
 
   // add label of category name for top 3 categories
