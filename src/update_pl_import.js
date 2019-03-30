@@ -65,12 +65,12 @@ function updateImportPack () {
       .selectAll('circle')
       .data(packLayout(rootNode).descendants())
 
-    var labelg = d3.select('#packLayout-import svg g')
-      .selectAll('g')
-      .data(packLayout(rootNode).descendants())
+    // var labelg = d3.select('#packLayout-import svg g')
+    //   .selectAll('g')
+    //   .data(packLayout(rootNode).descendants())
 
     // ==========================EXIT=================================
-    labelg.remove()
+    // labelg.remove()
     nodes.exit()
       .style('fill', function (d) { return switchColor(d.data.name) })
       .transition(t)

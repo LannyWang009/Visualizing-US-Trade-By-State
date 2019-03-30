@@ -4,10 +4,14 @@ var filters = {
   'time': '2018'
 }
 
-let packImpTooltip = d3.select('#packLayout-export')
+let packImpTooltip = d3.select('#packLayout-import')
   .append('div')
   .attr('class', 'tooltip')
   .style('opacity', 0)
+
+let packImpStaticLabels = d3.select('#packLayout-import')
+  .append('div')
+  .attr('class', 'labeldiv')
 
 d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   datasetImport = csvdata
@@ -115,32 +119,36 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
     })
 
   // add label of category name for top 3 categories
-  var labelg = nodes
-    .append('g')
-    .attr('class', 'packlayout-import-label')
-    .attr('cx', d => d.x)
-    .attr('cy', d => d.y)
+  // packImpStaticLabels
+  //   .append('g')
+  //   .attr('class', 'packlayout-import-label')
+  //   .attr('cx', d => d.x)
+  //   .attr('cy', d => d.y)
 
-  labelg
-    .append('text')
-    .text(function (d) {
-      const lengthOftext = d.data.name.length
-      const textCategory = d.data.name.slice(3, lengthOftext)
-      return d.data.tag === true ? textCategory : ''
-    })
-    .attr('dx', d => d.x - 40)
-    .attr('dy', d => d.y)
-    .attr('class', 'commodity-label')
+  // var labeldiv = d3.select('#packLayout-import .labeldiv')
+  // labeldiv
+  //   .data(rootNode.descendants())
+  //   .enter()
+  //   .append('text')
+  //   .text(function (d) {
+  //     console.log(d)
+  //     const lengthOftext = d.data.name.length
+  //     const textCategory = d.data.name.slice(3, lengthOftext)
+  //     return d.data.tag === true ? textCategory : ''
+  //   })
+  //   .attr('dx', d => d.x - 40)
+  //   .attr('dy', d => d.y)
+  //   .attr('class', 'commodity-label')
 
-  labelg
-    .append('text')
-    .attr('class', 'number-label')
-    .attr('dx', d => d.x - 36)
-    .attr('dy', d => d.y + 18)
-    .text(function (d) {
-      let textValue = Math.round(d.data.importValue / 10000000)
-      return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
-    })
+  // labeldiv
+  //   .append('text')
+  //   .attr('class', 'number-label')
+  //   .attr('dx', d => d.x - 36)
+  //   .attr('dy', d => d.y + 18)
+  //   .text(function (d) {
+  //     let textValue = Math.round(d.data.importValue / 10000000)
+  //     return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
+  //   })
 })
 
 //   // add label of import value under the category
