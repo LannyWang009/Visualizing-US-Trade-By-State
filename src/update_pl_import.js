@@ -65,23 +65,16 @@ function updateImportPack () {
       .selectAll('circle')
       .data(packLayout(rootNode).descendants())
 
-    var text = d3.select('#packLayout-import svg g')
-      .selectAll('text')
+    var labelg = d3.select('#packLayout-import svg g')
+      .selectAll('g')
       .data(packLayout(rootNode).descendants())
 
-    // var textNumber = d3.select('#packLayout-import svg g')
-    //   .selectAll('.layout-label-number')
-    //   .data(packLayout(rootNode).descendants())
-
     // ==========================EXIT=================================
-
+    labelg.remove()
     nodes.exit()
       .style('fill', function (d) { return switchColor(d.data.name) })
       .transition(t)
       .remove()
-
-    text.exit().transition(t).remove()
-    // textNumber.exit().transition(t).remove()
 
     // =====================UPDATE====================
 
@@ -117,29 +110,33 @@ function updateImportPack () {
         d3.select('#tooltip').remove()
       })
 
-    text.transition(t)
+    // nodes
+    //   .append('g')
+    //   // .attr('class', 'packlayout-import-label')
+    //   // .attr('class', 'layout-label-text')
+    //   .attr('dy', (d) => { console.log(d); return d.y })
+    //   .attr('dx', (d) => d.x - 40)
+
+    nodes
       .append('text')
-      .attr('class', 'packlayout-import-label')
-      .attr('class', 'layout-label-text')
-      .attr('dy', (d) => { return d.y })
-      .attr('dx', (d) => d.x - 40)
+      .attr('dx', d => d.x - 40)
+      .attr('dy', d => d.y)
+      .attr('class', 'commodity-label')
       .text(function (d) {
         const lengthOftext = d.data.name.length
         const textCategory = d.data.name.slice(3, lengthOftext)
         return d.data.tag === true ? textCategory : ''
       })
 
-    // add label of import value under the category
-    // textNumber.transition(t)
-    //   .append('text')
-    //   .attr('class', 'packlayout-import-label')
-    //   .attr('class', 'layout-label-number')
-    //   .attr('dx', d => d.x - 36)
-    //   .attr('dy', d => d.y18)
-    //   .text(function (d) {
-    //     let textValue = Math.round(d.data.importValue / 10000000)
-    //     return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
-    //   })
+    nodes
+      .append('text')
+      .attr('dx', d => d.x - 36)
+      .attr('dy', d => d.y + 18)
+      .attr('class', 'number-label')
+      .text(function (d) {
+        let textValue = Math.round(d.data.importValue / 10000000)
+        return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
+      })
   })
 
   // end d3.csv function

@@ -115,22 +115,26 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
     })
 
   // add label of category name for top 3 categories
-  nodes
-    .append('text')
+  var labelg = nodes
+    .append('g')
     .attr('class', 'packlayout-import-label')
-    .attr('dx', d => d.x - 40)
-    .attr('dy', d => d.y)
+    .attr('cx', d => d.x)
+    .attr('cy', d => d.y)
+
+  labelg
+    .append('text')
     .text(function (d) {
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
       return d.data.tag === true ? textCategory : ''
     })
+    .attr('dx', d => d.x - 40)
+    .attr('dy', d => d.y)
+    .attr('class', 'commodity-label')
 
-  // add label of import value under the category
-  nodes
+  labelg
     .append('text')
-    .attr('class', 'packlayout-import-label')
-    .attr('class', 'layout-label-text')
+    .attr('class', 'number-label')
     .attr('dx', d => d.x - 36)
     .attr('dy', d => d.y + 18)
     .text(function (d) {
@@ -138,6 +142,19 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
       return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
     })
 })
+
+//   // add label of import value under the category
+//   nodes
+//     .append('text')
+//     .attr('class', 'packlayout-import-label')
+//     .attr('class', 'layout-label-text')
+//     .attr('dx', d => d.x - 36)
+//     .attr('dy', d => d.y + 18)
+//     .text(function (d) {
+//       let textValue = Math.round(d.data.importValue / 10000000)
+//       return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
+//     })
+// })
 
 function conversor (d) {
   d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''))
@@ -180,73 +197,73 @@ function conversor (d) {
 //   '#a16de7',
 //   '#9131a7']
 
-var colors = [
-  'rgb(189,123,123)',
-  'rgb(64,108,191)',
-  'rgb(234,134,129)',
-  'rgb(75,104,165)',
-  'rgb(184,93,86)',
-  'rgb(127,154,232)',
-  'rgb(151,68,72)',
-  'rgb(176,146,219)',
-  'rgb(139,87,84)',
-  'rgb(225,170,233)',
-  'rgb(181,72,92)',
-  'rgb(222,189,223)',
-  'rgb(169,69,110)',
-  'rgb(182,180,233)',
-  'rgb(222,117,146)',
-  'rgb(137,124,183)',
-  'rgb(233,170,174)',
-  'rgb(116,113,190)',
-  'rgb(186,134,163)',
-  'rgb(147,82,146)',
-  'rgb(146,88,110)',
-  'rgb(80,80,153)',
-  'rgb(234,145,191)',
-  'rgb(133,88,167)',
-  'rgb(162,74,128)',
-  'rgb(151,142,180)',
-  'rgb(116,82,142)',
-  'rgb(195,120,180)',
-  'rgb(118,93,125)',
-  'rgb(98,96,143)',
-  'rgb(147,84,125)'
-]
+// var colors = [
+//   'rgb(189,123,123)',
+//   'rgb(64,108,191)',
+//   'rgb(234,134,129)',
+//   'rgb(75,104,165)',
+//   'rgb(184,93,86)',
+//   'rgb(127,154,232)',
+//   'rgb(151,68,72)',
+//   'rgb(176,146,219)',
+//   'rgb(139,87,84)',
+//   'rgb(225,170,233)',
+//   'rgb(181,72,92)',
+//   'rgb(222,189,223)',
+//   'rgb(169,69,110)',
+//   'rgb(182,180,233)',
+//   'rgb(222,117,146)',
+//   'rgb(137,124,183)',
+//   'rgb(233,170,174)',
+//   'rgb(116,113,190)',
+//   'rgb(186,134,163)',
+//   'rgb(147,82,146)',
+//   'rgb(146,88,110)',
+//   'rgb(80,80,153)',
+//   'rgb(234,145,191)',
+//   'rgb(133,88,167)',
+//   'rgb(162,74,128)',
+//   'rgb(151,142,180)',
+//   'rgb(116,82,142)',
+//   'rgb(195,120,180)',
+//   'rgb(118,93,125)',
+//   'rgb(98,96,143)',
+//   'rgb(147,84,125)'
+// ]
 
-function switchColor (commodity) {
-  switch (commodity) {
-    case '111 Agricultural Products':return colors[0]
-    case '112 Livestock & Livestock Products':return colors[1]
-    case '113 Forestry Products, Nesoi':return colors[2]
-    case '114 Fish, Fresh/chilled/frozen & Other Marine Products': return colors[3]
-    case '211 Oil & Gas': return colors[4]
-    case '212 Minerals & Ores': return colors[5]
-    case '311 Food & Kindred Products': return colors[6]
-    case '312 Beverages & Tobacco Products': return colors[7]
-    case '313 Textiles & Fabrics': return colors[8]
-    case '314 Textile Mill Products': return colors[9]
-    case '315 Apparel & Accessories': return colors[10]
-    case '316 Leather & Allied Products': return colors[11]
-    case '321 Wood Products': return colors[12]
-    case '322 Paper': return colors[13]
-    case '323 Printed Matter And Related Products, Nesoi': return colors[14]
-    case '324 Petroleum & Coal Products': return colors[15]
-    case '325 Chemicals': return colors[16]
-    case '326 Plastics & Rubber Products': return colors[17]
-    case '327 Nonmetallic Mineral Products': return colors[18]
-    case '331 Primary Metal Mfg': return colors[19]
-    case '332 Fabricated Metal Products, Nesoi': return colors[20]
-    case '333 Machinery, Except Electrical': return colors[21]
-    case '334 Computer & Electronic Products': return colors[22]
-    case '335 Electrical Equipment, Appliances & Components': return colors[23]
-    case '336 Transportation Equipment': return colors[24]
-    case '337 Furniture & Fixtures': return colors[25]
-    case '339 Miscellaneous Manufactured Commodities': return colors[26]
-    case '910 Waste And Scrap': return colors[27]
-    case '930 Used Or Second-hand Merchandise': return colors[28]
-    case '980 Goods Returned (exports For Canada Only)': return colors[29]
-    case '990 Other Special Classification Provisions': return colors[30]
-    default:return 'rgba(0, 0, 0, 0)'
-  }
-}
+// function switchColor (commodity) {
+//   switch (commodity) {
+//     case '111 Agricultural Products':return colors[0]
+//     case '112 Livestock & Livestock Products':return colors[1]
+//     case '113 Forestry Products, Nesoi':return colors[2]
+//     case '114 Fish, Fresh/chilled/frozen & Other Marine Products': return colors[3]
+//     case '211 Oil & Gas': return colors[4]
+//     case '212 Minerals & Ores': return colors[5]
+//     case '311 Food & Kindred Products': return colors[6]
+//     case '312 Beverages & Tobacco Products': return colors[7]
+//     case '313 Textiles & Fabrics': return colors[8]
+//     case '314 Textile Mill Products': return colors[9]
+//     case '315 Apparel & Accessories': return colors[10]
+//     case '316 Leather & Allied Products': return colors[11]
+//     case '321 Wood Products': return colors[12]
+//     case '322 Paper': return colors[13]
+//     case '323 Printed Matter And Related Products, Nesoi': return colors[14]
+//     case '324 Petroleum & Coal Products': return colors[15]
+//     case '325 Chemicals': return colors[16]
+//     case '326 Plastics & Rubber Products': return colors[17]
+//     case '327 Nonmetallic Mineral Products': return colors[18]
+//     case '331 Primary Metal Mfg': return colors[19]
+//     case '332 Fabricated Metal Products, Nesoi': return colors[20]
+//     case '333 Machinery, Except Electrical': return colors[21]
+//     case '334 Computer & Electronic Products': return colors[22]
+//     case '335 Electrical Equipment, Appliances & Components': return colors[23]
+//     case '336 Transportation Equipment': return colors[24]
+//     case '337 Furniture & Fixtures': return colors[25]
+//     case '339 Miscellaneous Manufactured Commodities': return colors[26]
+//     case '910 Waste And Scrap': return colors[27]
+//     case '930 Used Or Second-hand Merchandise': return colors[28]
+//     case '980 Goods Returned (exports For Canada Only)': return colors[29]
+//     case '990 Other Special Classification Provisions': return colors[30]
+//     default:return 'rgba(0, 0, 0, 0)'
+//   }
+// }
