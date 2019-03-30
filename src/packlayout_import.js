@@ -1,13 +1,13 @@
 var datasetImport // global var for
 var filters = {
-  'state': 'Ohio',
+  'state': 'Texas',
   'time': '2018'
 }
 
-let packImpTooltip = d3.select("#packLayout-export")
-                    .append("div")
-                    .attr("class", "tooltip")
-                    .style("opacity", 0)
+let packImpTooltip = d3.select('#packLayout-export')
+  .append('div')
+  .attr('class', 'tooltip')
+  .style('opacity', 0)
 
 d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   datasetImport = csvdata
@@ -28,10 +28,10 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   // }).sort(compare)
   console.log('datasetImport', datasetImport)
   // ========helper var for labels and scaling function=====
-  // to find out the top 3 category
+  // to find out the top 5 category
   const importValue = datasetImport.map(element => { return (element.total_import_values) })
   // console.log('importValue array', importValue)
-  const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 3)
+  const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 5)
   // console.log('big import numbers', biggest3data)
 
   var s = 410
@@ -71,17 +71,17 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
     .selectAll('circle')
     .data(rootNode.descendants())
     .enter()
-    .append('g')
-    .attr('transform', function (d) {
-      // console.log(d)
-      return 'translate(' + [d.x, d.y] + ')'
-    })
+    // .append('g')
+    // .attr('transform', function (d) {
+    //   // console.log(d)
+    //   return 'translate(' + [d.x, d.y] + ')'
+    // })
 
   nodes
     .append('circle')
     .style('fill', function (d) { return switchColor(d.data.name) })
-    // .attr('cx', function (d) { return d.x })
-    // .attr('cy', function (d) { return d.y })
+    .attr('cx', function (d) { return d.x })
+    .attr('cy', function (d) { return d.y })
     .attr('r', function (d) { return d.r })
 
     // show tips on mouseover
@@ -90,37 +90,36 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
       const textCategory = d.data.name.slice(3, lengthOftext)
       const textValue = Math.round(d.data.importValue / 10000000)
 
-      if (d.data.name != "Total") {
+      if (d.data.name != 'Total') {
         packImpTooltip.transition()
-        .duration(500)
-        .style("opacity", .9)
+          .duration(500)
+          .style('opacity', 0.9)
       }
 
       var tip = setTooltipText
-      
-      packImpTooltip.html(tip)
-          .style("left", (d3.event.pageX) + "px")
-          .style("top", (d3.event.pageY) + "px");
 
-          function setTooltipText () {
-            if (textValue) {
-              return textCategory + ', $' + textValue/100 + ' B'
-            } else { return null}
-          }
+      packImpTooltip.html(tip)
+        .style('left', (d3.event.pageX) + 'px')
+        .style('top', (d3.event.pageY) + 'px')
+
+      function setTooltipText () {
+        if (textValue) {
+          return textCategory + ', $' + textValue / 100 + ' B'
+        } else { return null }
+      }
     })
     .on('mouseout', function (d) {
       packImpTooltip.transition()
-      .duration(500)
-      .style("opacity", 0)
+        .duration(500)
+        .style('opacity', 0)
     })
 
   // add label of category name for top 3 categories
   nodes
     .append('text')
     .attr('class', 'packlayout-import-label')
-    // .attr(d => { return d.y })
-    .attr('dx', -40)
-    .attr('dy', 0)
+    .attr('dx', d => d.x - 40)
+    .attr('dy', d => d.y)
     .text(function (d) {
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
@@ -131,16 +130,14 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   nodes
     .append('text')
     .attr('class', 'packlayout-import-label')
-    // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
-    .attr('dx', -36)
-    .attr('dy', 18)
+    .attr('class', 'layout-label-text')
+    .attr('dx', d => d.x - 36)
+    .attr('dy', d => d.y + 18)
     .text(function (d) {
       let textValue = Math.round(d.data.importValue / 10000000)
-      return d.data.tag === true ? ' $' + textValue/100 + ' Billion' : ''
+      return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
     })
 })
-
-
 
 function conversor (d) {
   d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''))
@@ -149,7 +146,7 @@ function conversor (d) {
 }
 
 // ============All about assignming colors==================
-  // the first version (purple)
+// the first version (purple)
 // var colors =
 // ['#ae3871',
 //   '#3e40d3',
@@ -183,39 +180,38 @@ function conversor (d) {
 //   '#a16de7',
 //   '#9131a7']
 
-
 var colors = [
   'rgb(189,123,123)',
-'rgb(64,108,191)',
-'rgb(234,134,129)',
-'rgb(75,104,165)',
-'rgb(184,93,86)',
-'rgb(127,154,232)',
-'rgb(151,68,72)',
-'rgb(176,146,219)',
-'rgb(139,87,84)',
-'rgb(225,170,233)',
-'rgb(181,72,92)',
-'rgb(222,189,223)',
-'rgb(169,69,110)',
-'rgb(182,180,233)',
-'rgb(222,117,146)',
-'rgb(137,124,183)',
-'rgb(233,170,174)',
-'rgb(116,113,190)',
-'rgb(186,134,163)',
-'rgb(147,82,146)',
-'rgb(146,88,110)',
-'rgb(80,80,153)',
-'rgb(234,145,191)',
-'rgb(133,88,167)',
-'rgb(162,74,128)',
-'rgb(151,142,180)',
-'rgb(116,82,142)',
-'rgb(195,120,180)',
-'rgb(118,93,125)',
-'rgb(98,96,143)',
-'rgb(147,84,125)'
+  'rgb(64,108,191)',
+  'rgb(234,134,129)',
+  'rgb(75,104,165)',
+  'rgb(184,93,86)',
+  'rgb(127,154,232)',
+  'rgb(151,68,72)',
+  'rgb(176,146,219)',
+  'rgb(139,87,84)',
+  'rgb(225,170,233)',
+  'rgb(181,72,92)',
+  'rgb(222,189,223)',
+  'rgb(169,69,110)',
+  'rgb(182,180,233)',
+  'rgb(222,117,146)',
+  'rgb(137,124,183)',
+  'rgb(233,170,174)',
+  'rgb(116,113,190)',
+  'rgb(186,134,163)',
+  'rgb(147,82,146)',
+  'rgb(146,88,110)',
+  'rgb(80,80,153)',
+  'rgb(234,145,191)',
+  'rgb(133,88,167)',
+  'rgb(162,74,128)',
+  'rgb(151,142,180)',
+  'rgb(116,82,142)',
+  'rgb(195,120,180)',
+  'rgb(118,93,125)',
+  'rgb(98,96,143)',
+  'rgb(147,84,125)'
 ]
 
 function switchColor (commodity) {
