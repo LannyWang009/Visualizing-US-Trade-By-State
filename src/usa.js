@@ -45,7 +45,7 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
   ])
 
   // load GeoJSON data and merge with allstate2018 data
-  d3.json('../../data/json/us-states.json', function (error, json) {
+  d3.json('./data/json/us-states.json', function (error, json) {
     if (error) { console.log('error', error) }
     console.log('usjson', json)
     for (var i = 0; i < data.length; i++) {
