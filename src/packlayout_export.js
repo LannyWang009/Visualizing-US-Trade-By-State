@@ -115,6 +115,7 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
   nodes
     .append('text')
     .attr('class', 'packlayout-export-label')
+    .attr('class', 'layout-label-text')
     // .attr(d => { return d.y })
     .attr('dx', (d) => d.x - 40)
     .attr('dy', (d) => d.y)
@@ -128,7 +129,7 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
   nodes
     .append('text')
     .attr('class', 'packlayout-export-label')
-    // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
+    .attr('class', 'layout-label-number')
     .attr('dx', (d) => d.x - 36)
     .attr('dy', (d) => d.y + 18)
     .text(function (d) {

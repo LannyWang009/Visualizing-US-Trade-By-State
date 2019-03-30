@@ -118,9 +118,8 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   nodes
     .append('text')
     .attr('class', 'packlayout-import-label')
-    // .attr(d => { return d.y })
-    .attr('dx', -40)
-    .attr('dy', 0)
+    .attr('dx', d => d.x - 40)
+    .attr('dy', d => d.y)
     .text(function (d) {
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
@@ -131,9 +130,9 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   nodes
     .append('text')
     .attr('class', 'packlayout-import-label')
-    // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
-    .attr('dx', -36)
-    .attr('dy', 18)
+    .attr('class', 'layout-label-text')
+    .attr('dx', d => d.x - 36)
+    .attr('dy', d => d.y + 18)
     .text(function (d) {
       let textValue = Math.round(d.data.importValue / 10000000)
       return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''

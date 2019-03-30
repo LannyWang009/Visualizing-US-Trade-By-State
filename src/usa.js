@@ -81,6 +81,7 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
         updateExportGraph()
         updateImportGraph()
         updateExportPack()
+        updateImportPack()
       })
       .on('mouseover', function (d) {
         selectState(d)
@@ -263,7 +264,7 @@ function updatedImportGraph (error, data) {
 function updateExportPack () {
   d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     var filters = {
-      'state': selectedState,
+      'state': selectedState || 'Texas',
       'time': selectedTime || '2018'
     }
     // ================= filter the data =========
@@ -327,24 +328,25 @@ function updateExportPack () {
       .selectAll('circle')
       .data(packLayout(rootNode).descendants())
 
-    // var circleG = d3.select('#packLayout-export svg g')
-    //   .selectAll('g')
+    var text = d3.select('#packLayout-export svg g')
+      .selectAll('text')
+      .data(packLayout(rootNode).descendants())
+
+    // var textNumber = d3.select('#packLayout-export svg g')
+    //   .selectAll('.layout-label-number')
     //   .data(packLayout(rootNode).descendants())
 
     // ==========================EXIT=================================
-
-    // circleG.exit().transition(t).remove()
 
     nodes.exit()
       .style('fill', function (d) { return switchColor(d.data.name) })
       .transition(t)
       .remove()
 
-    // =====================UPDATE====================
+    text.exit().transition(t).remove()
+    // textNumber.exit().transition(t).remove()
 
-    // circleG.transition(t)
-    //   .append('g')
-    //   .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
+    // =====================UPDATE====================
 
     nodes.transition(t)
       .style('fill', function (d) { return switchColor(d.data.name) })
@@ -353,15 +355,10 @@ function updateExportPack () {
       .attr('cy', function (d) { return d.y })
       // show tips on mouseover
       .on('mouseover', function (d) {
-        // console.log('your mouse moved here')
-        // to get circle's cx and cy value
-        // const xPosition = parseFloat(d3.select(this).attr('cx'))
-        // const yPosition = parseFloat(d3.select(this).attr('cy'))
         const xPosition = parseFloat(d.x)
         const yPosition = parseFloat(d.y)
         const lengthOftext = d.data.name.length
         const textCategory = d.data.name.slice(3, lengthOftext)
-        // const textCategory = d.data.name
         const textValue = Math.round(d.data.exportValue / 10000000)
         // create the tooltip label
         d3.select('#packLayout-export svg g').append('text')
@@ -383,13 +380,12 @@ function updateExportPack () {
         d3.select('#tooltip').remove()
       })
 
-    // add label of category name for top 3 categories
-    nodes
+    text.transition(t)
       .append('text')
       .attr('class', 'packlayout-export-label')
-      // .attr(d => { return d.y })
-      .attr('dx', -40)
-      .attr('dy', 0)
+      .attr('class', 'layout-label-text')
+      .attr('dy', (d) => { return d.y })
+      .attr('dx', (d) => d.x - 40)
       .text(function (d) {
         const lengthOftext = d.data.name.length
         const textCategory = d.data.name.slice(3, lengthOftext)
@@ -397,16 +393,16 @@ function updateExportPack () {
       })
 
     // add label of export value under the category
-    nodes
-      .append('text')
-      .attr('class', 'packlayout-export-label')
-      // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
-      .attr('dx', -36)
-      .attr('dy', 18)
-      .text(function (d) {
-        let textValue = Math.round(d.data.exportValue / 10000000)
-        return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
-      })
+    // textNumber.transition(t)
+    //   .append('text')
+    //   .attr('class', 'packlayout-export-label')
+    //   .attr('class', 'layout-label-number')
+    //   .attr('dx', d => d.x - 36)
+    //   .attr('dy', d => d.y18)
+    //   .text(function (d) {
+    //     let textValue = Math.round(d.data.exportValue / 10000000)
+    //     return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
+    //   })
   })
 
   // end d3.csv function
@@ -429,6 +425,7 @@ function updateExportPack () {
     }
     return comparison
   }
+
   // get sum of an array
   // function sum (input) {
   //   if (toString.call(input) !== '[object Array]') { return false }
