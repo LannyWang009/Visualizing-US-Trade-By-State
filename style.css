@@ -283,3 +283,17 @@ z-index:10
     cursor: pointer; /* Cursor on hover */
   }
   
+  .mapLegend {
+      background-color: black;
+      z-index: 1;
+      float: right;
+      top: 180px;
+      right: 50px;
+      position: absolute;
+
+  }
+
+  .legend-label {
+      fill: white;
+      /* z-index: -1; */
+  }
