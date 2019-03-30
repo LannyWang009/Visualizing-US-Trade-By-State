@@ -1,7 +1,7 @@
 var datasetImport // global var for
 var filters = {
-  'state': 'California',
-  'time': '2015'
+  'state': 'Texas',
+  'time': '2018'
 }
 
 let packImpTooltip = d3.select('#packLayout-export')

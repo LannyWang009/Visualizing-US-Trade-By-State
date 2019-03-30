@@ -53,13 +53,25 @@
                 <div class="box" id="state-info-box"></div>
             </div> -->
             <div class="box" id="right">
+                    <div class="box" id="layoutchart-info">
+                            <div class="slidecontainer">
+                                    <div style="margin-top:0;margin-bottom:0;color:lavender;display:flex;flex-direction: row;justify-content: space-between">
+                                        <span>2014</span>
+                                        <span>2015</span>
+                                        <span>2016</span>
+                                        <span>2017</span>
+                                        <span>2018</span>
+                                    </div>
+                                    <input type="range" min="1" max="100" value="25" class="slider" id="myRange">
+                            </div>
+                    </div>
                     <div class="box" id="packLayout-export">
                             <p style="text-align:left; z-index:7; color:lavender; padding-left:15px; margin:0; font-size:22px">State Export Values by Commodity Category</p>
                             <svg width="520" height="410">
                                 <g></g>
                             </svg>
                     </div>
-                    <div class="box" id="layoutchart-info"></div>
+                    
                     <div class="box" id="packLayout-import">
                             <p style="text-align:left; z-index:7; color:lavender; padding-left:15px; margin:0; font-size:22px">State Import Values by Commodity Category</p>
                             <svg width="480" height="410">
@@ -71,6 +83,7 @@
 
 
 <script src="https://d3js.org/topojson.v2.js"></script>
+<script src='../src/yearSelection.js'></script>
 <script src="../src/usa.js"></script>
 <script src="../src/country-export.js"></script>
 <script src="../src/country-import.js"></script>

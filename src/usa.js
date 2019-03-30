@@ -25,6 +25,7 @@ var mapColor = d3.scaleQuantize()
   .range(['#ebe4eb', '#e4dbea', '#ddd1e9', '#d4c5e8', '#cab8e6', '#c0abe4', '#b69ee2', '#ab91e0', '#a085de'])
 
 var selectedState
+var selectedTime
 function selectState (d) {
   console.log(d.properties.name)
   selectedState = d.properties.name
@@ -263,7 +264,7 @@ function updateExportPack () {
   d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     var filters = {
       'state': selectedState,
-      'time': '2018'
+      'time': selectedTime || '2018'
     }
     // ================= filter the data =========
     datasetExport = csvdata.filter(function (row) {

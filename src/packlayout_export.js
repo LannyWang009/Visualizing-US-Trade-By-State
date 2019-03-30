@@ -1,8 +1,4 @@
 var datasetExport
-var filters = {
-  'state': 'Montana',
-  'time': '2018'
-}
 
 let packExpTooltip = d3.select('#packLayout-export')
   .append('div')
