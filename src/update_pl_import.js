@@ -110,29 +110,29 @@ function updateImportPack () {
         d3.select('#tooltip').remove()
       })
 
-    // nodes
-    //   .append('g')
-    //   // .attr('class', 'packlayout-import-label')
-    //   // .attr('class', 'layout-label-text')
-    //   .attr('dy', (d) => { console.log(d); return d.y })
-    //   .attr('dx', (d) => d.x - 40)
+    var newlabel = nodes
+      // .enter()
+      .append('g')
+      .attr('class', 'packlayout-import-label')
+      .attr('cx', d => { console.log(d); return d.x })
+      .attr('cy', d => d.y)
 
-    nodes
+    newlabel
       .append('text')
-      .attr('dx', d => d.x - 40)
-      .attr('dy', d => d.y)
-      .attr('class', 'commodity-label')
       .text(function (d) {
         const lengthOftext = d.data.name.length
         const textCategory = d.data.name.slice(3, lengthOftext)
         return d.data.tag === true ? textCategory : ''
       })
+      .attr('dx', d => d.x - 40)
+      .attr('dy', d => d.y)
+      .attr('class', 'commodity-label')
 
-    nodes
+    newlabel
       .append('text')
+      .attr('class', 'number-label')
       .attr('dx', d => d.x - 36)
       .attr('dy', d => d.y + 18)
-      .attr('class', 'number-label')
       .text(function (d) {
         let textValue = Math.round(d.data.importValue / 10000000)
         return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
