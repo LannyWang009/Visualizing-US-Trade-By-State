@@ -19,18 +19,23 @@ var svg = d3.select('#themap').append('svg')
   .attr('height', height)
 
 var g = svg.append('g')
+var colors = ['#ffc7ff', '#eab2ef', '#d59de0', '#bf8ad1', '#a976c2', '#9364b4', '#7d52a6', '#654098', '#4d308b']
+// var colors = ['#4d308b', '#654098', '#7d52a6', '#9364b4', '#a976c2', '#bf8ad1', '#d59de0', '#eab2ef', '#ffc7ff']
 
 // Define linear scale for color output
 var mapColor = d3.scaleQuantize()
-  .range(['#ebe4eb', '#e4dbea', '#ddd1e9', '#d4c5e8', '#cab8e6', '#c0abe4', '#b69ee2', '#ab91e0', '#a085de'])
+  .range(colors)
+  // .range(['#ebe4eb', '#e4dbea', '#ddd1e9', '#d4c5e8', '#cab8e6', '#c0abe4', '#b69ee2', '#ab91e0', '#a085de'])
 
-var selectedState;
-function selectState(d) {
+var selectedState
+var selectedTime
+function selectState (d) {
   console.log(d.properties.name)
   selectedState = d.properties.name
   // return d.properties.name
 }
 
+//Build U.S. Map
 d3.csv('../../data/csv/allState2018.csv', function (error, data) {
   if (error) { console.log('error', error) }
   console.log('data', data)
@@ -75,357 +80,68 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
           return 'grey'
         }
       })
-      .on("click", function(d) {
+      .on('click', function (d) {
         selectState(d)
         updateExportGraph()
         updateImportGraph()
-        // updateExportPack()
-        // updateImportPack()
+        updateExportPack()
+        updateImportPack()
       })
-      .on('mouseover', function(d){
-        selectState(d)
-        // updateExportGraph()
-        // updateImportGraph()
-      })
-      
-
-
+      // .on('mouseover', function (d) {
+      //   selectState(d)
+      //   updateExportGraph()
+      //   updateImportGraph()
+      //   updateExportPack()
+      //   updateImportPack()
+      // })
   })
-}
-)
 
-//Update Export Bar Chart
-function updateExportGraph() {
-  d3.csv("./data/csv/ExportByCountry.csv", numConverter, updatedExportGraph)
+})
 
-  function numConverter(d) {
-      d.Exports = parseFloat(d.Exports.replace(/,/g, ''));
-      d.Time = +d.Time;
-      return d;
-  }
-}
+//Build map legend
+function buildMapLegend() {
+  const w = 280
+  const h = 50
 
-function updatedExportGraph(error, data) {
-
-  //Filter dataset
-  if(error) {
-      console.log('Error occurred while loading data:', error)
-  } else {
-      let statesData = []
-      for (let i = 0; i < data.length; i++) {
-          if (data[i].State === selectedState && data[i].Time === 2018 && data[i].Country != "World Total") {
-              statesData.push(data[i])
-          }
-      }
-
-      statesData.sort(function (a, b) {
-          return b.Exports - a.Exports
-      })
-
-      exportBarChartData = statesData.slice(0, 10)
-
-  }
-
-  // console.log(exportBarChartData, exportBarChartData.length)
-
-  const w = 400;
-  const h = 225;
-  const padding = 30
-
-  //Update tooltip
-  let barTooltip = d3.select("#exportBarChart")
+  var legend = d3.select("#themap")
+                  .append('svg')
+                  .attr('width', w)
+                  .attr('height', h)
+                  .attr('class', 'mapLegend')
   
-  barTooltip.exit().remove()
+  // Build bars
+  legend.selectAll('rect')
+          .data(colors)
+          .enter()
+          .append('rect')
+          .attr("x", (d, i) => i * 30)
+          .attr("y", h - 10)
+          .attr("height", 10)
+          .attr("width", 30)
+          .attr('fill', function (d, i) {
+                return colors[i]
+            })
 
-  barTooltip.enter()
-            .append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0)
-
-  //Define scales
-  const xScale = d3.scaleLinear()
-                  .domain([0, d3.max(exportBarChartData, (d) => d.Exports)])
-                  .range([padding, w]);
-
-//Update chart
-  const svg = d3.select("#exportBarChart")
-
-  //Update bars
-  svg.selectAll("rect")
-      .data(exportBarChartData)
-      .transition().duration(1000)
-      .attr("x", padding)
-      .attr("y", (d, i) => i * (h / exportBarChartData.length))
-      .attr("height", (d) => (h / exportBarChartData.length) - 5)
-      .attr("width", (d) => xScale(d.Exports))
-      .attr("fill", "#9B88D8")
-      .attr("class", "chartBar")
-
-  //Update labels
-  svg.selectAll("text")
-      .data(exportBarChartData)
-      .transition()
-      .delay(function(d, i) {
-        return i * 50;})
-      .duration(2000)
-      .text(function(d, i) {
-              return exportBarChartData[i].Country;
-      })
-      .attr("text-anchor", "left")
-      .attr("y", (d, i) => 11 + i * (h / exportBarChartData.length))
-      .attr("x", padding + 5)
-      .attr("font-family", "sans-serif")
-      .attr("font-size", "11px")
-      .attr("fill", "white")
-
+  legend.append('text')
+            .text('Trade Volume')
+            .attr('class', 'legend-label')
+            .attr("x", (d, i) => (colors.length * 30) / 3)
+            .attr("y", h - 25)
+  
+  legend.append('text')
+            .text('Low')
+            .attr('class', 'legend-label')
+            .attr('x', 0)
+            .attr('y', h - 15)
+            .style('font-size', '11px')
+  
+  legend.append('text')
+            .text('High')
+            .attr('class', 'legend-label')
+            .attr('x', (d, i) => (colors.length * 30) - 25)
+            .attr('y', h - 15)
+            .style('font-size', '11px')
 }
 
-//Update Import Bar Chart
-function updateImportGraph() {
-  d3.csv("./data/csv/ImportsByCountry.csv", numConverter, updatedImportGraph)
-
-  function numConverter(d) {
-      d.Imports = parseFloat(d.Imports.replace(/,/g, ''));
-      d.Time = +d.Time;
-      return d;
-  }
-}
-
-function updatedImportGraph(error, data) {
-
-  //Filter dataset
-  if(error) {
-      console.log('Error occurred while loading data:', error)
-  } else {
-      let statesData = []
-      for (let i = 0; i < data.length; i++) {
-          if (data[i].State === selectedState && data[i].Time === 2018 && data[i].Country != "World Total") {
-              statesData.push(data[i])
-          }
-      }
-
-      statesData.sort(function (a, b) {
-          return b.Imports - a.Imports
-      })
-
-      importBarChartData = statesData.slice(0, 10)
-
-  }
-
-  // console.log(importBarChartData, importBarChartData.length)
-
-  const w = 400;
-  const h = 225;
-  const padding = 30
-
-  //Update tooltip
-  let barTooltip = d3.select("#importBarChart")
+buildMapLegend()
   
-  barTooltip.exit().remove()
-
-  barTooltip.enter()
-            .append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0)
-
-  //Define scales
-  const xScale = d3.scaleLinear()
-                  .domain([0, d3.max(importBarChartData, (d) => d.Imports)])
-                  .range([padding, w]);
-
-//Update chart
-  const svg = d3.select("#importBarChart")
-
-  //Update bars
-  svg.selectAll("rect")
-      .data(importBarChartData)
-      .transition().duration(1000)
-      .attr("x", padding)
-      .attr("y", (d, i) => i * (h / importBarChartData.length))
-      .attr("height", (d) => (h / importBarChartData.length) - 5)
-      .attr("width", (d) => xScale(d.Imports))
-      .attr("fill", "#9B88D8")
-      .attr("class", "chartBar")
-
-  //Update labels
-  svg.selectAll("text")
-      .data(importBarChartData)
-      .transition()
-      .delay(function(d, i) {
-        return i * 50;})
-      .duration(2000)
-      .text(function(d, i) {
-              return importBarChartData[i].Country;
-      })
-      .attr("text-anchor", "left")
-      .attr("y", (d, i) => 11 + i * (h / importBarChartData.length))
-      .attr("x", padding + 5)
-      .attr("font-family", "sans-serif")
-      .attr("font-size", "11px")
-      .attr("fill", "white")
-
-}
-
-// function updateExportPack() {
-//   var filters = {
-//     'state': selectedState,
-//     'time': '2018'
-//   }
-  
-//   // let packExpTooltip = d3.select("#packLayout-export")
-//   //                     .append("div")
-//   //                     .attr("class", "tooltip")
-//   //                     .style("opacity", 0)
-  
-//   d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
-//     // ================= filter the data =========
-//     datasetExport = csvdata.filter(function (row) {
-//       // run through all the filters, returning a boolean
-//       return ['commodity', 'state', 'time', 'country', 'total_exports_value'].reduce(function (pass, column) {
-//         return pass && (
-//         // pass if no filter is set
-//           !filters[column] ||
-//                 // pass if the row's value is equal to the filter
-//                 // (i.e. the filter is set to a string)
-//                 row[column] === filters[column]
-//         )
-//       }, true)
-//     })
-//     console.log('UPDATED datasetExport: ', datasetExport)
-  
-//     // =========== scaling function ===========
-//     // to find out the top 3 category
-//     // const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
-//     // const biggest3data = exportValue.sort(function (a, b) { return b - a }).slice(0, 3)
-  
-//     // ==================Size of the SVG==========
-//     var s = 410
-//     const max = d3.max(datasetExport.total_exports_value)
-//     const range = [0, s]
-//     const domain = [0, max]
-//     var linearscale = d3.scaleLinear()
-//       .domain(domain)
-//       .range(range)
-  
-//     var data = {
-//       'name': 'Total',
-//       'children': datasetExport.map(element => {
-//         // if (biggest3data.includes(element.total_exports_value)) {
-//         //   // console.log(element.commodity)
-//         //   return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': true }
-//         // } else {
-//           return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': false }
-//         }
-//       // }
-//       )
-//     }
-  
-//     //Build the pack layout
-//     var packLayout = d3.pack()
-//       .size([s, s])
-  
-//     var rootNode = d3.hierarchy(data)
-  
-//     rootNode.sum(function (d) {
-//               return d.value
-//             })
-//             .sort(function(a, b) { return b.value - a.value; });
-
-  
-//     packLayout(rootNode)
-  
-//     //Update circles
-//     var t = d3.transition()
-//     .duration(750)
-//     .ease(d3.easeLinear);
-
-//     var nodes = d3.select('#packLayout-export svg g')
-//       .selectAll('circle')
-//       .data(rootNode.descendants())
-      
-//     nodes.exit()
-//       .transition(t)
-//       .remove()
-//       // .enter()
-//       // .append('g')
-  
-//     nodes.transition(t)
-//       // .append('circle')
-//       // .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
-//       .style('fill', function (d) { return switchColor(d.data.name) })
-//       .attr('r', function (d) { return d.r })
-//       .attr('cx', function (d) { return d.x })
-//       .attr('cy', function (d) { return d.y })
-
-
-
-  
-//       // show tips on mouseover
-//       .on('mouseover', function (d) {
-//         const lengthOftext = d.data.name.length
-//         const textCategory = d.data.name.slice(3, lengthOftext)
-//         const textValue = Math.round(d.data.exportValue / 10000000)
-  
-//         if (d.data.name != "Total") {
-//           packExpTooltip.transition()
-//           .duration(500)
-//           .style("opacity", .9)
-//         }
-  
-//         var tip = setTooltipText
-        
-//         packExpTooltip.html(tip)
-//             .style("left", (d3.event.pageX) + "px")
-//             .style("top", (d3.event.pageY) + "px");
-  
-//             function setTooltipText () {
-//               if (textValue) {
-//                 return textCategory + ', $' + textValue/100 + ' B'
-//               } else { return null}
-//             }
-  
-//       })
-//       .on('mouseout', function (d) {
-//         packExpTooltip.transition()
-//         .duration(500)
-//         .style("opacity", 0)
-//       })
-  
-//     // add label of category name for top 3 categories
-//     nodes
-//       .append('text')
-//       .attr('class', 'packlayout-export-label')
-//       // .attr(d => { return d.y })
-//       .attr('dx', -40)
-//       .attr('dy', 0)
-//       .text(function (d) {
-//         const lengthOftext = d.data.name.length
-//         const textCategory = d.data.name.slice(3, lengthOftext)
-//         return d.data.tag === true ? textCategory : ''
-//       })
-  
-//     // add label of export value under the category
-//     nodes
-//       .append('text')
-//       .attr('class', 'packlayout-export-label')
-//       // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
-//       .attr('dx', -36)
-//       .attr('dy', 18)
-//       .text(function (d) {
-//         let textValue = Math.round(d.data.exportValue / 10000000)
-//         return d.data.tag === true ? ' $' + textValue/100 + ' Billion' : ''
-//       })
-//   })
-  
-//   // parsing csv data
-//   function conversor (d) {
-//     d.total_exports_value = parseInt(d.total_exports_value.replace(/,/g, ''))
-//     // console.log(d.total_exports_value)
-//     return d
-//   }
-  
-// }
-
-// function updateImportPack() {
-
-// }
