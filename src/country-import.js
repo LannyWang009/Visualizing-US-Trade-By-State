@@ -116,19 +116,24 @@ function updateImportGraph () {
 
   function numConverter (d) {
     d.Imports = parseFloat(d.Imports.replace(/,/g, ''))
-    d.Time = +d.Time
+    // d.Time = +d.Time
     return d
   }
 }
 
 function updatedImportGraph (error, data) {
+  var filters = {
+    state: selectedState || 'Texas',
+    time: selectedTime || '2018'
+  }
+
   // Filter dataset
   if (error) {
     console.log('Error occurred while loading data:', error)
   } else {
     let statesData = []
     for (let i = 0; i < data.length; i++) {
-      if (data[i].State === selectedState && data[i].Time === 2018 && data[i].Country != 'World Total') {
+      if (data[i].State === filters.state && data[i].Time === filters.time && data[i].Country != 'World Total') {
         statesData.push(data[i])
       }
     }
