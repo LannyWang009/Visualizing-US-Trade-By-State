@@ -75,14 +75,14 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     .selectAll('circle')
     .data(rootNode.descendants())
     .enter()
-    .append('g')
-    .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
+    // .append('g')
+    // .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
 
   nodes
     .append('circle')
     .style('fill', function (d) { return switchColor(d.data.name) })
-    // .attr('cx', function (d) { return d.x })
-    // .attr('cy', function (d) { return d.y })
+    .attr('cx', function (d) { return d.x })
+    .attr('cy', function (d) { return d.y })
     .attr('r', function (d) { return d.r })
 
     // show tips on mouseover
@@ -120,8 +120,8 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     .append('text')
     .attr('class', 'packlayout-export-label')
     // .attr(d => { return d.y })
-    .attr('dx', -40)
-    .attr('dy', 0)
+    .attr('dx', (d) => d.x - 40)
+    .attr('dy', (d) => d.y)
     .text(function (d) {
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
@@ -133,35 +133,13 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     .append('text')
     .attr('class', 'packlayout-export-label')
     // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
-    .attr('dx', -36)
-    .attr('dy', 18)
+    .attr('dx', (d) => d.x - 36)
+    .attr('dy', (d) => d.y + 18)
     .text(function (d) {
       let textValue = Math.round(d.data.exportValue / 10000000)
       return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
     })
 })
-
-// function wrap (text, width) {
-//   text.each(function () {
-//     const text = d3.select(this)
-//     let words = text.text().split(/\s+/).reverse()
-//     var word = ''
-//     let line = []
-//     let lineNumber = 0
-//     let lineHeight = 1.1 // ems
-//     let y = text.attr('y')
-//     let dy = parseFloat(text.attr('dy'))
-//     let tspan = text.text(null).append('tspan').attr('x', 0).attr('dy', dy + 'em')
-//     while (word === words.pop()) {
-//       line.push(word)
-//       tspan.text(line.join(' '))
-//       if (tspan.node().getComputedTextLength() > width) {
-//         line.pop()
-//         tspan.text.append('tspan').attr('x', 0).attr('y', y).attr('dy', ++lineNumber * lineHeight)
-//       }
-//     }
-//   })
-// }
 
 // parsing csv data
 function conversor (d) {

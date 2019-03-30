@@ -298,7 +298,7 @@ function updateExportPack () {
       'name': 'Total',
       'children': datasetExport.map(element => {
         if (biggest3data.includes(element.total_exports_value)) {
-          console.log(element.commodity)
+          console.log('show label', element.commodity)
           return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': true }
         } else {
           return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': false }
@@ -348,6 +348,8 @@ function updateExportPack () {
     nodes.transition(t)
       .style('fill', function (d) { return switchColor(d.data.name) })
       .attr('r', function (d) { return d.r })
+      .attr('cx', function (d) { return d.x })
+      .attr('cy', function (d) { return d.y })
       // show tips on mouseover
       .on('mouseover', function (d) {
         // console.log('your mouse moved here')
