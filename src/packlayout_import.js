@@ -28,10 +28,10 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   // }).sort(compare)
   console.log('datasetImport', datasetImport)
   // ========helper var for labels and scaling function=====
-  // to find out the top 3 category
+  // to find out the top 5 category
   const importValue = datasetImport.map(element => { return (element.total_import_values) })
   // console.log('importValue array', importValue)
-  const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 3)
+  const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 5)
   // console.log('big import numbers', biggest3data)
 
   var s = 410

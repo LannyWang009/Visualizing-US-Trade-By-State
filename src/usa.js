@@ -284,7 +284,7 @@ function updateExportPack () {
 
     // =========== scaling function ===========
     const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
-    const biggest3data = exportValue.sort(function (a, b) { return b - a }).slice(0, 3)
+    const biggest3data = exportValue.sort(function (a, b) { return b - a }).slice(0, 5)
 
     // ==================Size of the SVG==========
 

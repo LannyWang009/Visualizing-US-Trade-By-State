@@ -26,7 +26,7 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
   // to find out the top 3 category
   const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
   // console.log('exportValue array', exportValue)
-  const biggest3data = exportValue.sort(function (a, b) { return b - a }).slice(0, 3)
+  const biggest3data = exportValue.sort(function (a, b) { return b - a }).slice(0, 5)
   // console.log('big numbers', biggest3data)
 
   // ==================Size of the SVG==========

@@ -21,7 +21,7 @@ function updateImportPack () {
 
     // =========== scaling function ===========
     const importValue = updatedDatasetImport.map(element => { return (element.total_import_values) })
-    const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 3)
+    const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 5)
 
     // ==================Size of the SVG==========
 
