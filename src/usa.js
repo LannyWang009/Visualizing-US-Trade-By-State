@@ -79,11 +79,13 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
         selectState(d)
         updateExportGraph()
         updateImportGraph()
+        // updateExportPack()
+        // updateImportPack()
       })
       .on('mouseover', function(d){
         selectState(d)
-        updateExportGraph()
-        updateImportGraph()
+        // updateExportGraph()
+        // updateImportGraph()
       })
       
 
@@ -263,3 +265,167 @@ function updatedImportGraph(error, data) {
       .attr("fill", "white")
 
 }
+
+// function updateExportPack() {
+//   var filters = {
+//     'state': selectedState,
+//     'time': '2018'
+//   }
+  
+//   // let packExpTooltip = d3.select("#packLayout-export")
+//   //                     .append("div")
+//   //                     .attr("class", "tooltip")
+//   //                     .style("opacity", 0)
+  
+//   d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
+//     // ================= filter the data =========
+//     datasetExport = csvdata.filter(function (row) {
+//       // run through all the filters, returning a boolean
+//       return ['commodity', 'state', 'time', 'country', 'total_exports_value'].reduce(function (pass, column) {
+//         return pass && (
+//         // pass if no filter is set
+//           !filters[column] ||
+//                 // pass if the row's value is equal to the filter
+//                 // (i.e. the filter is set to a string)
+//                 row[column] === filters[column]
+//         )
+//       }, true)
+//     })
+//     console.log('UPDATED datasetExport: ', datasetExport)
+  
+//     // =========== scaling function ===========
+//     // to find out the top 3 category
+//     // const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
+//     // const biggest3data = exportValue.sort(function (a, b) { return b - a }).slice(0, 3)
+  
+//     // ==================Size of the SVG==========
+//     var s = 410
+//     const max = d3.max(datasetExport.total_exports_value)
+//     const range = [0, s]
+//     const domain = [0, max]
+//     var linearscale = d3.scaleLinear()
+//       .domain(domain)
+//       .range(range)
+  
+//     var data = {
+//       'name': 'Total',
+//       'children': datasetExport.map(element => {
+//         // if (biggest3data.includes(element.total_exports_value)) {
+//         //   // console.log(element.commodity)
+//         //   return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': true }
+//         // } else {
+//           return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': false }
+//         }
+//       // }
+//       )
+//     }
+  
+//     //Build the pack layout
+//     var packLayout = d3.pack()
+//       .size([s, s])
+  
+//     var rootNode = d3.hierarchy(data)
+  
+//     rootNode.sum(function (d) {
+//               return d.value
+//             })
+//             .sort(function(a, b) { return b.value - a.value; });
+
+  
+//     packLayout(rootNode)
+  
+//     //Update circles
+//     var t = d3.transition()
+//     .duration(750)
+//     .ease(d3.easeLinear);
+
+//     var nodes = d3.select('#packLayout-export svg g')
+//       .selectAll('circle')
+//       .data(rootNode.descendants())
+      
+//     nodes.exit()
+//       .transition(t)
+//       .remove()
+//       // .enter()
+//       // .append('g')
+  
+//     nodes.transition(t)
+//       // .append('circle')
+//       // .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
+//       .style('fill', function (d) { return switchColor(d.data.name) })
+//       .attr('r', function (d) { return d.r })
+//       .attr('cx', function (d) { return d.x })
+//       .attr('cy', function (d) { return d.y })
+
+
+
+  
+//       // show tips on mouseover
+//       .on('mouseover', function (d) {
+//         const lengthOftext = d.data.name.length
+//         const textCategory = d.data.name.slice(3, lengthOftext)
+//         const textValue = Math.round(d.data.exportValue / 10000000)
+  
+//         if (d.data.name != "Total") {
+//           packExpTooltip.transition()
+//           .duration(500)
+//           .style("opacity", .9)
+//         }
+  
+//         var tip = setTooltipText
+        
+//         packExpTooltip.html(tip)
+//             .style("left", (d3.event.pageX) + "px")
+//             .style("top", (d3.event.pageY) + "px");
+  
+//             function setTooltipText () {
+//               if (textValue) {
+//                 return textCategory + ', $' + textValue/100 + ' B'
+//               } else { return null}
+//             }
+  
+//       })
+//       .on('mouseout', function (d) {
+//         packExpTooltip.transition()
+//         .duration(500)
+//         .style("opacity", 0)
+//       })
+  
+//     // add label of category name for top 3 categories
+//     nodes
+//       .append('text')
+//       .attr('class', 'packlayout-export-label')
+//       // .attr(d => { return d.y })
+//       .attr('dx', -40)
+//       .attr('dy', 0)
+//       .text(function (d) {
+//         const lengthOftext = d.data.name.length
+//         const textCategory = d.data.name.slice(3, lengthOftext)
+//         return d.data.tag === true ? textCategory : ''
+//       })
+  
+//     // add label of export value under the category
+//     nodes
+//       .append('text')
+//       .attr('class', 'packlayout-export-label')
+//       // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
+//       .attr('dx', -36)
+//       .attr('dy', 18)
+//       .text(function (d) {
+//         let textValue = Math.round(d.data.exportValue / 10000000)
+//         return d.data.tag === true ? ' $' + textValue/100 + ' Billion' : ''
+//       })
+//   })
+  
+//   // parsing csv data
+//   function conversor (d) {
+//     d.total_exports_value = parseInt(d.total_exports_value.replace(/,/g, ''))
+//     // console.log(d.total_exports_value)
+//     return d
+//   }
+  
+// }
+
+// function updateImportPack() {
+
+// }
