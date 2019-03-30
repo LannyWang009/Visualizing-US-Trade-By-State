@@ -19,4 +19,5 @@ d3.select('input')
     if (sliderValue <= 100 && sliderValue >= 95) { selectedTime = '2018' }
 
     updateExportPack()
+    updateImportPack()
   })
