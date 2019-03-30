@@ -83,8 +83,8 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
       })
       .on('mouseover', function (d) {
         selectState(d)
-        updateExportGraph()
-        updateImportGraph()
+        // updateExportGraph()
+        // updateImportGraph()
       })
   })
 }
@@ -278,7 +278,7 @@ function updateExportPack () {
         )
       }, true)
     })
-    // console.log('datasetExport', datasetExport)
+    console.log('updated datasetExport: ', datasetExport)
 
     // =========== scaling function ===========
     const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
@@ -306,36 +306,51 @@ function updateExportPack () {
       })
     }
 
+    // packLayout
     var packLayout = d3.pack()
       .size([s, s])
+      // .value(function(d) { return d.value; });
 
+    // transition
+    var t = d3.transition()
+      .duration(1000)
+
+    // hierarchy
     var rootNode = d3.hierarchy(data)
+      .sum(function (d) {
+        return d.value
+      })
 
-    rootNode.sum(function (d) {
-      return d.value
-    })
-
-    packLayout(rootNode)
-
+    // =====================JOIN==========================
     var nodes = d3.select('#packLayout-export svg g')
       .selectAll('circle')
-      .data(rootNode.descendants())
-      .transition().duration(1000)
-      // .enter()
-      // .append('g')
-      // .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
+      .data(packLayout(rootNode).descendants())
 
-    // nodes
-      // .append('circle')
-      // .transition().duration(1000)
+    // var circleG = d3.select('#packLayout-export svg g')
+    //   .selectAll('g')
+    //   .data(packLayout(rootNode).descendants())
+
+    // ==========================EXIT=================================
+
+    // circleG.exit().transition(t).remove()
+
+    nodes.exit()
       .style('fill', function (d) { return switchColor(d.data.name) })
-      .attr('cx', function (d) { return d.x })
-      .attr('cy', function (d) { return d.y })
-      .attr('r', function (d) { return d.r })
+      .transition(t)
+      .remove()
 
+    // =====================UPDATE====================
+
+    // circleG.transition(t)
+    //   .append('g')
+    //   .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
+
+    nodes.transition(t)
+      .style('fill', function (d) { return switchColor(d.data.name) })
+      .attr('r', function (d) { return d.r })
       // show tips on mouseover
       .on('mouseover', function (d) {
-        console.log('your mouse moved here')
+        // console.log('your mouse moved here')
         // to get circle's cx and cy value
         // const xPosition = parseFloat(d3.select(this).attr('cx'))
         // const yPosition = parseFloat(d3.select(this).attr('cy'))
@@ -412,15 +427,15 @@ function updateExportPack () {
     return comparison
   }
   // get sum of an array
-  function sum (input) {
-    if (toString.call(input) !== '[object Array]') { return false }
-    var total = 0
-    for (var i = 0; i < input.length; i++) {
-      if (isNaN(input[i])) {
-        continue
-      }
-      total += Number(input[i])
-    }
-    return total
-  }
+  // function sum (input) {
+  //   if (toString.call(input) !== '[object Array]') { return false }
+  //   var total = 0
+  //   for (var i = 0; i < input.length; i++) {
+  //     if (isNaN(input[i])) {
+  //       continue
+  //     }
+  //     total += Number(input[i])
+  //   }
+  //   return total
+  // }
 }
