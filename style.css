@@ -234,10 +234,11 @@ path:hover {
     border-radius: 5px;
     box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.5);
     pointer-events: none;
-    font-family: sans-serif;
-    font-size: 11px;
+    font-family: 'Lato', sans-serif;
+    font-style:bold;
+    font-size: 18px;
 }
-#tooltip {   
+/* #tooltip {   
     position: absolute; 
     display: inline;          
    text-align: center;                           
@@ -249,7 +250,7 @@ path:hover {
    border-radius: 8px;           
    pointer-events: none;
 z-index:10
-}
+} */
 
 .slidecontainer {
     width: 100%; /* Width of the outside container */

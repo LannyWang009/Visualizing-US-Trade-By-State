@@ -13,7 +13,7 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
 var width = 960 * 0.7
 var height = 500 * 0.95
 var path = d3.geoPath() // <- A
-  .projection(d3.geoAlbersUsa().translate([width / 2, height / 2]).scale([800]))
+  .projection(d3.geoAlbersUsa().translate([width / 2, height / 2]).scale([930]))
 var svg = d3.select('#themap').append('svg')
   .attr('width', width)
   .attr('height', height)
