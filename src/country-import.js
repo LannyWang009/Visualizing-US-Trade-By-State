@@ -43,8 +43,8 @@ function importGraph (error, data) {
   console.log(importBarChartData, importBarChartData.length)
 
   // Build Import Bar Chart Graph
-  const w = 500
-  const h = 250
+  const w = 550
+  const h = 280
   const padding = 30
 
   // Build tooltip
@@ -74,7 +74,7 @@ function importGraph (error, data) {
     .attr('y', (d, i) => i * (h / importBarChartData.length))
     .attr('height', (d) => (h / importBarChartData.length) - 5)
     .attr('width', (d) => xScale(d.Imports))
-    .attr('fill', '#9B88D8')
+    .attr('fill', 'rgb(165, 55, 253)')
     .attr('class', 'chartBar')
     .on('mouseover', function (d) {
       barTooltip.transition()
@@ -103,11 +103,10 @@ function importGraph (error, data) {
       return importBarChartData[i].Country
     })
     .attr('text-anchor', 'left')
-    .attr('y', (d, i) => 11 + i * (h / importBarChartData.length))
+    .attr('y', (d, i) => 18 + i * (h / importBarChartData.length))
     .attr('x', padding + 5)
-    .attr('font-family', 'sans-serif')
-    .attr('font-size', '11px')
     .attr('fill', 'white')
+    .attr('class', 'chart-label')
 }
 
 // Update Import Bar Chart
@@ -147,8 +146,8 @@ function updatedImportGraph (error, data) {
 
   // console.log(importBarChartData, importBarChartData.length)
 
-  const w = 500
-  const h = 250
+  const w = 550
+  const h = 280
   const padding = 30
 
   // Update tooltip
@@ -177,7 +176,7 @@ function updatedImportGraph (error, data) {
     .attr('y', (d, i) => i * (h / importBarChartData.length))
     .attr('height', (d) => (h / importBarChartData.length) - 5)
     .attr('width', (d) => xScale(d.Imports))
-    .attr('fill', '#9B88D8')
+    .attr('fill', 'rgb(165, 55, 253)')
     .attr('class', 'chartBar')
 
   // Update labels
@@ -192,9 +191,8 @@ function updatedImportGraph (error, data) {
       return importBarChartData[i].Country
     })
     .attr('text-anchor', 'left')
-    .attr('y', (d, i) => 11 + i * (h / importBarChartData.length))
+    .attr('y', (d, i) => 18 + i * (h / importBarChartData.length))
     .attr('x', padding + 5)
-    .attr('font-family', 'sans-serif')
-    .attr('font-size', '11px')
     .attr('fill', 'white')
+    .attr('class', 'chart-label')
 }

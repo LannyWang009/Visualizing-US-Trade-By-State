@@ -13,7 +13,7 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
 var width = 960 * 0.7
 var height = 500 * 0.95
 var path = d3.geoPath() // <- A
-  .projection(d3.geoAlbersUsa().translate([width / 2, height / 2]).scale([800]))
+  .projection(d3.geoAlbersUsa().translate([width / 2, height / 2]).scale([880]))
 var svg = d3.select('#themap').append('svg')
   .attr('width', width)
   .attr('height', height)
@@ -28,15 +28,15 @@ var mapColor = d3.scaleQuantize()
   // .range(['#ebe4eb', '#e4dbea', '#ddd1e9', '#d4c5e8', '#cab8e6', '#c0abe4', '#b69ee2', '#ab91e0', '#a085de'])
 
 var selectedState
-var selectedTime
+// var selectedTime
 function selectState (d) {
   console.log(d.properties.name)
   selectedState = d.properties.name
   // return d.properties.name
 }
 
-//Build U.S. Map
-d3.csv('../../data/csv/allState2018.csv', function (error, data) {
+// Build U.S. Map
+d3.csv('./data/csv/allState2018.csv', function (error, data) {
   if (error) { console.log('error', error) }
   console.log('data', data)
   mapColor.domain([
@@ -86,6 +86,7 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
         updateImportGraph()
         updateExportPack()
         updateImportPack()
+        updateShowState()
       })
       // .on('mouseover', function (d) {
       //   selectState(d)
@@ -95,53 +96,52 @@ d3.csv('../../data/csv/allState2018.csv', function (error, data) {
       //   updateImportPack()
       // })
   })
-
 })
 
-//Build map legend
-function buildMapLegend() {
+// Build map legend
+function buildMapLegend () {
   const w = 280
   const h = 50
 
-  var legend = d3.select("#themap")
-                  .append('svg')
-                  .attr('width', w)
-                  .attr('height', h)
-                  .attr('class', 'mapLegend')
-  
+  var legend = d3.select('#themap')
+    .append('svg')
+    .attr('width', w)
+    .attr('height', h)
+    .attr('class', 'mapLegend')
+
   // Build bars
   legend.selectAll('rect')
-          .data(colors)
-          .enter()
-          .append('rect')
-          .attr("x", (d, i) => i * 30)
-          .attr("y", h - 10)
-          .attr("height", 10)
-          .attr("width", 30)
-          .attr('fill', function (d, i) {
-                return colors[i]
-            })
+    .data(colors)
+    .enter()
+    .append('rect')
+    .attr('x', (d, i) => i * 30)
+    .attr('y', h - 10)
+    .attr('height', 10)
+    .attr('width', 30)
+    .attr('fill', function (d, i) {
+      return colors[i]
+    })
 
   legend.append('text')
-            .text('Trade Volume')
-            .attr('class', 'legend-label')
-            .attr("x", (d, i) => (colors.length * 30) / 3)
-            .attr("y", h - 25)
-  
+    .text('Trade Volume')
+    .attr('class', 'legend-label')
+    .attr('x', (d, i) => (colors.length * 30) / 3)
+    .attr('y', h - 25)
+
   legend.append('text')
-            .text('Low')
-            .attr('class', 'legend-label')
-            .attr('x', 0)
-            .attr('y', h - 15)
-            .style('font-size', '11px')
-  
+    .text('Low')
+    .attr('class', 'legend-label')
+    .attr('x', 0)
+    .attr('y', h - 15)
+    .style('font-size', '11px')
+
   legend.append('text')
-            .text('High')
-            .attr('class', 'legend-label')
-            .attr('x', (d, i) => (colors.length * 30) - 25)
-            .attr('y', h - 15)
-            .style('font-size', '11px')
+    .text('High')
+    .attr('class', 'legend-label')
+    .attr('x', (d, i) => (colors.length * 30) - 25)
+    .attr('y', h - 15)
+    .style('font-size', '11px')
 }
 
 buildMapLegend()
-  
+
