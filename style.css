@@ -305,6 +305,11 @@ path:hover {
     text-shadow: 1.5px 3px black;
   }
 
+  /* .total-trade-chart-label {
+    font-family: 'sans-serif';
+    font-size: '5px';
+  } */
+
   .show-state-name {
     font-family:'Orbitron', 'sans-serif';
     text-shadow: 1.5px 3px black;
