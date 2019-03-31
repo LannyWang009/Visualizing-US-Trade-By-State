@@ -14,6 +14,7 @@ d3.select('input')
     updateImportPack()
     updateImportGraph()
     updateExportGraph()
+    updateShowState()
   })
 
 // ============All about assignming Colors==================

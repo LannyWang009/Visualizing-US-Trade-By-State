@@ -28,7 +28,7 @@ var mapColor = d3.scaleQuantize()
   // .range(['#ebe4eb', '#e4dbea', '#ddd1e9', '#d4c5e8', '#cab8e6', '#c0abe4', '#b69ee2', '#ab91e0', '#a085de'])
 
 var selectedState
-var selectedTime
+// var selectedTime
 function selectState (d) {
   console.log(d.properties.name)
   selectedState = d.properties.name
@@ -86,6 +86,7 @@ d3.csv('./data/csv/allState2018.csv', function (error, data) {
         updateImportGraph()
         updateExportPack()
         updateImportPack()
+        updateShowState()
       })
       // .on('mouseover', function (d) {
       //   selectState(d)
@@ -143,3 +144,4 @@ function buildMapLegend () {
 }
 
 buildMapLegend()
+
