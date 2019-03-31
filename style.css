@@ -1,44 +1,54 @@
 body {
     font-family: 'Lato', sans-serif;
     font-style:bold;
-    background-color: grey;
+    background-image: radial-gradient(rgb(61, 41, 60),black);
+    /* background-color: rgb(22,22,22); */
 }
 
 
 #title {
-    background-color: black;
+    /* background-color: rgb(22,22,22); */
     width:1800px;
-    height:80px;
+    height:65px;
     text-align: left;
     padding-left:70px;
-    color:rgb(165, 55, 253)
+    color:rgb(165, 55, 253);
+    border-bottom:rgb(160, 133, 222) dashed 2px;
+    border-top:rgb(160, 133, 222) dashed 2px;
+    margin-bottom:1.5px;
 }
+
 #content {
-    background-color:black;
-    width:1800px;
+    /* background-color:rgb(22,22,22); */
+    width:1870px;
     height:900px;
     display:flex;
     flex-direction: row;
+    padding-bottom:25px;
+    border-bottom: rgb(166, 146, 212) dashed 2px;
 }
 #left {
-    background-color:black;
+    /* background-color:rgb(22,22,22); */
     flex:12;
     display:flex;
     flex-direction: column;
 }
 
 #mapPanel {
-    background-color: black;
+    /* background-color: rgb(26,26,26); */
     flex:2;
     display: flex;
     flex-direction: row;
+    /* border-right:rgb(160, 133, 222) dashed 1.5px; */
 }
 
 #barPanel {
-    background-color: black;
+    /* background-color: rgb(22,22,22); */
     flex:1;
     display: flex;
     flex-direction: row;
+    /* border-top:rgb(160, 133, 222) dashed 1.5px; */
+    /* border-right:rgb(160, 133, 222) dashed 1.5px; */
 }
 /* 
 #middle {
@@ -47,17 +57,19 @@ body {
 } */
 
 #right {
-    background-color:lightskyblue;
     flex:6;
     display:flex;
     flex-direction: column;
-    
+    /* padding-right:2px; */
+    padding-left:10px;
+    padding-bottom: 50px;
+    border-left:rgba(160, 133, 222) dotted 2px;
 }
 
 #map {
 flex:7;
    text-align: center;
-   border:thin solid silver;
+   /* border:thin solid silver; */
    display:flex;
    flex-direction:column;
 }
@@ -78,7 +90,7 @@ flex:7;
 
 #bar {
     flex:4;
-    border:thin dashed silver;
+    /* border:thin dashed silver; */
     
 }
 
@@ -88,31 +100,25 @@ flex:7;
 }
 
 #packLayout-export {
-    background-color: black;
+    /* background-color: rgb(22,22,22); */
     flex:5;
-    /* position:absolute; */
-    /* width:400px; */
-    /* height:400px; */
-    /* margin-top:200px; */
-    /* margin-right:10px; */
-    /* margin-left:1000px; */
     z-index:2;
 }
 
 #packLayout-import {
     flex:5;
-    background-color:black;
+    /* background-color:rgb(22,22,22); */
 }
 
 #layoutchart-info {
     flex:4;
-    background-color:black;
+    /* background-color:rgb(22,22,22); */
 }
 
 #exportBarChart {
     height: 290px;
     width: 600px;
-    background-color: black;
+    /* background-color: rgb(22,22,22); */
     align-self: flex-end;
 }
 
@@ -124,7 +130,7 @@ flex:7;
 #importBarChart {
     height: 290px;
     width: 600px;
-    background-color: black;
+    /* background-color: black; */
     align-self: flex-end;
 }
 
@@ -187,17 +193,14 @@ path:hover {
 
 
 .box {
-    /* width: 200px; */
-    /* height: 200px; */
-    margin: 3px;
+    margin: 0.5px;
     float: left;
     text-align: center;
-    border: #969696 dashed thin;
-    /* padding: 5px; */
 }
 
 .chartBar:hover {
     fill: #4d308b;
+    
 }
 
 .xaxis {
@@ -227,22 +230,11 @@ path:hover {
     border-radius: 5px;
     box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.5);
     pointer-events: none;
-    font-family: sans-serif;
-    font-size: 11px;
+    font-family: 'Lato', sans-serif;
+    font-style:bold;
+    font-size: 18px;
 }
-#tooltip {   
-    position: absolute; 
-    display: inline;          
-   text-align: center;                           
-   padding: 2px;             
-   font: 12px sans-serif;        
-   background-color: rgba(231, 226, 226, 0.342); 
-   color:rgb(17, 2, 29);  
-   border: 0px;      
-   border-radius: 8px;           
-   pointer-events: none;
-z-index:10
-}
+
 
 .slidecontainer {
     width: 100%; /* Width of the outside container */
@@ -284,8 +276,11 @@ z-index:10
     cursor: pointer; /* Cursor on hover */
   }
   
+  .commodity-label {
+      color:white;}
+
   .mapLegend {
-      background-color: black;
+      /* background-color: black; */
       z-index: 1;
       position: absolute;
       right: 0;
@@ -295,4 +290,22 @@ z-index:10
   .legend-label {
       fill: white;
       /* z-index: -1; */
+  }
+
+  .chartTitle {
+    font-family: 'Economica', sans-serif;
+    font-size: 25px;
+    font-style:bold;
+  }
+
+  .chart-label {
+    font-family:'Orbitron', 'sans-serif';
+    font-style: 'bold';
+    font-size: '18px';
+    text-shadow: 1.5px 3px black;
+  }
+
+  .show-state-name {
+    font-family:'Orbitron', 'sans-serif';
+    text-shadow: 1.5px 3px black;
   }
