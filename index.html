@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
     <link rel="manifest" href="./favicon_io/site.webmanifest">
     <!-- add style sheets -->
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Economica|Lato|Orbitron:400,700|Share+Tech+Mono" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js" integrity="sha256-kX9/pjvgpDgSmoSfzAlYJeICaZXca16iu+c3F6ueKRo=" crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -25,11 +25,10 @@
             <div style="float:left;margin:3px">
                 <img style="object-fit:scale-down; width:50px; height:65px" src="./favicon_io/android-chrome-192x192.png"/>
             </div>
-            <h1 style="padding-left:80px;margin-top:0px; padding-top:15px"> U.S. International Trade and Commerce By State</h1>
+            <h1 style="padding-left:80px;margin-top:0px; padding-top:15px; font-family: 'Share Tech Mono', monospace; font-style:bold"> U.S. International Trade and Commerce By State</h1>
         </div>
         <div style="float:right; flex:1.3; justify-content: right">
-            <svg style="height:43px; width: 620px; padding-left:20px; margin-top:0px; padding-top:18px; background-color:purple;  ">
-                <text style="z-index: 5;font-size:50px;">Alabama</text>
+            <svg id='show-state' style="height:43px; width: 620px; padding-left:20px; margin-top:0px; padding-top:18px;background-image:linear-gradient(-90deg, rgb(22,22,22,0),rgba(77, 48, 139,0.8),rgb(22,22,22,0));  ">
             </svg>
         </div>
         
@@ -41,28 +40,25 @@
                     <div class="box" id="bar"></div>
                     <div class="box" id="map">
                         <div class="box" id="maptitle">
-                            <text class="maptitle">Total Trade Volume in 2018</text>
-                            <!-- <p style="text-align: right; padding-right:300px;float:right; color:lavender;">CLICK THE MAP </p> -->
+                            <text class="maptitle chartTitle">Total Trade Volume in 2018</text>
+    
                         </div>
                        <div class="box" id="themap">
                        </div>
-                       <!-- <div class="box" id="map-slider"></div> -->
+                       
                     </div>
                 </div>
                 <div class="box" id="barPanel">
                     <div id="exportBarChart">
-                        <h2 style="text-align:left; z-index:7; color:lavender; padding-left:15px; padding-bottom:3px;margin:0; font-size:18px">Top Trade Partners: <strong>Export </strong>(2018)</h2>
+                        <h2 class="chartTitle" style="text-align:center; z-index:7;  padding-left:15px; padding-bottom:3px;margin:0;font-size:25px; ">Top Trade Partners: <strong>Exports </strong></h2>
                     </div>        
                             
                     <div id="importBarChart">
-                        <h2 style="text-align:left; z-index:7; color:lavender; padding-left:15px; padding-bottom:3px;margin:0; font-size:18px">Top Trade Partners: <strong>Import </strong>(2018)</h2>
+                        <h2 class="chartTitle" style="text-align:center; z-index:7;  padding-left:15px; padding-bottom:3px;margin:0; font-size:25px;">Top Trade Partners: <strong>Imports </strong></h2>
                     </div>
                 </div>
             </div>
 
-            <!-- <div class="box" id="middle">
-                <div class="box" id="state-info-box"></div>
-            </div> -->
             <div class="box" id="right">
                     <div class="box" id="layoutchart-info">
                             <div class="slidecontainer">
@@ -77,14 +73,14 @@
                             </div>
                     </div>
                     <div class="box" id="packLayout-export">
-                            <p style="text-align:left; z-index:7; color:lavender; padding-left:15px; margin:0; font-size:22px">State Export Values by Commodity Category</p>
+                            <p class="chartTitle" style="text-align:left; z-index:7; color:lavender; padding-left:15px; margin:0; ">State Export Values by Commodity Category</p>
                             <svg width="520" height="410">
                                 <g></g>
                             </svg>
                     </div>
                     
                     <div class="box" id="packLayout-import">
-                            <p style="text-align:left; z-index:7; color:lavender; padding-left:15px; margin:0; font-size:22px">State Import Values by Commodity Category</p>
+                            <p class="chartTitle" style="text-align:left; z-index:7; color:lavender; padding-left:15px; margin:0; x">State Import Values by Commodity Category</p>
                             <svg width="480" height="410">
                                 <g></g>
                             </svg>

@@ -25,6 +25,8 @@ body {
     height:900px;
     display:flex;
     flex-direction: row;
+    padding-bottom:25px;
+    border-bottom: rgb(166, 146, 212) dashed 2px;
 }
 #left {
     /* background-color:rgb(22,22,22); */
@@ -38,6 +40,7 @@ body {
     flex:2;
     display: flex;
     flex-direction: row;
+    /* border-right:rgb(160, 133, 222) dashed 1.5px; */
 }
 
 #barPanel {
@@ -45,8 +48,8 @@ body {
     flex:1;
     display: flex;
     flex-direction: row;
-    border-top:rgb(160, 133, 222) dashed 1.5px;
-    border-right:rgb(160, 133, 222) dashed 1.5px;
+    /* border-top:rgb(160, 133, 222) dashed 1.5px; */
+    /* border-right:rgb(160, 133, 222) dashed 1.5px; */
 }
 /* 
 #middle {
@@ -55,11 +58,13 @@ body {
 } */
 
 #right {
-    /* background-color:lightskyblue; */
     flex:6;
     display:flex;
     flex-direction: column;
-    
+    /* padding-right:2px; */
+    padding-left:10px;
+    padding-bottom: 50px;
+    border-left:rgba(160, 133, 222) dotted 2px;
 }
 
 #map {
@@ -76,6 +81,7 @@ flex:7;
 
 #themap{
     flex:481;
+    position: relative;
 }
 
 #map-slider{
@@ -118,7 +124,7 @@ flex:7;
 
 #exportBarChart {
     height: 290px;
-    width: 450px;
+    width: 600px;
     /* background-color: rgb(22,22,22); */
     align-self: flex-end;
 }
@@ -130,8 +136,8 @@ flex:7;
 
 #importBarChart {
     height: 290px;
-    width: 450px;
-    /* background-color: rgb(22,22,22); */
+    width: 600px;
+    /* background-color: black; */
     align-self: flex-end;
 }
 
@@ -205,6 +211,7 @@ path:hover {
 
 .chartBar:hover {
     fill: #4d308b;
+    
 }
 
 .xaxis {
@@ -293,5 +300,30 @@ z-index:10
   }
   
   .commodity-label {
-      color:white;
+      color:white;}
+
+  .mapLegend {
+      /* background-color: black; */
+      z-index: 1;
+      position: absolute;
+      right: 0;
+      top: 0;
+  }
+
+  .legend-label {
+      fill: white;
+      /* z-index: -1; */
+  }
+
+  .chartTitle {
+    font-family: 'Economica', sans-serif;
+    font-size: 25px;
+    font-style:bold;
+  }
+
+  .chart-label {
+    font-family:'Orbitron', 'sans-serif';
+    font-style: 'bold';
+    font-size: '18px';
+    text-shadow: 1.5px 3px black;
   }
