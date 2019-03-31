@@ -43,8 +43,8 @@ function exportGraph (error, data) {
   console.log(exportBarChartData, exportBarChartData.length)
 
   // Build Export Bar Chart Graph
-  const w = 400
-  const h = 225
+  const w = 500
+  const h = 250
   const padding = 30
 
   // Build tooltip
@@ -116,19 +116,24 @@ function updateExportGraph () {
 
   function numConverter (d) {
     d.Exports = parseFloat(d.Exports.replace(/,/g, ''))
-    d.Time = +d.Time
+    // d.Time = +d.Time
     return d
   }
 }
 
 function updatedExportGraph (error, data) {
+  var filters = {
+    state: selectedState || 'Texas',
+    time: selectedTime || '2018'
+  }
+
   // Filter dataset
   if (error) {
     console.log('Error occurred while loading data:', error)
   } else {
     let statesData = []
     for (let i = 0; i < data.length; i++) {
-      if (data[i].State === selectedState && data[i].Time === 2018 && data[i].Country != 'World Total') {
+      if (data[i].State === filters.state && data[i].Time === filters.time && data[i].Country != 'World Total') {
         statesData.push(data[i])
       }
     }
@@ -142,8 +147,8 @@ function updatedExportGraph (error, data) {
 
   // console.log(exportBarChartData, exportBarChartData.length)
 
-  const w = 400
-  const h = 225
+  const w = 500
+  const h = 250
   const padding = 30
 
   // Update tooltip
