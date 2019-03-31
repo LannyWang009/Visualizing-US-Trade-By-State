@@ -43,8 +43,8 @@ function exportGraph (error, data) {
   console.log(exportBarChartData, exportBarChartData.length)
 
   // Build Export Bar Chart Graph
-  const w = 400
-  const h = 225
+  const w = 500
+  const h = 250
   const padding = 30
 
   // Build tooltip
@@ -147,8 +147,8 @@ function updatedExportGraph (error, data) {
 
   // console.log(exportBarChartData, exportBarChartData.length)
 
-  const w = 400
-  const h = 225
+  const w = 500
+  const h = 250
   const padding = 30
 
   // Update tooltip

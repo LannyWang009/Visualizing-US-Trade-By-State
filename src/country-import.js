@@ -43,8 +43,8 @@ function importGraph (error, data) {
   console.log(importBarChartData, importBarChartData.length)
 
   // Build Import Bar Chart Graph
-  const w = 400
-  const h = 225
+  const w = 500
+  const h = 250
   const padding = 30
 
   // Build tooltip
@@ -147,8 +147,8 @@ function updatedImportGraph (error, data) {
 
   // console.log(importBarChartData, importBarChartData.length)
 
-  const w = 400
-  const h = 225
+  const w = 500
+  const h = 250
   const padding = 30
 
   // Update tooltip
