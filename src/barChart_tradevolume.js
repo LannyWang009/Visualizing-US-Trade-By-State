@@ -10,7 +10,7 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
   console.log(csvdata)
   tradeVolumeDataset = csvdata
   
-  var legendData = ['Exports', 'Imports']
+  var legendData = ['Total Imports', 'Total Exports']
 
   // Setup chart 
   var margin = {top: 50, right: 10, bottom: 0, left: 105}
@@ -78,7 +78,7 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
   
         format = d3.format(',')
   
-        var tip = '$' + d.import_2018 + ' B'
+        var tip = 'Total ' + d.state + ' Imports: $' + d.import_2018 + ' B'
   
         tooltip.html(tip)
           .style('left', (d3.event.pageX) + 'px')
@@ -106,7 +106,7 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
   
         format = d3.format(',')
   
-        var tip = '$' + d.export_2018 + ' B'
+        var tip = 'Total ' + d.state + ' Exports: $' + d.export_2018 + ' B'
   
         tooltip.html(tip)
           .style('left', (d3.event.pageX) + 'px')
