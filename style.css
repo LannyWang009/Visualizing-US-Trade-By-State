@@ -310,10 +310,10 @@ path:hover {
     fill: white;
 }
 
-  /* .total-trade-chart-label {
-    font-family: 'sans-serif';
-    font-size: '5px';
-  } */
+.textLabels {
+    fill: white;
+    font-size: 11px;
+}
 
   .show-state-name {
     font-family:'Orbitron', 'sans-serif';

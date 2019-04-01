@@ -10,6 +10,8 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
   console.log(csvdata)
   tradeVolumeDataset = csvdata
   
+  var legendData = ['Exports', 'Imports']
+
   // Setup chart 
   var margin = {top: 50, right: 10, bottom: 0, left: 105}
   var width = 432 - margin.right - margin.left
@@ -23,6 +25,10 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
+  let tooltip = d3.select('#bar')
+                .append('div')
+                .attr('class', 'tooltip')
+                .style('opacity', 0)
   // Axes
   var xScale = d3.scaleLinear()
                 .domain([0, 620.1])
@@ -65,6 +71,24 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
       .attr('r', '4')
       .style('fill', colors[0])
       .attr('stroke', colors[0])
+      .on('mouseover', function (d) {
+        tooltip.transition()
+          .duration(500)
+          .style('opacity', 0.9)
+  
+        format = d3.format(',')
+  
+        var tip = '$' + d.import_2018 + ' B'
+  
+        tooltip.html(tip)
+          .style('left', (d3.event.pageX) + 'px')
+          .style('top', (d3.event.pageY - 28) + 'px')
+      })
+      .on('mouseout', function (d) {
+        tooltip.transition()
+          .duration(500)
+          .style('opacity', 0)
+      })
 
   svg.selectAll('export-circles')
       .data(tradeVolumeDataset)
@@ -75,20 +99,43 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
       .attr('r', '4')
       .style('fill', function(d) {return colors[1]})
       .attr('stroke', function(d) {return colors[1]})
+      .on('mouseover', function (d) {
+        tooltip.transition()
+          .duration(500)
+          .style('opacity', 0.9)
+  
+        format = d3.format(',')
+  
+        var tip = '$' + d.export_2018 + ' B'
+  
+        tooltip.html(tip)
+          .style('left', (d3.event.pageX) + 'px')
+          .style('top', (d3.event.pageY - 28) + 'px')
+      })
+      .on('mouseout', function (d) {
+        tooltip.transition()
+          .duration(500)
+          .style('opacity', 0)
+      })
 
   var legend = svg.selectAll('.legend')
-                  .data(tradeVolumeDataset)
+                  .data(legendData)
                   .enter()
-                  .append('g')
+                  .append('circle')
+                  .attr('cx', width - 150)
+                  .attr('cy', function(d, i) {return height - 50 + (i * 20)})
+                  .attr('r', '4')
+                  .style('fill', function(d, i) {return colors[i]})
                   .attr('class', 'legend')
-                  .attr('transform', function(d, i) {return 'translate (30,' + i * 19 + ')'})
     
-  legend.append('rect')
-        .attr('x', width - 18)
-        .attr('width', 18)
-        .attr('height', 18)
-        .style('fill', function (d, i) {return colors[i]})
-
+ svg.selectAll('textLabels')
+        .data(legendData)
+        .enter()
+        .append('text')
+        .text(function(d) {return d})
+        .attr('class', 'textLabels')
+        .attr('x', width - 140)
+        .attr('y', function(d, i) { return height - 45 + (i * 20)})
 })
 
 function numConverter (d) {
