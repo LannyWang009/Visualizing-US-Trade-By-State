@@ -289,6 +289,7 @@ path:hover {
 
   .legend-label {
       fill: white;
+      /* font-family: 'Orbitron', 'sans-serif' */
       /* z-index: -1; */
   }
 
@@ -312,7 +313,8 @@ path:hover {
 
 .textLabels {
     fill: white;
-    font-size: 11px;
+    font-size: 12px;
+    font-family: 'Orbitron', 'sans-serif'
 }
 
   .show-state-name {

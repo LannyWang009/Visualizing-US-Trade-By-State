@@ -123,8 +123,8 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
                   .enter()
                   .append('circle')
                   .attr('cx', width - 150)
-                  .attr('cy', function(d, i) {return height - 50 + (i * 20)})
-                  .attr('r', '4')
+                  .attr('cy', function(d, i) {return height - 50 + (i * 25)})
+                  .attr('r', '10')
                   .style('fill', function(d, i) {return colors[i]})
                   .attr('class', 'legend')
     
@@ -134,8 +134,8 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
         .append('text')
         .text(function(d) {return d})
         .attr('class', 'textLabels')
-        .attr('x', width - 140)
-        .attr('y', function(d, i) { return height - 45 + (i * 20)})
+        .attr('x', width - 135)
+        .attr('y', function(d, i) { return height - 45 + (i * 25)})
 })
 
 function numConverter (d) {

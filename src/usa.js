@@ -30,7 +30,7 @@ var mapColor = d3.scaleQuantize()
 var selectedState
 // var selectedTime
 function selectState (d) {
-  console.log(d.properties.name)
+  console.log(d.properties)
   selectedState = d.properties.name
   // return d.properties.name
 }
