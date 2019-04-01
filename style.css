@@ -305,6 +305,11 @@ path:hover {
     text-shadow: 1.5px 3px black;
   }
 
+  .axisLabel text {
+    font-family: Orbitron;
+    fill: white;
+}
+
   /* .total-trade-chart-label {
     font-family: 'sans-serif';
     font-size: '5px';
