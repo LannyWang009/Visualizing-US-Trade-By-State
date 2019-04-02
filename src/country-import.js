@@ -74,7 +74,7 @@ function importGraph (error, data) {
     .attr('y', (d, i) => i * (h / importBarChartData.length))
     .attr('height', (d) => (h / importBarChartData.length) - 5)
     .attr('width', (d) => xScale(d.Imports))
-    .attr('fill', 'rgb(165, 55, 253)')
+    .attr('fill', '#6B56D3')
     .attr('class', 'chartBar')
     .on('mouseover', function (d) {
       barTooltip.transition()
@@ -176,7 +176,7 @@ function updatedImportGraph (error, data) {
     .attr('y', (d, i) => i * (h / importBarChartData.length))
     .attr('height', (d) => (h / importBarChartData.length) - 5)
     .attr('width', (d) => xScale(d.Imports))
-    .attr('fill', 'rgb(165, 55, 253)')
+    .attr('fill', '#6B56D3')
     .attr('class', 'chartBar')
 
   // Update labels

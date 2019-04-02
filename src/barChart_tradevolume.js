@@ -10,13 +10,13 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
   console.log(csvdata)
   tradeVolumeDataset = csvdata
   
-  var legendData = ['Total Imports', 'Total Exports']
+  var legendData = ['Total Exports', 'Total Imports']
 
   // Setup chart 
   var margin = {top: 50, right: 10, bottom: 0, left: 105}
   var width = 432 - margin.right - margin.left
   var height = 577 - margin.top - margin.bottom
-  var colors = ['#6b55d3', 'pink']
+  var colors = ['#C85FE5', '#6B56D3']
 
   var svg = d3.select('#bar')
                 .append('svg')
@@ -69,8 +69,8 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
       .attr('cx', function(d) { return xScale((d.import_2018 + d.export_2018))})
       .attr('cy', function(d) { return yScale(d.state)})
       .attr('r', '4')
-      .style('fill', colors[0])
-      .attr('stroke', colors[0])
+      .style('fill', colors[1])
+      .attr('stroke', colors[1])
       .on('mouseover', function (d) {
         tooltip.transition()
           .duration(500)
@@ -97,8 +97,8 @@ d3.csv('./data/csv/allState2018.csv', numConverter, function (error, csvdata) {
       .attr('cx', function(d) { return xScale((d.export_2018))})
       .attr('cy', function(d) { return yScale(d.state)})
       .attr('r', '4')
-      .style('fill', function(d) {return colors[1]})
-      .attr('stroke', function(d) {return colors[1]})
+      .style('fill', function(d) {return colors[0]})
+      .attr('stroke', function(d) {return colors[0]})
       .on('mouseover', function (d) {
         tooltip.transition()
           .duration(500)

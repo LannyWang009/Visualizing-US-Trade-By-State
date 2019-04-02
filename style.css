@@ -300,21 +300,21 @@ path:hover {
   }
 
   .chart-label {
-    font-family:'Orbitron', 'sans-serif';
+    /* font-family:'Orbitron', 'sans-serif'; */
     font-style: 'bold';
     font-size: '18px';
     text-shadow: 1.5px 3px black;
   }
 
   .axisLabel text {
-    font-family: Orbitron;
+    /* font-family: 'sans-serif'; */
     fill: white;
 }
 
 .textLabels {
     fill: white;
-    font-size: 12px;
-    font-family: 'Orbitron', 'sans-serif'
+    font-size: 16px;
+    /* font-family: 'sans-serif' */
 }
 
   .show-state-name {
