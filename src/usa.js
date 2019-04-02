@@ -30,7 +30,7 @@ var mapColor = d3.scaleQuantize()
 var selectedState
 // var selectedTime
 function selectState (d) {
-  console.log(d.properties.name)
+  // console.log(d.properties.name)
   selectedState = d.properties.name
   // return d.properties.name
 }
@@ -38,7 +38,7 @@ function selectState (d) {
 // Build U.S. Map
 d3.csv('./data/csv/allState2018.csv', function (error, data) {
   if (error) { console.log('error', error) }
-  console.log('data', data)
+  // console.log('data', data)
   mapColor.domain([
     d3.min(data, function (d) { return d.total_trade_activity }),
     d3.max(data, function (d) { return d.total_trade_activity })
@@ -47,7 +47,7 @@ d3.csv('./data/csv/allState2018.csv', function (error, data) {
   // load GeoJSON data and merge with allstate2018 data
   d3.json('./data/json/us-states.json', function (error, json) {
     if (error) { console.log('error', error) }
-    console.log('usjson', json)
+    // console.log('usjson', json)
     for (var i = 0; i < data.length; i++) {
       // grab te state name and total trade activity value in billions
       var dataState = data[i].state
@@ -94,6 +94,7 @@ d3.csv('./data/csv/allState2018.csv', function (error, data) {
       //   updateImportGraph()
       //   updateExportPack()
       //   updateImportPack()
+      //   updateShowState()
       // })
   })
 })
@@ -144,4 +145,3 @@ function buildMapLegend () {
 }
 
 buildMapLegend()
-

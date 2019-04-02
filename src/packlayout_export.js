@@ -20,14 +20,13 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     }, true)
   })
   // }).sort(compare)
-  console.log('datasetExport', datasetExport)
+  // console.log('datasetExport', datasetExport)
 
   // =========== scaling function ===========
   // to find out the top 3 category
   const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
-  // console.log('exportValue array', exportValue)
   const biggest3data = exportValue.sort(function (a, b) { return b - a }).slice(0, 5)
-  // console.log('big numbers', biggest3data)
+
 
   // ==================Size of the SVG==========
   // var biggest = 410
@@ -48,7 +47,6 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     'name': 'Total',
     'children': datasetExport.map(element => {
       if (biggest3data.includes(element.total_exports_value)) {
-        console.log(element.commodity)
         return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': true }
       } else {
         return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': false }
@@ -71,8 +69,7 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
     .selectAll('circle')
     .data(rootNode.descendants())
     .enter()
-    // .append('g')
-    // .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
+  
 
   nodes
     .append('circle')
@@ -141,7 +138,7 @@ d3.csv('./data/csv/StateExportData.csv', conversor, function (csvdata) {
 // parsing csv data
 function conversor (d) {
   d.total_exports_value = parseInt(d.total_exports_value.replace(/,/g, ''))
-  // console.log(d.total_exports_value)
+  
   return d
 }
 
@@ -165,7 +162,7 @@ function updateExportPack () {
         )
       }, true)
     })
-    console.log('updated datasetExport: ', datasetExport)
+    // console.log('updated datasetExport: ', datasetExport)
 
     // =========== scaling function ===========
     const exportValue = datasetExport.map(element => { return (element.total_exports_value) })
@@ -185,7 +182,7 @@ function updateExportPack () {
       'name': 'Total',
       'children': datasetExport.map(element => {
         if (biggest3data.includes(element.total_exports_value)) {
-          console.log('show label', element.commodity)
+          console.log('updated export layout labels', element.commodity)
           return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': true }
         } else {
           return { 'name': element.commodity, 'value': linearscale(element.total_exports_value), 'exportValue': element.total_exports_value, 'tag': false }
@@ -238,32 +235,33 @@ function updateExportPack () {
       .attr('r', function (d) { return d.r })
       .attr('cx', function (d) { return d.x })
       .attr('cy', function (d) { return d.y })
-      // show tips on mouseover
-      .on('mouseover', function (d) {
-        const xPosition = parseFloat(d.x)
-        const yPosition = parseFloat(d.y)
-        const lengthOftext = d.data.name.length
-        const textCategory = d.data.name.slice(3, lengthOftext)
-        const textValue = Math.round(d.data.exportValue / 10000000)
-        // create the tooltip label
-        d3.select('#packLayout-export svg g').append('text')
-          .attr('id', 'tooltip')
-          .attr('x', xPosition)
-          .attr('y', yPosition)
-          .attr('text-anchor', 'middle')
-          .attr('fill', 'lavender')
-          .text(
-            function () {
-              if (textValue) {
-                return textCategory + ', $' + textValue / 100 + ' B'
-              } else { return '' }
-            }
 
-          )
-      })
-      .on('mouseout', function (d) {
-        d3.select('#tooltip').remove()
-      })
+      // show tips on mouseover
+      // .on('mouseover', function (d) {
+      //   const xPosition = parseFloat(d.x)
+      //   const yPosition = parseFloat(d.y)
+      //   const lengthOftext = d.data.name.length
+      //   const textCategory = d.data.name.slice(3, lengthOftext)
+      //   const textValue = Math.round(d.data.exportValue / 10000000)
+      //   // create the tooltip label
+      //   d3.select('#packLayout-export svg g').append('text')
+      //     .attr('id', 'tooltip')
+      //     .attr('x', xPosition)
+      //     .attr('y', yPosition)
+      //     .attr('text-anchor', 'middle')
+      //     .attr('fill', 'lavender')
+      //     .text(
+      //       function () {
+      //         if (textValue) {
+      //           return textCategory + ', $' + textValue / 100 + ' B'
+      //         } else { return '' }
+      //       }
+
+      //     )
+      // })
+      // .on('mouseout', function (d) {
+      //   d3.select('#tooltip').remove()
+      // })
 
     // text.transition(t)
     //   .append('text')
@@ -294,7 +292,6 @@ function updateExportPack () {
   // parsing csv data
   function conversor (d) {
     d.total_exports_value = parseInt(d.total_exports_value.replace(/,/g, ''))
-    // console.log(d.total_exports_value)
     return d
   }
 

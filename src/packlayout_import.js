@@ -5,13 +5,13 @@ var filters = {
 }
 
 let packImpTooltip = d3.select('#packLayout-import')
-  .append('div')
+  .append('g')
   .attr('class', 'tooltip')
   .style('opacity', 0)
 
-let packImpStaticLabels = d3.select('#packLayout-import')
-  .append('div')
-  .attr('class', 'labeldiv')
+// let packImpStaticLabels = d3.select('#packLayout-import')
+//   .append('div')
+//   .attr('class', 'labeldiv')
 
 d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   datasetImport = csvdata
@@ -29,15 +29,13 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
       )
     }, true)
   })
-  // }).sort(compare)
-  console.log('datasetImport', datasetImport)
+
+  // console.log('datasetImport', datasetImport)
   // ========helper var for labels and scaling function=====
   // to find out the top 5 category
   const importValue = datasetImport.map(element => { return (element.total_import_values) })
-  // console.log('importValue array', importValue)
   const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 5)
-  // console.log('big import numbers', biggest3data)
-
+  
   var s = 410
   const max = d3.max(importValue)
   const range = [0, s]
@@ -51,7 +49,6 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
     'name': 'Total',
     'children': datasetImport.map(element => {
       if (biggest3data.includes(element.total_import_values)) {
-        console.log('injecting', element.commodity)
         return { 'name': element.commodity, 'value': linearscale(element.total_import_values), 'importValue': element.total_import_values, 'tag': true }
       } else {
         return { 'name': element.commodity, 'value': linearscale(element.total_import_values), 'importValue': element.total_import_values, 'tag': false }
@@ -71,15 +68,9 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   packLayout(rootNode)
 
   var nodes = d3.select('#packLayout-import svg g')
-    // .select('svg g')
     .selectAll('circle')
     .data(rootNode.descendants())
     .enter()
-    // .append('g')
-    // .attr('transform', function (d) {
-    //   // console.log(d)
-    //   return 'translate(' + [d.x, d.y] + ')'
-    // })
 
   nodes
     .append('circle')
@@ -93,8 +84,7 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
       const lengthOftext = d.data.name.length
       const textCategory = d.data.name.slice(3, lengthOftext)
       const textValue = Math.round(d.data.importValue / 10000000)
-
-      if (d.data.name != 'Total') {
+      if (d.data.name !== 'Total') {
         packImpTooltip.transition()
           .duration(500)
           .style('opacity', 0.9)
@@ -118,55 +108,41 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
         .style('opacity', 0)
     })
 
-  // add label of category name for top 3 categories
-  // packImpStaticLabels
-  //   .append('g')
-  //   .attr('class', 'packlayout-import-label')
-  //   .attr('cx', d => d.x)
-  //   .attr('cy', d => d.y)
+let gBox = nodes
+    .filter(function (n) { return n.data.tag === true })
+    .append('g')
+    .attr('class', 'packlayout-import-label')
+    .attr('cx', d => d.x)
+    .attr('cy', d => d.y)
+    
 
-  // var labeldiv = d3.select('#packLayout-import .labeldiv')
-  // labeldiv
-  //   .data(rootNode.descendants())
-  //   .enter()
-  //   .append('text')
-  //   .text(function (d) {
-  //     console.log(d)
-  //     const lengthOftext = d.data.name.length
-  //     const textCategory = d.data.name.slice(3, lengthOftext)
-  //     return d.data.tag === true ? textCategory : ''
-  //   })
-  //   .attr('dx', d => d.x - 40)
-  //   .attr('dy', d => d.y)
-  //   .attr('class', 'commodity-label')
+ gBox
+    // .data(rootNode.descendants())
+    // .enter()
+    .append('text')
+    .text(function (d) {
+      // console.log(d)
+      const lengthOftext = d.data.name.length
+      const textCategory = d.data.name.slice(3, lengthOftext)
+      return d.data.tag === true ? textCategory : ''
+    })
+    .attr('dx', d => d.x - 40)
+    .attr('dy', d => d.y)
+    .attr('class', 'commodity-label')
 
-  // labeldiv
-  //   .append('text')
-  //   .attr('class', 'number-label')
-  //   .attr('dx', d => d.x - 36)
-  //   .attr('dy', d => d.y + 18)
-  //   .text(function (d) {
-  //     let textValue = Math.round(d.data.importValue / 10000000)
-  //     return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
-  //   })
+  gBox
+    .append('text')
+    .attr('class', 'number-label')
+    .attr('dx', d => d.x - 36)
+    .attr('dy', d => d.y + 18)
+    .text(function (d) {
+      let textValue = Math.round(d.data.importValue / 10000000)
+      return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
+    })
 })
 
-//   // add label of import value under the category
-//   nodes
-//     .append('text')
-//     .attr('class', 'packlayout-import-label')
-//     .attr('class', 'layout-label-text')
-//     .attr('dx', d => d.x - 36)
-//     .attr('dy', d => d.y + 18)
-//     .text(function (d) {
-//       let textValue = Math.round(d.data.importValue / 10000000)
-//       return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
-//     })
-// })
-
 function conversor (d) {
-  d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''))
-  // console.log(d.total_import_values)
+  d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''), 10)
   return d
 }
 
@@ -189,7 +165,7 @@ function updateImportPack () {
         )
       }, true)
     })
-    console.log('updatedDatasetImport: ', updatedDatasetImport)
+    // console.log('updatedDatasetImport: ', updatedDatasetImport)
 
     // =========== scaling function ===========
     const importValue = updatedDatasetImport.map(element => { return (element.total_import_values) })
@@ -209,7 +185,6 @@ function updateImportPack () {
       'name': 'Total',
       'children': updatedDatasetImport.map(element => {
         if (biggest3data.includes(element.total_import_values)) {
-          console.log('show label', element.commodity)
           return { 'name': element.commodity, 'value': linearscale(element.total_import_values), 'importValue': element.total_import_values, 'tag': true }
         } else {
           return { 'name': element.commodity, 'value': linearscale(element.total_import_values), 'importValue': element.total_import_values, 'tag': false }
@@ -237,16 +212,22 @@ function updateImportPack () {
       .selectAll('circle')
       .data(packLayout(rootNode).descendants())
 
-    // var labelg = d3.select('#packLayout-import svg g')
-    //   .selectAll('g')
-    //   .data(packLayout(rootNode).descendants())
+    var newnodes = d3.select('#packLayout-import svg g')
+      .selectAll('g')
+      .data(packLayout(rootNode).descendants())
+      .filter(function (n) { console.log('newnodes running', n.data.name); return n.data.tag === true })
+
+    var gBox = d3.select('#packLayout-import svg g')
+      .selectAll('g')
+      .data(packLayout(rootNode).descendants())
 
     // ==========================EXIT=================================
-    // labelg.remove()
-    nodes.exit()
-      .style('fill', function (d) { return switchColor(d.data.name) })
-      .transition(t)
-      .remove()
+    gBox.remove() // to delete all label <g>
+
+    // nodes.exit()
+    //   .style('fill', function (d) { return switchColor(d.data.name) })
+    //   .transition(t)
+    //   .remove()
 
     // =====================UPDATE====================
 
@@ -255,43 +236,21 @@ function updateImportPack () {
       .attr('r', function (d) { return d.r })
       .attr('cx', function (d) { return d.x })
       .attr('cy', function (d) { return d.y })
-    // show tips on mouseover
-      .on('mouseover', function (d) {
-        const xPosition = parseFloat(d.x)
-        const yPosition = parseFloat(d.y)
-        const lengthOftext = d.data.name.length
-        const textCategory = d.data.name.slice(3, lengthOftext)
-        const textValue = Math.round(d.data.importValue / 10000000)
-        // create the tooltip label
-        d3.select('#packLayout-import svg g').append('text')
-          .attr('id', 'tooltip')
-          .attr('x', xPosition)
-          .attr('y', yPosition)
-          .attr('text-anchor', 'middle')
-          .attr('fill', 'lavender')
-          .text(
-            function () {
-              if (textValue) {
-                return textCategory + ', $' + textValue / 100 + ' B'
-              } else { return '' }
-            }
-
-          )
-      })
-      .on('mouseout', function (d) {
-        d3.select('#tooltip').remove()
-      })
-
-    var newlabel = nodes
-      // .enter()
+    
+    // put new labels inside 
+    newnodes
+      .enter()
       .append('g')
       .attr('class', 'packlayout-import-label')
-      .attr('cx', d => { console.log(d); return d.x })
+      .attr('cx', d => { console.log('gBoxUpdate runs'); return d.x})
       .attr('cy', d => d.y)
-
-    newlabel
+      
+   d3.select('svg g').selectAll('.packlayout-import-label')
+      // .data(rootNode.descendants())
+      // .enter()
       .append('text')
       .text(function (d) {
+        // console.log(d)
         const lengthOftext = d.data.name.length
         const textCategory = d.data.name.slice(3, lengthOftext)
         return d.data.tag === true ? textCategory : ''
@@ -299,8 +258,8 @@ function updateImportPack () {
       .attr('dx', d => d.x - 40)
       .attr('dy', d => d.y)
       .attr('class', 'commodity-label')
-
-    newlabel
+  
+    d3.select('svg g').selectAll('.packlayout-import-label')
       .append('text')
       .attr('class', 'number-label')
       .attr('dx', d => d.x - 36)
@@ -314,8 +273,7 @@ function updateImportPack () {
   // end d3.csv function
   // parsing csv data
   function conversor (d) {
-    d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''))
-    // console.log(d.total_import_values)
+    d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''), 10)
     return d
   }
 
