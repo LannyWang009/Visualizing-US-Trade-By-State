@@ -245,9 +245,7 @@ function updateImportPack () {
       .attr('cx', d => { console.log('gBoxUpdate runs'); return d.x})
       .attr('cy', d => d.y)
       
-   d3.select('svg g').selectAll('.packlayout-import-label')
-      // .data(rootNode.descendants())
-      // .enter()
+   newnodes
       .append('text')
       .text(function (d) {
         // console.log(d)
