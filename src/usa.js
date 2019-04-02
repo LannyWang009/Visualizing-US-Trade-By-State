@@ -30,7 +30,7 @@ var mapColor = d3.scaleQuantize()
 var selectedState
 // var selectedTime
 function selectState (d) {
-  console.log(d.properties.name)
+  console.log(d.properties)
   selectedState = d.properties.name
   // return d.properties.name
 }
@@ -65,7 +65,7 @@ d3.csv('./data/csv/allState2018.csv', function (error, data) {
       }
     }
 
-    // Bind the data to the SVG and create one ath per GeoJSON feature
+    // Bind the data to the SVG and create one path per GeoJSON feature
     svg.selectAll('path')
       .data(json.features)
       .enter()
@@ -81,6 +81,12 @@ d3.csv('./data/csv/allState2018.csv', function (error, data) {
         }
       })
       .on('click', function (d) {
+        // Find previously selected, unselect
+        d3.select(".selected").classed("selected", false);
+        // Select current item
+        d3.select(this).classed("selected", true);
+
+        // Update bar and pack layout charts
         selectState(d)
         updateExportGraph()
         updateImportGraph()

@@ -74,7 +74,7 @@ function exportGraph (error, data) {
     .attr('y', (d, i) => i * (h / exportBarChartData.length))
     .attr('height', (d) => (h / exportBarChartData.length) - 5)
     .attr('width', (d) => xScale(d.Exports))
-    .attr('fill', 'rgb(165, 55, 253)')
+    .attr('fill', '#C85FE5')
     .attr('class', 'chartBar')
     .on('mouseover', function (d) {
       barTooltip.transition()
@@ -176,7 +176,7 @@ function updatedExportGraph (error, data) {
     .attr('y', (d, i) => i * (h / exportBarChartData.length))
     .attr('height', (d) => (h / exportBarChartData.length) - 5)
     .attr('width', (d) => xScale(d.Exports))
-    .attr('fill', 'rgb(165, 55, 253)')
+    .attr('fill', '#C85FE5')
     .attr('class', 'chartBar')
 
   // Update labels
