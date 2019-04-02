@@ -3,6 +3,7 @@ var filters = {
   'state': 'Texas',
   'time': '2018'
 }
+var numberOfLabels = 5
 
 let packImpTooltip = d3.select('#packLayout-import')
   .append('g')
@@ -34,7 +35,7 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
   // ========helper var for labels and scaling function=====
   // to find out the top 5 category
   const importValue = datasetImport.map(element => { return (element.total_import_values) })
-  const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 5)
+  const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, numberOfLabels)
   
   var s = 410
   const max = d3.max(importValue)
@@ -108,38 +109,32 @@ d3.csv('./data/csv/StateImportType.csv', conversor, function (csvdata) {
         .style('opacity', 0)
     })
 
-let gBox = nodes
-    .filter(function (n) { return n.data.tag === true })
-    .append('g')
-    .attr('class', 'packlayout-import-label')
-    .attr('cx', d => d.x)
-    .attr('cy', d => d.y)
-    
+nodes
+  .append('text')
+  .attr('class', 'packlayout-import-label-name')
+  // .attr(d => { return d.y })
+  .attr('dx', d=> d.x - 40)
+  .attr('dy', d=>d.y)
+  .text(function (d) {
+    const lengthOftext = d.data.name.length
+    const textCategory = d.data.name.slice(3, lengthOftext)
+    return d.data.tag === true ? textCategory : ''
+  })
 
- gBox
-    // .data(rootNode.descendants())
-    // .enter()
-    .append('text')
-    .text(function (d) {
-      // console.log(d)
-      const lengthOftext = d.data.name.length
-      const textCategory = d.data.name.slice(3, lengthOftext)
-      return d.data.tag === true ? textCategory : ''
-    })
-    .attr('dx', d => d.x - 40)
-    .attr('dy', d => d.y)
-    .attr('class', 'commodity-label')
-
-  gBox
-    .append('text')
-    .attr('class', 'number-label')
-    .attr('dx', d => d.x - 36)
-    .attr('dy', d => d.y + 18)
-    .text(function (d) {
-      let textValue = Math.round(d.data.importValue / 10000000)
-      return d.data.tag === true ? ' $' + textValue / 100 + ' Billion' : ''
-    })
+// add label of import value under the category
+nodes
+  .append('text')
+  .attr('class', 'packlayout-import-label-number')
+  // .attr('dx', d => -40 - d.data.name.slice(3, d.data.name.length) / 7)
+  .attr('dx', d=> d.x - 36)
+  .attr('dy', d=> d.y + 18)
+  .text(function (d) {
+    let textValue = Math.round(d.data.importValue / 10000000)
+    return d.data.tag === true ? ' $' + textValue/100 + ' Billion' : ''
+  })
 })
+
+
 
 function conversor (d) {
   d.total_import_values = parseInt(d.total_import_values.replace(/,/g, ''), 10)
@@ -165,11 +160,10 @@ function updateImportPack () {
         )
       }, true)
     })
-    // console.log('updatedDatasetImport: ', updatedDatasetImport)
-
+    
     // =========== scaling function ===========
     const importValue = updatedDatasetImport.map(element => { return (element.total_import_values) })
-    const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, 5)
+    const biggest3data = importValue.sort(function (a, b) { return b - a }).slice(0, numberOfLabels)
 
     // ==================Size of the SVG==========
 
@@ -195,11 +189,12 @@ function updateImportPack () {
     // packLayout
     var packLayout = d3.pack()
       .size([s, s])
-    // .value(function(d) { return d.value; });
 
     // transition
     var t = d3.transition()
       .duration(1000)
+    var t2 = d3.transition()
+      .duration(2000)
 
     // hierarchy
     var rootNode = d3.hierarchy(data)
@@ -212,22 +207,16 @@ function updateImportPack () {
       .selectAll('circle')
       .data(packLayout(rootNode).descendants())
 
-    var newnodes = d3.select('#packLayout-import svg g')
-      .selectAll('g')
+    var textName = d3.select('#packLayout-import svg g')
+      .selectAll('.packlayout-import-label-name')
       .data(packLayout(rootNode).descendants())
-      .filter(function (n) { console.log('newnodes running', n.data.name); return n.data.tag === true })
 
-    var gBox = d3.select('#packLayout-import svg g')
-      .selectAll('g')
+    var textNumber = d3.select('#packLayout-import svg g')
+      .selectAll('.packlayout-import-label-number')
       .data(packLayout(rootNode).descendants())
 
     // ==========================EXIT=================================
-    gBox.remove() // to delete all label <g>
-
-    // nodes.exit()
-    //   .style('fill', function (d) { return switchColor(d.data.name) })
-    //   .transition(t)
-    //   .remove()
+    // haha, no need to exit~
 
     // =====================UPDATE====================
 
@@ -237,16 +226,8 @@ function updateImportPack () {
       .attr('cx', function (d) { return d.x })
       .attr('cy', function (d) { return d.y })
     
-    // put new labels inside 
-    newnodes
-      .enter()
-      .append('g')
-      .attr('class', 'packlayout-import-label')
-      .attr('cx', d => { console.log('gBoxUpdate runs'); return d.x})
-      .attr('cy', d => d.y)
-      
-   newnodes
-      .append('text')
+   textName
+      .transition(t2)
       .text(function (d) {
         // console.log(d)
         const lengthOftext = d.data.name.length
@@ -255,11 +236,9 @@ function updateImportPack () {
       })
       .attr('dx', d => d.x - 40)
       .attr('dy', d => d.y)
-      .attr('class', 'commodity-label')
   
-    d3.select('svg g').selectAll('.packlayout-import-label')
-      .append('text')
-      .attr('class', 'number-label')
+    textNumber
+      .transition(t2)
       .attr('dx', d => d.x - 36)
       .attr('dy', d => d.y + 18)
       .text(function (d) {
